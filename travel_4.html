@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f8f5;color:#1a1a18;padding:2rem 1.5rem}
+nav{max-width:900px;margin:0 auto 2rem;display:flex;align-items:center;justify-content:space-between}
+nav a{font-size:13px;color:#888780;text-decoration:none;display:flex;align-items:center;gap:5px}
+nav a:hover{color:#1a1a18}
+h1{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#888780}
+.wrap{max-width:900px;margin:0 auto}
+.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;padding:.75rem 1rem;min-width:90px}
+.stat-n{font-size:20px;font-weight:500}
+.stat-l{font-size:11px;color:#888780;margin-top:1px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fb{font-size:12px;font-weight:500;padding:5px 14px;border-radius:20px;border:0.5px solid #e0dfd8;background:#fff;color:#888780;cursor:pointer;transition:all .15s}
+.fb.active{background:#1a1a18;color:#f9f8f5;border-color:#1a1a18}
+.view-toggle{display:flex;border:0.5px solid #e0dfd8;border-radius:20px;overflow:hidden;background:#fff}
+.vb{font-size:12px;font-weight:500;padding:5px 14px;border:none;background:transparent;color:#888780;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.vb.active{background:#1a1a18;color:#f9f8f5}
+.filter-row{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.section{margin-bottom:2rem}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:.5px solid #e0dfd8}
+.sec-title{font-size:15px;font-weight:500}
+.badge{font-size:11px;font-weight:500;padding:2px 10px;border-radius:10px}
+.b-v{background:#E1F5EE;color:#085041}
+.b-s{background:#FAEEDA;color:#633806}
+.b-p{background:#EEEDFE;color:#3C3489}
+.hint{font-size:11px;color:#bbb;margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.item{background:#fff;border:0.5px solid #e0dfd8;border-radius:12px;padding:.875rem 1rem;display:flex;align-items:flex-start;gap:10px;cursor:pointer;transition:background .18s,border-color .18s,transform .15s,opacity .2s}
+.item:active{transform:scale(.96)}
+.item-icon{font-size:16px;margin-top:1px;flex-shrink:0;transition:color .18s}
+.item-name{font-size:14px;font-weight:500;line-height:1.3}
+.item-sub{font-size:12px;color:#888780;margin-top:2px;line-height:1.4}
+.st-v{border-color:#9FE1CB;background:#f7fdfb}
+.st-v:hover{background:#f0faf6;border-color:#5DCAA5}
+.st-v .item-icon{color:#1D9E75}
+.st-v .item-name{text-decoration:line-through;text-decoration-color:#9FE1CB;color:#888780}
+.st-v .item-sub{color:#bbb}
+.st-s:hover{background:#fffcf4;border-color:#EF9F27}
+.st-s .item-icon{color:#BA7517}
+.st-p:hover{background:#faf9ff;border-color:#AFA9EC}
+.st-p .item-icon{color:#c5c2f0}
+.st-p:hover .item-icon{color:#7F77DD}
+@keyframes out{to{opacity:0;transform:scale(.92)}}
+@keyframes in{from{opacity:0;transform:scale(.92)}}
+.anim-out{animation:out .2s forwards}
+.anim-in{animation:in .2s ease-out}
+#map{height:520px;border-radius:16px;border:0.5px solid #e0dfd8;display:none}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a1a18;color:#fff;font-size:13px;padding:.75rem 1.25rem;border-radius:12px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:1999;display:flex;align-items:center;gap:7px}
+.toast.show{opacity:1}
+.leaflet-popup-content-wrapper{border-radius:12px!important;box-shadow:0 4px 20px rgba(0,0,0,.12)!important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important}
+.leaflet-popup-content{font-size:13px!important;margin:10px 14px!important}
+.pop-name{font-weight:500;margin-bottom:2px}
+.pop-sub{color:#888780;font-size:12px}
+.pop-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:8px;display:inline-block;margin-top:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a href="index.html"><i class="ti ti-arrow-left"></i> Home</a>
+    <h1>Travel</h1>
+    <span></span>
+  </nav>
+
+  <div class="top-row">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="n-v">0</div><div class="stat-l">Visited</div></div>
+      <div class="stat"><div class="stat-n" id="n-s">0</div><div class="stat-l">Upcoming</div></div>
+      <div class="stat"><div class="stat-n" id="n-p">0</div><div class="stat-l">On the list</div></div>
+    </div>
+    <div class="view-toggle">
+      <button class="vb active" id="vb-cards" onclick="setView('cards')"><i class="ti ti-layout-grid" style="font-size:13px"></i>Cards</button>
+      <button class="vb" id="vb-map" onclick="setView('map')"><i class="ti ti-map-2" style="font-size:13px"></i>Map</button>
+    </div>
+  </div>
+
+  <div class="filter-row" id="filter-row">
+    <button class="fb active" onclick="setF('all')">All</button>
+    <button class="fb" onclick="setF('v')">Visited</button>
+    <button class="fb" onclick="setF('s')">Upcoming</button>
+    <button class="fb" onclick="setF('p')">Bucket list</button>
+  </div>
+
+  <div id="cards-view"></div>
+  <div id="map"></div>
+</div>
+<div class="toast" id="toast"><i class="ti ti-check"></i><span id="tmsg"></span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const BASE=[
+  {id:"stk",s:"v",name:"Stockholm",sub:"Sweden, Apr 2026",ll:[59.33,18.07]},
+  {id:"cph",s:"v",name:"Copenhagen",sub:"Denmark, Apr 2026",ll:[55.68,12.57]},
+  {id:"ber",s:"v",name:"Berlin",sub:"Germany, Apr 2026",ll:[52.52,13.40]},
+  {id:"prg",s:"v",name:"Prague",sub:"Czechia, Apr 2026",ll:[50.08,14.44]},
+  {id:"vie",s:"v",name:"Vienna",sub:"Austria, Apr 2026",ll:[48.21,16.37]},
+  {id:"ck",s:"v",name:"Český Krumlov",sub:"Czechia, Apr 2026",ll:[48.81,14.32]},
+  {id:"dre",s:"v",name:"Dresden",sub:"Germany, Apr 2026",ll:[51.05,13.74]},
+  {id:"nur",s:"v",name:"Nuremberg",sub:"Germany, Apr 2026",ll:[49.45,11.08]},
+  {id:"mun",s:"v",name:"Munich",sub:"Germany, Apr 2026",ll:[48.14,11.58]},
+  {id:"nic",s:"v",name:"Nice & French Riviera",sub:"France, Mar 2026",ll:[43.71,7.26]},
+  {id:"mon",s:"v",name:"Monaco",sub:"Mar 2026",ll:[43.74,7.43]},
+  {id:"arl",s:"v",name:"Arles & Provence",sub:"France, Mar 2026",ll:[43.68,4.63]},
+  {id:"als",s:"v",name:"Colmar & Strasbourg",sub:"Alsace, Mar 2026",ll:[48.08,7.36]},
+  {id:"lyo",s:"v",name:"Lyon",sub:"France, Mar 2026",ll:[45.75,4.83]},
+  {id:"cha",s:"v",name:"Chamonix",sub:"French Alps, Mar 2026",ll:[45.92,6.87]},
+  {id:"mlt",s:"v",name:"Malta & Valletta",sub:"May 2026",ll:[35.90,14.51]},
+  {id:"ams",s:"v",name:"Amsterdam",sub:"Netherlands, Mar 2026",ll:[52.37,4.90]},
+  {id:"bel",s:"v",name:"Bruges, Ghent & Brussels",sub:"Belgium, Mar 2026",ll:[50.85,4.35]},
+  {id:"tro",s:"v",name:"Tromsø",sub:"Norway, Feb 2026",ll:[69.65,18.96]},
+  {id:"edi",s:"v",name:"Edinburgh",sub:"Scotland, Feb 2026",ll:[55.95,-3.19]},
+  {id:"sky",s:"v",name:"Inverness & Isle of Skye",sub:"Scotland, Nov 2025",ll:[57.28,-5.52]},
+  {id:"lis",s:"v",name:"Lisbon & Lagos",sub:"Portugal, Jan 2026",ll:[38.72,-9.14]},
+  {id:"rom",s:"v",name:"Naples & Rome",sub:"Italy, Nov 2025",ll:[41.90,12.50]},
+  {id:"mil",s:"v",name:"Milan & Italian Lakes",sub:"Italy, Dec 2025",ll:[45.46,9.19]},
+  {id:"blk",s:"v",name:"Balkans & Central Europe",sub:"Dec 2025–Jan 2026",ll:[43.84,18.34]},
+  {id:"ire",s:"v",name:"Dublin & Ireland",sub:"May 2026",ll:[53.33,-6.25]},
+  {id:"cot",s:"v",name:"Cotswolds",sub:"England, May 2026",ll:[51.88,-1.85]},
+  {id:"cam",s:"v",name:"Cambridge",sub:"England, Oct 2025",ll:[52.21,0.12]},
+  {id:"oxf",s:"v",name:"Oxford",sub:"England, Nov 2025",ll:[51.75,-1.25]},
+  {id:"can",s:"v",name:"Canterbury",sub:"England, Mar 2026",ll:[51.28,1.08]},
+  {id:"par",s:"s",name:"Paris & Normandy",sub:"May 2026",ll:[48.86,2.35]},
+  {id:"gla",s:"s",name:"Glasgow",sub:"Scotland, May 2026",ll:[55.86,-4.25]},
+  {id:"yor",s:"s",name:"York",sub:"England, May 2026",ll:[53.96,-1.08]},
+  {id:"flo",s:"s",name:"Florence & Venice",sub:"Italy, Jun 2026",ll:[43.77,11.26]},
+  {id:"ice",s:"p",name:"Iceland",sub:"Reykjavik, Golden Circle",ll:[64.13,-21.82]},
+  {id:"swi",s:"p",name:"Switzerland",sub:"Interlaken, Zermatt, Lucerne",ll:[46.52,7.99]},
+  {id:"tur",s:"p",name:"Turkey",sub:"Istanbul, Cappadocia, Ephesus",ll:[39.92,32.85]},
+  {id:"gre",s:"p",name:"Greece",sub:"Athens, Santorini, Crete, Meteora",ll:[37.98,23.73]},
+  {id:"spa",s:"p",name:"Spain",sub:"Barcelona, Madrid, Seville, Granada",ll:[40.42,-3.70]},
+  {id:"por",s:"p",name:"Porto",sub:"Portugal",ll:[41.16,-8.63]},
+  {id:"sic",s:"p",name:"Sicily",sub:"Palermo, Agrigento, Mount Etna",ll:[37.50,14.00]},
+  {id:"sit",s:"p",name:"Southern Italy",sub:"Naples, Pompeii, Amalfi, Capri",ll:[40.84,14.25]},
+  {id:"mor",s:"p",name:"Morocco",sub:"Marrakech, Atlas Mountains",ll:[31.63,-7.99]},
+  {id:"wbl",s:"p",name:"Western Balkans",sub:"Croatia, Bosnia, Montenegro",ll:[44.80,16.57]},
+  {id:"bal",s:"p",name:"Baltics",sub:"Tallinn, Vilnius, Riga",ll:[59.44,24.75]},
+  {id:"pol",s:"p",name:"Poland",sub:"Warsaw, Gdańsk, Kraków",ll:[52.23,21.01]},
+  {id:"rob",s:"p",name:"Romania & Bulgaria",sub:"Bucharest, Plovdiv, Transylvania",ll:[45.94,24.97]},
+  {id:"dor",s:"p",name:"Dordogne",sub:"France — caves, castles, river",ll:[44.89,0.82]},
+  {id:"col",s:"p",name:"Cologne & Rhine Valley",sub:"Germany",ll:[50.94,6.96]},
+  {id:"ork",s:"p",name:"Orkney Islands",sub:"Scotland — prehistoric sites",ll:[58.99,-3.17]},
+  {id:"moh",s:"p",name:"Cliffs of Moher & Dingle",sub:"Ireland",ll:[52.97,-9.43]},
+  {id:"nwg",s:"p",name:"Newgrange",sub:"Ireland — older than Stonehenge",ll:[53.69,-6.47]},
+  {id:"cnr",s:"p",name:"Canary Islands",sub:"Tenerife, Lanzarote",ll:[28.12,-15.44]},
+  {id:"bss",s:"p",name:"Bilbao & San Sebastián",sub:"Basque Country, Spain",ll:[43.26,-2.93]},
+  {id:"fin",s:"p",name:"Finnish Lapland",sub:"Rovaniemi, northern lights",ll:[66.50,25.73]},
+  {id:"sva",s:"p",name:"Svalbard",sub:"Norway — extreme north",ll:[78.22,15.64]}
+];
+
+const NEXT={p:"v",s:"v",v:"p"};
+const MSGS={p:"✓ visited!",s:"✓ visited!",v:"moved to bucket list"};
+const ICONS={v:"ti-circle-check",s:"ti-clock",p:"ti-bookmark"};
+const HINTS={v:"click to uncheck",s:"click when visited",p:"click to mark visited"};
+const BADGES={v:"b-v",s:"b-s",p:"b-p"};
+const LABELS={v:"Visited",s:"Upcoming",p:"Bucket list"};
+const COLORS={v:"#1D9E75",s:"#BA7517",p:"#7F77DD"};
+const PBADGE={v:"background:#E1F5EE;color:#085041",s:"background:#FAEEDA;color:#633806",p:"background:#EEEDFE;color:#3C3489"};
+
+let state={};
+try{const r=localStorage.getItem("travel2");if(r)state=JSON.parse(r);}catch(e){}
+
+function cur(id){return state[id]||BASE.find(x=>x.id===id).s;}
+function save(){try{localStorage.setItem("travel2",JSON.stringify(state));}catch(e){}}
+
+function handleClick(id){
+  const el=document.getElementById("i-"+id);
+  if(!el)return;
+  el.classList.add("anim-out");
+  setTimeout(()=>{
+    const c=cur(id),n=NEXT[c];
+    const base=BASE.find(x=>x.id===id);
+    if(n===base.s)delete state[id];else state[id]=n;
+    save();showToast(base.name+" "+MSGS[c]);render();
+    if(mapInited)refreshMap();
+  },200);
+}
+
+let tt;
+function showToast(msg){
+  document.getElementById("tmsg").textContent=msg;
+  const t=document.getElementById("toast");
+  t.classList.add("show");clearTimeout(tt);
+  tt=setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+let curF="all",curView="cards",mapInited=false,leafMap,markers=[];
+
+function setView(v){
+  curView=v;
+  document.getElementById("vb-cards").classList.toggle("active",v==="cards");
+  document.getElementById("vb-map").classList.toggle("active",v==="map");
+  document.getElementById("cards-view").style.display=v==="cards"?"block":"none";
+  document.getElementById("map").style.display=v==="map"?"block":"none";
+  document.getElementById("filter-row").style.display=v==="cards"?"flex":"none";
+  if(v==="map"){initMap();refreshMap();}
+}
+
+function initMap(){
+  if(mapInited)return;
+  leafMap=L.map("map",{zoomControl:true}).setView([48,10],4);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{
+    attribution:'© <a href="https://carto.com">CARTO</a>',maxZoom:19
+  }).addTo(leafMap);
+  mapInited=true;
+}
+
+function makeIcon(color){
+  return L.divIcon({
+    className:"",
+    html:`<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>`,
+    iconSize:[14,14],iconAnchor:[7,7]
+  });
+}
+
+function refreshMap(){
+  if(!mapInited)return;
+  markers.forEach(m=>leafMap.removeLayer(m));
+  markers=[];
+  BASE.forEach(d=>{
+    const s=cur(d.id);
+    const m=L.marker(d.ll,{icon:makeIcon(COLORS[s])})
+      .addTo(leafMap)
+      .bindPopup(`<div class="pop-name">${d.name}</div><div class="pop-sub">${d.sub}</div><span class="pop-badge" style="${PBADGE[s]}">${LABELS[s]}</span>`);
+    markers.push(m);
+  });
+}
+
+function setF(f){
+  curF=f;
+  document.querySelectorAll(".fb").forEach(b=>{
+    const map={all:"All",v:"Visited",s:"Upcoming",p:"Bucket list"};
+    b.classList.toggle("active",map[f]===b.textContent);
+  });
+  render();
+}
+
+function render(){
+  const g={v:[],s:[],p:[]};
+  BASE.forEach(d=>g[cur(d.id)].push(d));
+  document.getElementById("n-v").textContent=g.v.length;
+  document.getElementById("n-s").textContent=g.s.length;
+  document.getElementById("n-p").textContent=g.p.length;
+  const secs=["v","s","p"].filter(k=>curF==="all"?g[k].length>0:curF===k);
+  document.getElementById("cards-view").innerHTML=secs.map(k=>`
+    <div class="section">
+      <div class="sec-hdr">
+        <span class="sec-title">${LABELS[k]}</span>
+        <span class="badge ${BADGES[k]}">${g[k].length}</span>
+        <span class="hint">${HINTS[k]}</span>
+      </div>
+      <div class="grid">
+        ${g[k].map(d=>`
+          <div id="i-${d.id}" class="item st-${k} anim-in" onclick="handleClick('${d.id}')">
+            <i class="ti ${ICONS[k]} item-icon"></i>
+            <div><div class="item-name">${d.name}</div><div class="item-sub">${d.sub}</div></div>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+}
+
+render();
+</script>
+</body>
+</html>
