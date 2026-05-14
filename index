@@ -1,5 +1,12 @@
-
-<h2 class="sr-only">Interactive knowledge guide for a 21-year-old medical student: 13 categories with priority ranking</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>21-year-old curriculum</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
 
 <style>
 .kg-wrap{padding:1rem 0 2rem}
@@ -199,3 +206,7 @@ function renderPanel(){
 }
 renderTabs();renderPanel();
 </script>
+
+</body>
+</html>
+<h2 class="sr-only">Interactive knowledge guide for a 21-year-old medical student: 13 categories with priority ranking</h2>
