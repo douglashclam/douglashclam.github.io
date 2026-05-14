@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>European Sights Checklist — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.page-wrap { max-width: 740px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); text-decoration: none; transition: color 0.15s; }
+nav a:hover { color: var(--color-text-primary); }
+nav h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); }
+.panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; }
+
+.tier-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.tier-S { background:#FAEEDA;color:#633806 } .tier-A { background:#E6F1FB;color:#0C447C } .tier-B { background:#EAF3DE;color:#27500A } .tier-C { background:#EEEDFE;color:#3C3489 } .tier-D { background:#F1EFE8;color:#444441 }
+.sight-row { display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;transition:background .12s; }
+.sight-row:hover { background:var(--color-background-secondary) }
+.sight-row.vr { background:var(--color-background-secondary);opacity:.5 } .sight-row.vr:hover { opacity:.7 }
+.sight-row.wr { background:#FAC775; } .sight-row.wr:hover { background:#EF9F27; }
+.sn { flex:1;font-size:14px;color:var(--color-text-primary) } .sn.v { text-decoration:line-through;color:var(--color-text-tertiary) }
+.wr .sn { color:#412402; }
+.ib { background:none;border:.5px solid var(--color-border-tertiary);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .12s;flex-shrink:0; }
+.ib:hover { background:var(--color-background-secondary);border-color:var(--color-border-secondary) }
+.ib.av { background:#E1F5EE;border-color:#0F6E56;color:#0F6E56 } .ib.aw { background:#EF9F27;border-color:#633806;color:#412402; }
+.sc { background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center }
+.sn2 { font-size:22px;font-weight:500;color:var(--color-text-primary) } .sl { font-size:11px;color:var(--color-text-secondary);margin-top:1px }
+.th { font-size:13px;font-weight:500;color:var(--color-text-secondary);padding:12px 10px 4px;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:2px;display:flex;align-items:center;gap:8px }
+.fb { background:none;border:.5px solid var(--color-border-tertiary);border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--color-text-secondary);transition:all .12s;font-family:'Inter',sans-serif; }
+.fb.act { border-color:var(--color-border-primary);color:var(--color-text-primary);background:var(--color-background-secondary) }
+.pb { background:var(--color-border-tertiary);border-radius:99px;height:4px;flex:1;overflow:hidden }
+.pf { height:100%;border-radius:99px;background:#1D9E75;transition:width .3s }
+#si { font-family:'Inter',sans-serif;font-size:13px;height:32px;padding:0 10px;border:.5px solid var(--color-border-secondary);border-radius:6px;background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;width:100%; }
+#si:focus { border-color:var(--color-border-primary); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="index.html"><i class="ti ti-arrow-left"></i> Home</a>
+    <h1>European Sights</h1>
+    <span></span>
+  </nav>
+  <div class="panel">
+    <div id="app" style="padding:.5rem 0"></div>
+  </div>
+</div>
+<script>
+const T=[
+{id:'S',label:'S — The Untouchables',s:['Eiffel Tower, Paris','Colosseum, Rome','Acropolis & Parthenon, Athens','Big Ben & Palace of Westminster, London','Sagrada Família, Barcelona','St. Peter\'s Basilica & Square, Vatican','Venice — Grand Canal & St. Mark\'s Square','Notre-Dame Cathedral, Paris','Stonehenge, England','Neuschwanstein Castle, Bavaria','Leaning Tower of Pisa','The Louvre & Mona Lisa, Paris','Brandenburg Gate, Berlin']},
+{id:'A',label:'A — Must-See',s:['Tower of London & Tower Bridge','Mont Saint-Michel, Normandy','Trevi Fountain, Rome','The Alhambra, Granada','Florence Duomo (Brunelleschi\'s dome)','Charles Bridge & Prague Castle','Edinburgh Castle & Royal Mile','Pantheon, Rome','Buckingham Palace & Changing of the Guard','Sistine Chapel, Vatican','The Matterhorn, Switzerland','Anne Frank House, Amsterdam','Palace of Versailles','Schönbrunn Palace, Vienna','Vatican Museums','Roman Forum & Palatine Hill, Rome','Doge\'s Palace & St. Mark\'s Basilica, Venice','Reichstag Dome, Berlin','Hagia Sophia, Istanbul','Cappadocia & Göreme, Turkey','Plitvice Lakes, Croatia','Porto & Ribeira district, Portugal','Alfama & Lisbon waterfront, Portugal','Cliffs of Moher, Ireland','Arc de Triomphe, Paris','Uffizi Gallery, Florence','The Prado, Madrid','Rijksmuseum, Amsterdam','Sacré-Cœur & Montmartre, Paris','Pompeii, Italy','Cinque Terre, Italy','Amalfi Coast, Italy','Lake Como, Italy','Bruges historic center, Belgium','Amsterdam canals','Dubrovnik old city walls, Croatia','Santorini caldera & Oia at sunset','Norwegian fjords (Geiranger, Nærøyfjord)','Northern Lights — Lapland / Iceland','Auschwitz-Birkenau, Poland']},
+{id:'B',label:'B — Excellent',s:['Salzburg old town, Austria','Hallstatt, Austria','Kraków with Wawel Castle, Poland','Budapest Parliament & Fisherman\'s Bastion','Tallinn old town, Estonia','Bath, England','York & York Minster, England','Toledo, Spain','Carcassonne, France','Sintra, Portugal','Lucerne & Lake Lucerne, Switzerland','Kotor Bay, Montenegro','Delphi, Greece','Olympia, Greece','Rhodes old town, Greece','Valley of the Temples, Agrigento (Sicily)','Palermo, Sicily','Capri & the Blue Grotto, Italy','Scottish Highlands','Liverpool (Albert Docks & cultural quarter)','Belvedere Palace (Klimt\'s Kiss), Vienna','Hofburg & Vienna Ringstrasse','Royal Palace & Retiro Park, Madrid','Windsor Castle, England','Loire châteaux (Chambord, Chenonceau)','Hermitage / Winter Palace, St. Petersburg','St. Basil\'s Cathedral & the Kremlin, Moscow','Diocletian\'s Palace, Split, Croatia','Pena Palace, Sintra','Cologne Cathedral, Germany','Sevilla Cathedral & La Giralda','Meteora monasteries, Greece','Westminster Abbey, London','Bergen & Bryggen, Norway','Iceland\'s Golden Circle (Þingvellir, Geysir, Gullfoss)','Lake District, England','Cotswolds, England','Giant\'s Causeway, Northern Ireland','Musée d\'Orsay, Paris','Reina Sofía (Guernica), Madrid','Van Gogh Museum, Amsterdam','British Museum, London','East Side Gallery & Berlin Wall','Holocaust Memorial, Berlin','D-Day beaches & Bayeux Tapestry, Normandy','Wieliczka Salt Mine, Poland','Jerónimos Monastery, Lisbon','Pergamon Museum & Museum Island, Berlin']},
+{id:'C',label:'C — Worth the Detour',s:['Casa Batlló, Barcelona','Park Güell, Barcelona','Plaza de España, Sevilla','Mezquita-Catedral, Córdoba','Ronda, Spain','Albaicín, Granada','Siena\'s Piazza del Campo, Italy','Ponte Vecchio, Florence','Verona Arena, Italy','Ravenna mosaics, Italy','Burano, Venice lagoon','Lake Bled, Slovenia','Stari Most (Old Bridge), Mostar','Albanian Riviera & Gjirokastër','Brașov & Bran Castle, Romania','Sighișoara, Romania','Český Krumlov, Czechia','Rothenburg ob der Tauber, Germany','Gdańsk, Poland','Wrocław, Poland','Loch Lomond, Scotland','Riga old town, Latvia','Vilnius old town, Lithuania','Suomenlinna, Helsinki','Stockholm Gamla Stan & Vasa Museum','Copenhagen: Nyhavn & Tivoli','Lofoten Islands, Norway','Faroe Islands','Vatnajökull Glacier, Iceland','Reynisfjara black sand beach, Iceland','Ring of Kerry, Ireland','Trinity College Library & Book of Kells, Dublin','Cambridge & Oxford colleges','Canterbury Cathedral, England','Hadrian\'s Wall, England','Isle of Skye, Scotland','Snowdonia, Wales','Strasbourg & Petite France, France','Colmar, Alsace','Annecy, France','Nice, French Riviera','Èze village, France','Avignon & Palais des Papes, France','Arles — Roman arena & Van Gogh sites','Nîmes — Maison Carrée & Roman arena','Étretat cliffs, Normandy','Saint-Malo, France','Lyon old town & silk district','Bordeaux Place de la Bourse','Douro Valley, Portugal','Funchal, Madeira','The Azores, Portugal','Courtroom 600, Nuremberg','Reims Cathedral, France','Évora, Portugal','Mont Blanc & Chamonix valley','Antwerp Cathedral & old town, Belgium','Luxembourg old town','Frauenkirche & Zwinger, Dresden']},
+{id:'D',label:'D — If You\'re Already There',s:['Spanish Steps, Rome','Glockenspiel, Marienplatz Munich','Juliet\'s Balcony, Verona','Manneken Pis, Brussels','Loch Ness, Scotland','San Marino','Andorra','Liechtenstein','Mozart\'s Birthplace, Salzburg','Reichenbach Falls, Switzerland','Roussillon, Provence','Les Baux-de-Provence','Stratford-upon-Avon, England']}
+];
+const SK='eu-sights-checklist-v2';
+function load(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):{visited:{},wishlist:{}};}catch(e){return{visited:{},wishlist:{}};}}
+function save(s){try{localStorage.setItem(SK,JSON.stringify(s));}catch(e){}}
+function render(st,fi,se){
+  const app=document.getElementById('app');
+  let tot=0,vis=0,wis=0;
+  T.forEach(t=>t.s.forEach(s=>{tot++;if(st.visited[s])vis++;if(st.wishlist[s])wis++;}));
+  const pct=tot?Math.round(vis/tot*100):0;
+  let h=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+    <div class="sc"><div class="sn2">${vis}</div><div class="sl">Visited</div></div>
+    <div class="sc"><div class="sn2">${wis}</div><div class="sl">Wishlist</div></div>
+    <div class="sc"><div class="sn2">${tot-vis-wis}</div><div class="sl">Untracked</div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div class="pb"><div class="pf" style="width:${pct}%"></div></div>
+    <span style="font-size:12px;color:var(--color-text-secondary);white-space:nowrap">${pct}% seen</span>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:14px;">
+    <input type="text" id="si" placeholder="Search sights…" value="${se.replace(/"/g,'&quot;')}">
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
+    ${['All','S','A','B','C','D','Visited','Wishlist'].map(f=>`<button class="fb${fi===f?' act':''}" data-f="${f}">${f}</button>`).join('')}
+  </div>`;
+  T.forEach(tier=>{
+    if(fi!=='All'&&fi!=='Visited'&&fi!=='Wishlist'&&fi!==tier.id)return;
+    const rows=tier.s.filter(s=>{
+      if(se&&!s.toLowerCase().includes(se.toLowerCase()))return false;
+      if(fi==='Visited'&&!st.visited[s])return false;
+      if(fi==='Wishlist'&&!st.wishlist[s])return false;
+      return true;
+    });
+    if(!rows.length)return;
+    const tv=rows.filter(s=>st.visited[s]).length;
+    h+=`<div class="th"><span class="tier-label tier-${tier.id}">${tier.id}</span><span>${tier.label.split('—')[1].trim()}</span><span style="margin-left:auto;font-size:12px;font-weight:400">${tv}/${rows.length}</span></div>`;
+    rows.forEach(s=>{
+      const iv=!!st.visited[s],iw=!!st.wishlist[s];
+      const rc=iv?'vr':iw?'wr':'';
+      h+=`<div class="sight-row${rc?' '+rc:''}"><span class="sn${iv?' v':''}">${s}</span>
+      <button class="ib${iw?' aw':''}" data-a="w" data-s="${s.replace(/"/g,'&quot;')}" aria-label="${iw?'Remove from':'Add to'} wishlist"><i class="ti ti-bookmark" style="font-size:15px" aria-hidden="true"></i></button>
+      <button class="ib${iv?' av':''}" data-a="v" data-s="${s.replace(/"/g,'&quot;')}" aria-label="${iv?'Unmark':'Mark'} as visited"><i class="ti ti-check" style="font-size:15px" aria-hidden="true"></i></button>
+      </div>`;
+    });
+  });
+  app.innerHTML=h;
+  document.getElementById('si').addEventListener('input',e=>{cS=e.target.value;render(cSt,cF,cS);});
+  document.querySelectorAll('[data-f]').forEach(b=>b.addEventListener('click',()=>{cF=b.dataset.f;render(cSt,cF,cS);}));
+  document.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>{
+    const s=b.dataset.s,a=b.dataset.a;
+    if(a==='v'){if(cSt.visited[s])delete cSt.visited[s];else{cSt.visited[s]=true;delete cSt.wishlist[s];}}
+    else{if(cSt.wishlist[s])delete cSt.wishlist[s];else{cSt.wishlist[s]=true;delete cSt.visited[s];}}
+    save(cSt);render(cSt,cF,cS);
+  }));
+}
+let cSt=load(),cF='All',cS='';
+render(cSt,cF,cS);
+</script>
+</body>
+</html>
