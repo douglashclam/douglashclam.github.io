@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>European Crime Hotspots — Interactive Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --bg: #0f1419; --panel: #1a2027; --border: #2a3441;
+    --text: #e6e9ed; --text-dim: #8a95a3;
+    --accent: #4a9eff;
+    --red: #ef4444; --orange: #f59e0b; --blue: #3b82f6; --yellow: #eab308;
+    --purple: #8b5cf6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  #app { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+  @media (max-width: 768px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    #sidebar { max-height: 45vh; overflow-y: auto; }
+  }
+  #sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; }
+  #sidebar h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.01em; }
+  #sidebar .subtitle { color: var(--text-dim); font-size: 12px; margin-bottom: 16px; line-height: 1.5; }
+  #sidebar h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); margin: 18px 0 10px; }
+  .city-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; padding: 4px; background: rgba(255,255,255,0.04); border-radius: 8px; margin-bottom: 8px; }
+  .city-tab { padding: 8px 4px; background: transparent; color: var(--text-dim); border: none; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 500; transition: all 0.15s; font-family: inherit; text-align: center; }
+  .city-tab.active { background: var(--accent); color: white; }
+  .city-tab:hover:not(.active) { background: rgba(255,255,255,0.06); color: var(--text); }
+  .filter { display: flex; align-items: center; padding: 8px 10px; border-radius: 6px; cursor: pointer; transition: background 0.15s; user-select: none; }
+  .filter:hover { background: rgba(255,255,255,0.04); }
+  .filter input { margin-right: 10px; cursor: pointer; }
+  .filter .dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
+  .filter .label { font-size: 13px; flex: 1; }
+  .filter .count { font-size: 11px; color: var(--text-dim); }
+  .stats { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; margin-top: 16px; }
+  .stat { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 12px; }
+  .stat-label { color: var(--text-dim); }
+  .stat-value { font-weight: 500; text-align: right; max-width: 60%; }
+  .actions { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+  button { width: 100%; padding: 8px 12px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.15s; font-family: inherit; }
+  button:hover { background: #3a8cef; }
+  button.secondary { background: rgba(255,255,255,0.06); color: var(--text); }
+  button.secondary:hover { background: rgba(255,255,255,0.1); }
+  .view-toggle { display: flex; gap: 4px; padding: 4px; background: rgba(255,255,255,0.04); border-radius: 8px; }
+  .toggle-btn { flex: 1; padding: 8px 10px; background: transparent; color: var(--text-dim); border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.15s; font-family: inherit; }
+  .toggle-btn.active { background: var(--accent); color: white; }
+  .toggle-btn:hover:not(.active) { background: rgba(255,255,255,0.06); color: var(--text); }
+  #map { width: 100%; height: 100%; background: #f5f5f0; }
+  #compare-view { width: 100%; height: 100vh; background: var(--bg); color: var(--text); padding: 32px 40px; overflow-y: auto; }
+  #compare-view h1 { font-size: 22px; margin-bottom: 6px; letter-spacing: -0.01em; }
+  #compare-view .compare-subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 28px; line-height: 1.5; max-width: 700px; }
+  .compare-section { margin-bottom: 32px; max-width: 720px; }
+  .compare-section h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); margin-bottom: 14px; }
+  .compare-section h2 .unit { color: var(--text-dim); font-weight: 400; text-transform: none; letter-spacing: 0; margin-left: 8px; font-size: 11px; }
+  .compare-section .metric-explanation { color: var(--text-dim); font-size: 11px; margin-top: 10px; line-height: 1.5; }
+  .bar-row { display: grid; grid-template-columns: 110px 1fr 60px; align-items: center; gap: 12px; margin-bottom: 7px; }
+  .bar-row .city-label { font-size: 12px; color: var(--text); }
+  .bar-track { height: 22px; background: rgba(255,255,255,0.04); border-radius: 4px; position: relative; overflow: visible; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .bar-row .bar-value { font-size: 12px; color: var(--text-dim); text-align: right; font-variant-numeric: tabular-nums; }
+  .reference-line { position: absolute; top: -3px; bottom: -3px; width: 2px; background: rgba(255,255,255,0.4); border-radius: 1px; pointer-events: none; }
+  .reference-line::before { content: attr(data-label); position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-dim); white-space: nowrap; }
+  .compare-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; max-width: 900px; }
+  .city-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .city-card .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .city-card h3 { font-size: 14px; font-weight: 600; }
+  .tier { font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .tier-safest { background: #10b98133; color: #10b981; }
+  .tier-very-safe { background: #3b82f633; color: #3b82f6; }
+  .tier-moderate { background: #f59e0b33; color: #f59e0b; }
+  .city-card p { font-size: 12px; color: var(--text-dim); line-height: 1.55; }
+  .compare-context { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 16px; margin-bottom: 28px; max-width: 720px; }
+  .compare-context strong { color: var(--text); }
+  .compare-context p { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .leaflet-popup-content-wrapper { background: var(--panel); color: var(--text); border-radius: 8px; border: 1px solid var(--border); }
+  .leaflet-popup-tip { background: var(--panel); }
+  .leaflet-popup-content { margin: 14px 16px; font-size: 13px; line-height: 1.5; min-width: 220px; }
+  .leaflet-popup-close-button { color: var(--text-dim) !important; }
+  .popup-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .popup-borough { color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .popup-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; }
+  .popup-desc { color: var(--text); font-size: 12px; line-height: 1.5; }
+  .footnote { font-size: 11px; color: var(--text-dim); margin-top: 14px; line-height: 1.5; }
+  .legend-meta { font-size: 11px; color: var(--text-dim); margin-top: 10px; line-height: 1.4; }
+  .tourist-pin { background: transparent; border: none; }
+  .tourist-pin svg { display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4)); }
+  #compare-view {
+    display: none;
+    position: absolute;
+    top: 0; left: 320px; right: 0; bottom: 0;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 36px 48px 48px;
+    z-index: 5;
+  }
+  body.compare-mode #compare-view { display: block; }
+  body.compare-mode #map { visibility: hidden; }
+  body.compare-mode #sidebar h2,
+  body.compare-mode .view-toggle,
+  body.compare-mode .filter,
+  body.compare-mode .stats,
+  body.compare-mode .actions,
+  body.compare-mode .footnote,
+  body.compare-mode .legend-meta { display: none !important; }
+  @media (max-width: 768px) {
+    #compare-view { left: 0; top: 45vh; padding: 24px; }
+  }
+  .compare-header { max-width: 920px; margin: 0 auto 32px; }
+  .compare-header h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .compare-header p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .compare-chart { max-width: 920px; margin: 0 auto 28px; padding: 20px 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+  .chart-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.005em; }
+  .chart-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; margin-bottom: 16px; }
+  .chart-row { display: grid; grid-template-columns: 92px 1fr 56px; align-items: center; gap: 14px; padding: 5px 0; font-size: 13px; }
+  .chart-row .city-name { font-weight: 500; color: var(--text); }
+  .chart-row.highlight .city-name { color: var(--accent); }
+  .bar-container { height: 22px; background: rgba(255,255,255,0.04); border-radius: 4px; overflow: hidden; }
+  .bar { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .chart-row .value { font-size: 12px; color: var(--text-dim); text-align: right; font-variant-numeric: tabular-nums; }
+  .compare-takeaways { max-width: 920px; margin: 32px auto; padding: 24px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+  .compare-takeaways h2 { font-size: 14px; font-weight: 600; margin-bottom: 12px; text-transform: none; letter-spacing: 0; color: var(--text); }
+  .compare-takeaways ul { list-style: none; padding: 0; }
+  .compare-takeaways li { font-size: 13px; line-height: 1.6; padding: 8px 0; color: var(--text); border-top: 1px solid var(--border); }
+  .compare-takeaways li:first-child { border-top: none; }
+  .compare-takeaways li strong { color: var(--accent); font-weight: 600; }
+  @media print { #sidebar { display: none; } #app { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="city-tabs">
+      <button class="city-tab active" data-city="london">London</button>
+      <button class="city-tab" data-city="paris">Paris</button>
+      <button class="city-tab" data-city="rome">Rome</button>
+      <button class="city-tab" data-city="florence">Florence</button>
+      <button class="city-tab" data-city="venice">Venice</button>
+      <button class="city-tab" data-city="siena">Siena</button>
+      <button class="city-tab" data-city="hongkong">HK</button>
+      <button class="city-tab" data-city="compare">Compare</button>
+    </div>
+    <div id="city-controls">
+    <h1 id="city-name">London</h1>
+    <div class="subtitle" id="city-subtitle"></div>
+
+    <h2>Crime types</h2>
+    <label class="filter"><input type="checkbox" data-type="violent" checked><span class="dot" style="background:var(--red)"></span><span class="label">Violent crime zones</span><span class="count" id="count-violent"></span></label>
+    <label class="filter"><input type="checkbox" data-type="robbery" checked><span class="dot" style="background:var(--orange)"></span><span class="label">Robbery / phone snatch</span><span class="count" id="count-robbery"></span></label>
+    <label class="filter"><input type="checkbox" data-type="theft" checked><span class="dot" style="background:var(--blue)"></span><span class="label">Pickpocketing / theft</span><span class="count" id="count-theft"></span></label>
+    <label class="filter"><input type="checkbox" data-type="nightlife" checked><span class="dot" style="background:var(--yellow)"></span><span class="label">Nightlife disorder</span><span class="count" id="count-nightlife"></span></label>
+
+    <h2>Layers</h2>
+    <label class="filter"><input type="checkbox" id="show-attractions" checked><span class="dot" style="background:var(--purple)"></span><span class="label">Tourist attractions</span><span class="count" id="count-attractions"></span></label>
+
+    <div class="stats" id="stats-panel"></div>
+
+    <h2>Export current city</h2>
+    <div class="actions">
+      <button onclick="exportJSON()">Download JSON</button>
+      <button class="secondary" onclick="exportCSV()">Download CSV</button>
+      <button class="secondary" onclick="window.print()">Print map</button>
+    </div>
+
+    <div class="footnote" id="footnote"></div>
+    <div class="legend-meta" id="legend-meta"></div>
+    </div>
+    <div id="compare-info" style="display:none;">
+      <h1>Comparison</h1>
+      <div class="subtitle">Crime rates across all 7 cities, normalized where possible.</div>
+      <h2>Reading the charts</h2>
+      <div class="legend-meta"><strong>Homicide rate</strong> is the most objective comparison — per-capita per year. The white reference line is the US average for context.</div>
+      <div class="legend-meta" style="margin-top:8px;"><strong>Pickpocket density</strong> and <strong>scam intensity</strong> are subjective 1–10 scales based on Met/Polizia/Préfecture reporting and tourist incident data.</div>
+      <h2>Tier colours</h2>
+      <div class="legend-meta"><span class="tier tier-safest">Safest</span> Negligible crime risk for tourists.</div>
+      <div class="legend-meta" style="margin-top:6px;"><span class="tier tier-very-safe">Very safe</span> Petty theft only; almost no violent risk.</div>
+      <div class="legend-meta" style="margin-top:6px;"><span class="tier tier-moderate">Moderate</span> Real risks but geographically concentrated and avoidable.</div>
+    </div>
+  </aside>
+  <div id="map"></div>
+  <div id="compare-view" style="display:none;">
+    <h1>Comparison: 7 Cities</h1>
+    <div class="compare-subtitle">Crime rates and tourist risk levels across all mapped cities. Homicide rate is per-capita per year (most objective metric); other metrics are subjective 1–10 scales calibrated to Met / Polizia / Préfecture / HK Police reporting.</div>
+    <div class="compare-context"><p><strong>Context:</strong> US national average homicide rate is ~4.0 per 100k. Western European average is ~1.0. World average is ~5.6. The seven cities here range from 0.1 (Siena, Venice) to 1.2 (London) — all of them sit at or below the Western European average.</p></div>
+    <div id="compare-charts"></div>
+    <h2 style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text); margin-bottom:14px; margin-top:8px;">Per-city verdict</h2>
+    <div id="compare-cards-container"></div>
+  </div>
+</div>
+
+<script>
+const cities = {
+  london: {
+    name: "London",
+    subtitle: "Where crime concentrates · Met data, late 2025",
+    center: [51.5074, -0.1100],
+    zoom: 11,
+    stats: [["Highest-crime borough", "Westminster"], ["Highest violent rate", "Croydon"], ["Trend (2025)", "Homicides ↓ 16% YoY"]],
+    footnote: "Met Police MOPAC bulletins (Nov 2025), ONS data to Dec 2024.",
+    legend: "Red zones = elevated violent crime areas. Tourists rarely have reason to enter any of them. Everywhere else (~95% of London) is fine.",
+    hotspots: [
+      { name: "Croydon Town Centre", borough: "Croydon", type: "violent", lat: 51.3762, lng: -0.0982, desc: "Highest violent crime rate in London. Concentrates around West Croydon, Whitgift Centre, Surrey Street." },
+      { name: "Brixton (Coldharbour Lane)", borough: "Lambeth", type: "violent", lat: 51.4613, lng: -0.1156, desc: "Active especially evening/night. Brixton tube area is well-policed; the lane and surrounding streets less so." },
+      { name: "Tottenham High Road", borough: "Haringey", type: "violent", lat: 51.5825, lng: -0.0750, desc: "Robbery and violent offences along the High Road. Long-standing gang dynamics." },
+      { name: "Stratford perimeter", borough: "Newham", type: "violent", lat: 51.5416, lng: -0.0035, desc: "Westfield itself well-policed; violence concentrates in surrounding streets toward Maryland and West Ham." },
+      { name: "Peckham (Rye Lane)", borough: "Southwark", type: "violent", lat: 51.4742, lng: -0.0697, desc: "Gentrifying but knife crime persists. Overlap with phone-snatch hotspots." },
+      { name: "Old Kent Road", borough: "Southwark", type: "violent", lat: 51.4856, lng: -0.0695, desc: "Persistent violent crime, especially around bus routes between Bricklayer's Arms and New Cross." },
+      { name: "Whitechapel", borough: "Tower Hamlets", type: "violent", lat: 51.5189, lng: -0.0610, desc: "Whitechapel Road sees robbery and assault, plus high burglary in surrounding estates." },
+      { name: "Deptford / New Cross", borough: "Lewisham", type: "violent", lat: 51.4767, lng: -0.0370, desc: "Deptford High Street and around New Cross station. Knife crime active evening hours." },
+      { name: "Harlesden", borough: "Brent", type: "violent", lat: 51.5364, lng: -0.2535, desc: "Long-standing hotspot in north-west London. High Street and surrounding streets." },
+      { name: "Edmonton Green", borough: "Enfield", type: "violent", lat: 51.6249, lng: -0.0689, desc: "Outer-North hotspot. Knife-enabled robbery and youth violence around the shopping centre." },
+      { name: "Mayfair / Bond Street", borough: "Westminster", type: "robbery", lat: 51.5145, lng: -0.1469, desc: "Moped/e-bike phone snatching epicentre. Targets visible iPhones and designer bags." },
+      { name: "Soho / Wardour Street", borough: "Westminster", type: "robbery", lat: 51.5132, lng: -0.1349, desc: "Phone snatching during evening crowds. Watches and bags also targeted." },
+      { name: "Shoreditch (Old St)", borough: "Hackney", type: "robbery", lat: 51.5219, lng: -0.0790, desc: "Phone snatching at peak times — bar queues, taxi waits. Moped riders work the Old Street roundabout." },
+      { name: "South Bank / Waterloo", borough: "Lambeth", type: "robbery", lat: 51.5050, lng: -0.1170, desc: "Phone-snatch and pickpocket activity, especially around the Eye and Royal Festival Hall." },
+      { name: "Stratford station", borough: "Newham", type: "robbery", lat: 51.5416, lng: -0.0035, desc: "High-volume transport hub. Phone snatch and bag theft especially at commute peaks." },
+      { name: "Oxford Circus", borough: "Westminster", type: "theft", lat: 51.5152, lng: -0.1418, desc: "Highest-volume theft area in London. Pickpocketing, phone snatch, and shoplifting." },
+      { name: "Leicester Sq / Piccadilly", borough: "Westminster", type: "theft", lat: 51.5113, lng: -0.1281, desc: "Tourist-saturation pickpocket zone. Crowds, phones out, distraction tactics." },
+      { name: "Covent Garden", borough: "Westminster", type: "theft", lat: 51.5117, lng: -0.1240, desc: "Distraction-based pickpocketing around the Piazza, performer crowds, restaurant terraces." },
+      { name: "Camden Town", borough: "Camden", type: "theft", lat: 51.5390, lng: -0.1426, desc: "23,000+ thefts last year. Market crowds, plus drug-related anti-social behaviour around the lock." },
+      { name: "King's Cross / St Pancras", borough: "Camden", type: "theft", lat: 51.5308, lng: -0.1238, desc: "Major transport hub theft. Bag theft on station concourses." },
+      { name: "Liverpool Street", borough: "City of London", type: "theft", lat: 51.5179, lng: -0.0815, desc: "Commuter-hour pickpocketing, plus active around the City fringe with Shoreditch nightlife crowd." },
+      { name: "Brick Lane / Spitalfields", borough: "Tower Hamlets", type: "theft", lat: 51.5219, lng: -0.0721, desc: "Sunday market crowds and weekend nightlife. Phone snatch active on the Lane itself." },
+      { name: "Clapham High Street", borough: "Lambeth", type: "nightlife", lat: 51.4644, lng: -0.1387, desc: "Friday/Saturday late-night disorder, alcohol-fuelled assaults, occasional knife incidents." },
+      { name: "Upper Street, Islington", borough: "Islington", type: "nightlife", lat: 51.5407, lng: -0.1031, desc: "Late-licence bar strip. Violent incidents spike after midnight, mostly drunk altercations." }
+    ],
+    dangerZones: [
+      { name: "Croydon Town Centre", desc: "Highest violent crime rate in London. Outer-South borough. No tourist reason to be here.", polygon: [[51.385, -0.111], [51.383, -0.097], [51.380, -0.087], [51.376, -0.087], [51.370, -0.090], [51.366, -0.097], [51.367, -0.107], [51.373, -0.112]] },
+      { name: "Brixton / Loughborough Junction", desc: "South London violent crime cluster along Coldharbour Lane. Tourist Brixton (market, Electric Avenue) is fine in daytime; the surrounding lanes get rough at night.", polygon: [[51.469, -0.103], [51.467, -0.095], [51.462, -0.092], [51.459, -0.105], [51.460, -0.118], [51.464, -0.118], [51.467, -0.110]] },
+      { name: "Peckham / Old Kent Road", desc: "Persistent knife crime corridor running NW-SE. Gentrifying in parts but real violent crime concentration.", polygon: [[51.494, -0.080], [51.488, -0.068], [51.482, -0.055], [51.476, -0.055], [51.467, -0.060], [51.466, -0.072], [51.470, -0.078], [51.480, -0.080], [51.488, -0.082]] },
+      { name: "Lewisham / New Cross / Deptford", desc: "South-East violent crime cluster forming a rough triangle. Near Elizabeth Line stops but still rough.", polygon: [[51.481, -0.027], [51.477, -0.034], [51.475, -0.042], [51.466, -0.018], [51.461, -0.012], [51.464, -0.005], [51.475, -0.018]] },
+      { name: "Tottenham / Wood Green", desc: "North London violent crime corridor along the High Road from Wood Green to Seven Sisters.", polygon: [[51.605, -0.110], [51.598, -0.090], [51.595, -0.072], [51.580, -0.067], [51.575, -0.072], [51.578, -0.090], [51.585, -0.105], [51.600, -0.115]] },
+      { name: "Edmonton Green", desc: "Outer-North hotspot. Estates around the shopping centre.", polygon: [[51.629, -0.075], [51.626, -0.062], [51.620, -0.060], [51.616, -0.065], [51.617, -0.075], [51.624, -0.080]] },
+      { name: "Newham strip (Stratford east)", desc: "Westfield itself is fine; the strip running east through Forest Gate and Plaistow concentrates violent crime.", polygon: [[51.553, -0.005], [51.553, 0.040], [51.535, 0.045], [51.535, 0.020], [51.540, 0.005], [51.545, -0.005]] },
+      { name: "Whitechapel / Bethnal Green", desc: "East London inner zone. Knife and robbery clusters in surrounding estates.", polygon: [[51.532, -0.075], [51.530, -0.055], [51.520, -0.050], [51.515, -0.058], [51.518, -0.072], [51.525, -0.078]] },
+      { name: "Dalston / Hackney (Kingsland Rd)", desc: "Mixed area — Kingsland Road has both cool nightlife and persistent knife crime.", polygon: [[51.555, -0.080], [51.554, -0.072], [51.546, -0.072], [51.541, -0.075], [51.541, -0.082], [51.548, -0.080]] },
+      { name: "Harlesden / Stonebridge", desc: "North-west London hotspot. Estate-concentrated violent crime.", polygon: [[51.555, -0.285], [51.548, -0.250], [51.535, -0.250], [51.530, -0.265], [51.535, -0.285], [51.548, -0.290]] }
+    ],
+    attractions: [
+      { name: "Tower of London", desc: "1,000-year-old fortress, Crown Jewels, Beefeaters", lat: 51.5081, lng: -0.0759 },
+      { name: "Tower Bridge", desc: "Victorian bascule bridge with glass-floor walkway", lat: 51.5055, lng: -0.0754 },
+      { name: "The Shard", desc: "Western Europe's tallest building; viewing platform on floor 72", lat: 51.5045, lng: -0.0865 },
+      { name: "Borough Market", desc: "1,000-year-old food market under London Bridge", lat: 51.5052, lng: -0.0907 },
+      { name: "Tate Modern", desc: "Free modern art in the former Bankside power station", lat: 51.5076, lng: -0.0994 },
+      { name: "Shakespeare's Globe", desc: "Reconstructed Elizabethan theatre on the South Bank", lat: 51.5081, lng: -0.0972 },
+      { name: "St. Paul's Cathedral", desc: "Wren's masterpiece; climb to the Whispering Gallery", lat: 51.5138, lng: -0.0984 },
+      { name: "Sky Garden (20 Fenchurch)", desc: "Free public garden + observation deck; advance booking required", lat: 51.5111, lng: -0.0838 },
+      { name: "Imperial War Museum", desc: "Free; comprehensive 20th-century conflict history", lat: 51.4960, lng: -0.1085 },
+      { name: "London Eye", desc: "135m observation wheel; 30-minute rotation", lat: 51.5033, lng: -0.1196 },
+      { name: "Westminster Abbey", desc: "1,000-year coronation church; Poets' Corner", lat: 51.4994, lng: -0.1273 },
+      { name: "Big Ben / Houses of Parliament", desc: "Gothic Revival seat of UK government", lat: 51.4995, lng: -0.1248 },
+      { name: "Churchill War Rooms", desc: "Underground WWII command bunker with original equipment", lat: 51.5022, lng: -0.1290 },
+      { name: "Tate Britain", desc: "500 years of British art; Turner collection", lat: 51.4912, lng: -0.1276 },
+      { name: "Buckingham Palace", desc: "Royal residence; summer State Rooms tours", lat: 51.5014, lng: -0.1419 },
+      { name: "St James's Park", desc: "17th-century royal park; pelicans, palace views", lat: 51.5025, lng: -0.1336 },
+      { name: "Trafalgar Square", desc: "Nelson's Column, fountains, central rallying point", lat: 51.5080, lng: -0.1281 },
+      { name: "National Gallery", desc: "Free; world-class European painting collection", lat: 51.5089, lng: -0.1283 },
+      { name: "National Portrait Gallery", desc: "Free; faces of British history", lat: 51.5093, lng: -0.1280 },
+      { name: "Piccadilly Circus", desc: "Bright lights, statue of Eros, theatre district hub", lat: 51.5101, lng: -0.1340 },
+      { name: "Covent Garden", desc: "Market hall, street performers, Royal Opera House", lat: 51.5119, lng: -0.1226 },
+      { name: "British Museum", desc: "Free; Rosetta Stone, Parthenon Marbles, world treasures", lat: 51.5194, lng: -0.1270 },
+      { name: "Camden Market", desc: "Alternative market; food stalls along Regent's Canal", lat: 51.5414, lng: -0.1462 },
+      { name: "Regent's Park", desc: "Nash-designed park; London Zoo, Open Air Theatre", lat: 51.5313, lng: -0.1571 },
+      { name: "Hyde Park", desc: "Largest royal park; Speakers' Corner, Serpentine Lake", lat: 51.5074, lng: -0.1657 },
+      { name: "Kensington Palace", desc: "Diana's former home; royal residence and exhibits", lat: 51.5050, lng: -0.1877 },
+      { name: "V&A Museum", desc: "Free; world's leading art and design museum", lat: 51.4966, lng: -0.1722 },
+      { name: "Natural History Museum", desc: "Free; dinosaurs, blue whale, mineral hall", lat: 51.4967, lng: -0.1764 },
+      { name: "Science Museum", desc: "Free; interactive science and tech exhibits, IMAX", lat: 51.4978, lng: -0.1745 },
+      { name: "Royal Albert Hall", desc: "Victorian concert hall; home of the Proms", lat: 51.5009, lng: -0.1773 },
+      { name: "Notting Hill / Portobello Road", desc: "Antiques market, pastel townhouses; Saturday is best", lat: 51.5158, lng: -0.2059 },
+      { name: "Hampstead Heath", desc: "320 hectares of parkland; ponds, Parliament Hill view", lat: 51.5604, lng: -0.1623 },
+      { name: "Greenwich (Royal Observatory)", desc: "Prime Meridian; maritime museum and Cutty Sark nearby", lat: 51.4769, lng: 0.0005 },
+      { name: "Kew Gardens (~10 km W)", desc: "UNESCO botanical gardens; Victorian glasshouses", lat: 51.4787, lng: -0.2956 }
+    ]
+  },
+  paris: {
+    name: "Paris",
+    subtitle: "Petty crime is rampant in tourist Paris · Préfecture de Police data, 2025",
+    center: [48.8567, 2.3122],
+    zoom: 12,
+    stats: [["Most-pickpocketed line", "Métro 1"], ["Highest violent rate", "18th / 19th arr."], ["Worst scam zone", "Sacré-Cœur / Montmartre"]],
+    footnote: "Préfecture de Police de Paris stats, French interior ministry data, RATP transport reports.",
+    legend: "The danger zone is concentrated in the north-east corner (18e/19e). Central Paris and the entire Left Bank are statistically safe — petty theft is the only real concern there.",
+    hotspots: [
+      { name: "Eiffel Tower / Champ de Mars", borough: "7e", type: "theft", lat: 48.8584, lng: 2.2945, desc: "Pickpocket epicentre. Petitions, bracelet scams, distraction crews. Don't sign anything." },
+      { name: "Trocadéro", borough: "16e", type: "theft", lat: 48.8629, lng: 2.2877, desc: "Open square, high pickpocket density. Phone snatchers on e-scooters work the viewpoint." },
+      { name: "Sacré-Cœur / Montmartre", borough: "18e", type: "theft", lat: 48.8867, lng: 2.3431, desc: "Worst scam zone in Paris. Friendship bracelet hustlers at the steps. Pickpockets in dense alleys around Place du Tertre." },
+      { name: "Champs-Élysées", borough: "8e", type: "theft", lat: 48.8698, lng: 2.3079, desc: "High-volume pickpocketing. Distraction-based teams work flagship store queues and tourist photo spots." },
+      { name: "Louvre / Tuileries", borough: "1er", type: "theft", lat: 48.8606, lng: 2.3376, desc: "Inside the Louvre is heavily monitored; the gardens, Pyramide queue, and Métro are pickpocket-active." },
+      { name: "Métro Line 1", borough: "Various", type: "theft", lat: 48.8635, lng: 2.3275, desc: "Most-targeted Métro line. Concorde, Tuileries, Châtelet, Hôtel de Ville, Bastille — full carriages are the work environment." },
+      { name: "Châtelet-Les Halles", borough: "1er", type: "theft", lat: 48.8619, lng: 2.3471, desc: "Largest underground transit hub in Europe = pickpocket goldmine, especially at RER interchanges." },
+      { name: "Galeries Lafayette / Opéra", borough: "9e", type: "theft", lat: 48.8730, lng: 2.3320, desc: "Department store crowds, Métro hub. Active around Chaussée d'Antin and the rooftop queues." },
+      { name: "Gare du Nord", borough: "10e", type: "robbery", lat: 48.8809, lng: 2.3553, desc: "Major pickpocket and phone-snatch hub. Eurostar arrivals especially targeted. Outside the station gets sketchier at night." },
+      { name: "Strasbourg-Saint-Denis", borough: "10e", type: "robbery", lat: 48.8694, lng: 2.3543, desc: "Phone snatching, street-level robbery especially at night." },
+      { name: "Barbès-Rochechouart", borough: "18e", type: "violent", lat: 48.8838, lng: 2.3493, desc: "Long-standing problem area. Robbery, drug dealing, periodic violent incidents." },
+      { name: "La Goutte d'Or", borough: "18e", type: "violent", lat: 48.8862, lng: 2.3530, desc: "Concentrated drug economy and violent incidents. Tourists rarely have reason to be here." },
+      { name: "Stalingrad / 'Crack Hill'", borough: "19e", type: "violent", lat: 48.8845, lng: 2.3700, desc: "Open-air crack market notorious across Europe. Periodic relocation hasn't fixed it." },
+      { name: "Porte de la Chapelle", borough: "18e", type: "violent", lat: 48.8979, lng: 2.3590, desc: "Drug-related violence. Improved with the 2024 Olympics push but still rough." },
+      { name: "Belleville", borough: "20e", type: "violent", lat: 48.8721, lng: 2.3768, desc: "Mixed picture — gentrifying, lots of legitimate nightlife, but pockets of violent crime after dark." },
+      { name: "Pigalle", borough: "9e", type: "nightlife", lat: 48.8819, lng: 2.3373, desc: "Touristic red-light area. Tourist scams (overpriced clubs, drink-spiking). Improved markedly over the last decade." },
+      { name: "Bastille", borough: "11e", type: "nightlife", lat: 48.8532, lng: 2.3692, desc: "Major bar strip. Late-night disorder, alcohol-related fights, occasional phone snatching at closing time." },
+      { name: "Place de la République", borough: "11e", type: "nightlife", lat: 48.8676, lng: 2.3635, desc: "Big public square that gets edgy after midnight." }
+    ],
+    dangerZones: [
+      { name: "North-East Quadrant (18e/19e)", desc: "The Paris danger triangle. Includes Barbès, La Goutte d'Or, Stalingrad/'Crack Hill', Porte de la Chapelle, La Villette. Open-air drug economy, periodic violent incidents. Sacré-Cœur sits inside the western edge — daytime is fine, just walk south afterward.", polygon: [[48.905, 2.348], [48.900, 2.380], [48.890, 2.395], [48.880, 2.380], [48.876, 2.358], [48.880, 2.345], [48.890, 2.343], [48.898, 2.345]] },
+      { name: "Belleville (20e)", desc: "Mixed area — fashionable gentrification meets persistent violent crime pockets. Fine in daytime; cautious at night.", polygon: [[48.880, 2.378], [48.876, 2.388], [48.866, 2.385], [48.866, 2.375], [48.873, 2.372]] },
+      { name: "Strasbourg-Saint-Denis corridor", desc: "Improving but still rough at night. The corridor between Gare du Nord and the Marais along Rue Saint-Denis.", polygon: [[48.875, 2.350], [48.875, 2.358], [48.866, 2.360], [48.866, 2.350]] }
+    ],
+    attractions: [
+      { name: "Eiffel Tower", desc: "330m wrought iron icon; three observation levels", lat: 48.8584, lng: 2.2945 },
+      { name: "Arc de Triomphe", desc: "Napoleon's monumental arch; Tomb of the Unknown Soldier", lat: 48.8738, lng: 2.2950 },
+      { name: "Champs-Élysées", desc: "2km grand avenue from Concorde to Étoile", lat: 48.8698, lng: 2.3079 },
+      { name: "Place de la Concorde", desc: "Paris's largest square; Egyptian obelisk centrepiece", lat: 48.8656, lng: 2.3211 },
+      { name: "Louvre", desc: "World's largest museum; Mona Lisa, Venus de Milo", lat: 48.8606, lng: 2.3376 },
+      { name: "Orsay Museum", desc: "Impressionist masterpieces in former railway station", lat: 48.8600, lng: 2.3266 },
+      { name: "Musée de l'Orangerie", desc: "Monet's Water Lilies in two oval rooms", lat: 48.8638, lng: 2.3226 },
+      { name: "Hôtel des Invalides (Napoleon's tomb)", desc: "Military complex with gilded dome and Napoleon's sarcophagus", lat: 48.8566, lng: 2.3128 },
+      { name: "Musée Rodin", desc: "Sculpture museum in Rodin's former mansion + garden", lat: 48.8553, lng: 2.3158 },
+      { name: "Galeries Lafayette Haussmann", desc: "Belle Époque department store; stained-glass dome, rooftop view", lat: 48.8731, lng: 2.3322 },
+      { name: "Printemps Haussmann", desc: "Sister department store with rooftop terrace café", lat: 48.8743, lng: 2.3287 },
+      { name: "Palais Garnier", desc: "Opulent 19th-century opera house; Phantom inspiration", lat: 48.8720, lng: 2.3316 },
+      { name: "Sacré-Cœur / Montmartre", desc: "White basilica atop Paris's highest hill (inside the danger zone — daytime only, walk south back)", lat: 48.8867, lng: 2.3431 },
+      { name: "Moulin Rouge", desc: "1889 cabaret; can-can birthplace", lat: 48.8841, lng: 2.3324 },
+      { name: "Notre-Dame Cathedral", desc: "850-year-old Gothic cathedral; reopened post-2019 restoration", lat: 48.8530, lng: 2.3499 },
+      { name: "Sainte-Chapelle", desc: "13th-century stained-glass jewel-box chapel", lat: 48.8554, lng: 2.3450 },
+      { name: "Centre Pompidou", desc: "Inside-out modern art museum; panoramic views", lat: 48.8606, lng: 2.3522 },
+      { name: "Place des Vosges (Marais)", desc: "Paris's oldest planned square (1612); arcaded townhouses", lat: 48.8554, lng: 2.3656 },
+      { name: "Musée Picasso", desc: "5,000+ Picasso works in 17th-century Marais mansion", lat: 48.8597, lng: 2.3625 },
+      { name: "Latin Quarter / Bd St-Michel", desc: "Student district; narrow streets, cafés, Sorbonne", lat: 48.8511, lng: 2.3438 },
+      { name: "Panthéon", desc: "Neoclassical mausoleum; Foucault's pendulum, Voltaire's tomb", lat: 48.8463, lng: 2.3461 },
+      { name: "Luxembourg Gardens", desc: "17th-century formal gardens; palace, sailboat pond", lat: 48.8462, lng: 2.3372 },
+      { name: "Catacombs", desc: "2km underground ossuary; 6 million skeletons", lat: 48.8338, lng: 2.3324 },
+      { name: "Père Lachaise Cemetery", desc: "Jim Morrison, Wilde, Chopin, Piaf among 70,000 tombs", lat: 48.8615, lng: 2.3927 },
+      { name: "Versailles (~17 km SW)", desc: "Louis XIV's palace; Hall of Mirrors, formal gardens", lat: 48.8049, lng: 2.1204 }
+    ]
+  },
+  rome: {
+    name: "Rome",
+    subtitle: "Pickpocket capital of Western Europe · Polizia Locale data, 2025",
+    center: [41.9028, 12.4964],
+    zoom: 13,
+    stats: [["Pickpocket epicentre", "Termini / Bus 64"], ["Tourist scam density", "Highest in Europe"], ["Violent crime", "Far suburbs only"]],
+    footnote: "Polizia Locale Roma Capitale, Italian interior ministry stats.",
+    legend: "Rome inverts the usual pattern: violent crime is far from tourists (Tor Bella Monaca, San Basilio — both off-screen at this zoom). The historic centre has zero violent crime risk and maximum pickpocket risk.",
+    hotspots: [
+      { name: "Termini Station", borough: "Esquilino", type: "theft", lat: 41.9009, lng: 12.5018, desc: "Biggest pickpocket hub in Italy. Multiple organised rings. Watch for distraction crews." },
+      { name: "Bus 64 (Termini–Vatican)", borough: "Various", type: "theft", lat: 41.8985, lng: 12.4825, desc: "The most notorious pickpocket bus in Europe. Don't carry anything you can't lose." },
+      { name: "Bus 40 (Express to Vatican)", borough: "Various", type: "theft", lat: 41.8975, lng: 12.4795, desc: "Alternative express route, same problem." },
+      { name: "Colosseum / Forum", borough: "Centro", type: "theft", lat: 41.8902, lng: 12.4922, desc: "Distraction scams, fake centurions demanding money for photos, ticket scalpers, pickpockets in queues." },
+      { name: "Trevi Fountain", borough: "Centro", type: "theft", lat: 41.9009, lng: 12.4833, desc: "Crowds + phones out for photos = ideal conditions. Bag dippers work the perimeter." },
+      { name: "Spanish Steps", borough: "Centro", type: "theft", lat: 41.9059, lng: 12.4823, desc: "Rose-pushers and bracelet scammers at the base. Pickpockets work the Via Condotti shopping crowds." },
+      { name: "Vatican / St Peter's", borough: "Vaticano", type: "theft", lat: 41.9022, lng: 12.4574, desc: "Via della Conciliazione approach is heavily worked. The Metro Ottaviano is a key hotspot." },
+      { name: "Pantheon", borough: "Centro", type: "theft", lat: 41.8986, lng: 12.4769, desc: "Tight crowds, narrow approach streets. Café terraces around the piazza see phone-on-table snatching." },
+      { name: "Piazza Navona", borough: "Centro", type: "theft", lat: 41.8992, lng: 12.4731, desc: "Tourist saturation. Distraction scammers (petitions, bracelets) plus pickpockets in fountain crowds." },
+      { name: "Campo de' Fiori", borough: "Centro", type: "theft", lat: 41.8957, lng: 12.4722, desc: "Daytime market crowds, evening drinker crowds. Phone-on-table snatching from bars." },
+      { name: "Esquilino at night", borough: "Esquilino", type: "violent", lat: 41.8946, lng: 12.5057, desc: "Drug-related issues after dark. Daytime fine; surrounding streets get rough at night." },
+      { name: "San Basilio (eastern fringe)", borough: "San Basilio", type: "violent", lat: 41.9404, lng: 12.5747, desc: "Drug-economy violent crime. Tourists never go here." },
+      { name: "Tor Bella Monaca", borough: "Suburbs", type: "violent", lat: 41.8651, lng: 12.6248, desc: "Far-eastern suburb with active drug trade. 12+ km from centre, no tourist reason to be there." },
+      { name: "Trastevere", borough: "Trastevere", type: "nightlife", lat: 41.8893, lng: 12.4699, desc: "Rome's main nightlife area. Generally very safe; occasional alcohol-related incidents late." },
+      { name: "San Lorenzo", borough: "San Lorenzo", type: "nightlife", lat: 41.9005, lng: 12.5197, desc: "Student/alternative nightlife. Edgier feel than Trastevere but largely safe." },
+      { name: "Testaccio", borough: "Testaccio", type: "nightlife", lat: 41.8786, lng: 12.4760, desc: "Club district. Late-night alcohol issues but very low actual violence." }
+    ],
+    dangerZones: [
+      { name: "Tor Bella Monaca", desc: "Far-eastern suburb with active drug economy. ~12 km from city centre — tourists have zero reason to come here.", polygon: [[41.875, 12.612], [41.872, 12.642], [41.860, 12.645], [41.855, 12.625], [41.860, 12.612]] },
+      { name: "San Basilio", desc: "North-east periphery. Drug-related crime, gang dynamics. Off the tourist map entirely.", polygon: [[41.948, 12.567], [41.945, 12.586], [41.937, 12.585], [41.935, 12.572]] },
+      { name: "Esquilino (after dark)", desc: "Immediate area south of Termini. Drug-related issues at night. Daytime totally fine — the National Roman Museum is right here.", polygon: [[41.901, 12.500], [41.899, 12.510], [41.895, 12.516], [41.890, 12.512], [41.892, 12.502]] }
+    ],
+    attractions: [
+      { name: "Pantheon", desc: "2,000-year-old temple; world's largest unreinforced concrete dome", lat: 41.8986, lng: 12.4769 },
+      { name: "Piazza Navona", desc: "Baroque square; Bernini's Four Rivers fountain", lat: 41.8992, lng: 12.4731 },
+      { name: "Campo de' Fiori", desc: "Lively daytime market square; evening drinks scene", lat: 41.8957, lng: 12.4722 },
+      { name: "Trevi Fountain", desc: "Baroque masterpiece; traditional coin-toss spot", lat: 41.9009, lng: 12.4833 },
+      { name: "Spanish Steps", desc: "18th-century stairway between Piazza di Spagna and Trinità dei Monti", lat: 41.9059, lng: 12.4823 },
+      { name: "Piazza del Popolo", desc: "Grand piazza; twin Baroque churches, Egyptian obelisk", lat: 41.9109, lng: 12.4768 },
+      { name: "Colosseum", desc: "80 AD amphitheatre; Rome's defining icon", lat: 41.8902, lng: 12.4922 },
+      { name: "Roman Forum", desc: "Centre of ancient Roman public life; ruins", lat: 41.8925, lng: 12.4853 },
+      { name: "Palatine Hill", desc: "Mythical founding hill of Rome; imperial palace ruins", lat: 41.8893, lng: 12.4868 },
+      { name: "Capitoline Museums", desc: "World's oldest public museums; Michelangelo's piazza", lat: 41.8930, lng: 12.4830 },
+      { name: "Trajan's Forum & Markets", desc: "Ancient Roman shopping complex; multi-level ruins", lat: 41.8957, lng: 12.4861 },
+      { name: "San Pietro in Vincoli", desc: "Michelangelo's Moses; the chains of St Peter", lat: 41.8939, lng: 12.4933 },
+      { name: "Santa Maria Maggiore", desc: "5th-century papal basilica; gold mosaics", lat: 41.8975, lng: 12.4986 },
+      { name: "National Roman Museum (Palazzo Massimo)", desc: "Finest classical art and frescoes", lat: 41.9013, lng: 12.4970 },
+      { name: "Santa Maria della Vittoria", desc: "Bernini's Ecstasy of Saint Teresa", lat: 41.9051, lng: 12.4944 },
+      { name: "Borghese Gallery", desc: "Bernini sculptures, Caravaggio paintings (timed entry)", lat: 41.9142, lng: 12.4923 },
+      { name: "Villa Borghese", desc: "Sprawling park around the gallery; rentable bikes", lat: 41.9134, lng: 12.4824 },
+      { name: "Castel Sant'Angelo", desc: "Hadrian's mausoleum turned papal fortress; Tiber views", lat: 41.9032, lng: 12.4662 },
+      { name: "St. Peter's Basilica", desc: "Michelangelo's dome; Pietà; Bernini's baldachin", lat: 41.9022, lng: 12.4533 },
+      { name: "Vatican Museums", desc: "Sistine Chapel, Raphael Rooms, miles of galleries", lat: 41.9065, lng: 12.4534 },
+      { name: "Jewish Ghetto", desc: "Historic quarter; Roman-Jewish cuisine, Theatre of Marcellus", lat: 41.8923, lng: 12.4781 },
+      { name: "Bocca della Verità", desc: "Mouth of Truth carving in Santa Maria in Cosmedin", lat: 41.8884, lng: 12.4814 },
+      { name: "Aventine Keyhole", desc: "Famous secret keyhole view of St Peter's dome", lat: 41.8825, lng: 12.4794 },
+      { name: "Circus Maximus", desc: "Ancient chariot racing track; now a public field", lat: 41.8859, lng: 12.4855 },
+      { name: "Trastevere", desc: "Charming bohemian neighborhood across the Tiber", lat: 41.8893, lng: 12.4699 },
+      { name: "St. John Lateran", desc: "The Pope's actual cathedral as Bishop of Rome", lat: 41.8868, lng: 12.5053 }
+    ]
+  },
+  florence: {
+    name: "Florence",
+    subtitle: "Compact, walkable, mostly safe · Polizia Municipale data, 2025",
+    center: [43.7700, 11.2540],
+    zoom: 14,
+    stats: [["Pickpocket epicentre", "Duomo + SMN station"], ["Violent crime", "Among lowest in Italy"], ["Avoid after dark", "Cascine Park only"]],
+    footnote: "Polizia Municipale Firenze, Comune di Firenze data.",
+    legend: "Florence is genuinely safe. The only red zone worth flagging is Cascine Park after dark — perfectly fine for jogging or the Tuesday market in daylight. Everything in your itinerary sits in safe territory.",
+    hotspots: [
+      { name: "Santa Maria Novella station", borough: "Centro", type: "theft", lat: 43.7765, lng: 11.2483, desc: "Florence's main station. Pickpockets work platforms, ticket machines, and bus stops outside." },
+      { name: "Piazza del Duomo", borough: "Centro", type: "theft", lat: 43.7733, lng: 11.2558, desc: "Densest pickpocket area in Florence. Cathedral entry queues, the Baptistery doors, Campanile base." },
+      { name: "Ponte Vecchio", borough: "Centro", type: "theft", lat: 43.7679, lng: 11.2530, desc: "Bottleneck crowds + phones out for photos. Pickpockets work the bridge approaches." },
+      { name: "Piazza della Signoria / Uffizi", borough: "Centro", type: "theft", lat: 43.7696, lng: 11.2558, desc: "Uffizi queue, the Loggia dei Lanzi, the David replica all generate tight crowds." },
+      { name: "Mercato Centrale (San Lorenzo)", borough: "Centro", type: "theft", lat: 43.7766, lng: 11.2538, desc: "Indoor market plus surrounding leather stalls. Very tight crowds, distraction tactics common." },
+      { name: "Pitti Palace area", borough: "Oltrarno", type: "theft", lat: 43.7651, lng: 11.2500, desc: "Less intense than the north bank but active around the palace entrance and Piazza Pitti." },
+      { name: "Piazzale Michelangelo", borough: "Oltrarno", type: "theft", lat: 43.7629, lng: 11.2649, desc: "Sunset crowd brings phone snatchers on scooters. Walking paths quiet — stay on the main approach." },
+      { name: "Cascine Park (after dark)", borough: "West", type: "violent", lat: 43.7805, lng: 11.2308, desc: "The one part of central Florence to avoid at night. Fine during the day for jogging or the Tuesday market." },
+      { name: "Around SMN at night", borough: "Centro", type: "violent", lat: 43.7765, lng: 11.2510, desc: "Streets immediately west and north of the station get sketchy late at night. Easily avoided by routing east." },
+      { name: "Piazza Santo Spirito", borough: "Oltrarno", type: "nightlife", lat: 43.7669, lng: 11.2478, desc: "Main Oltrarno nightlife square. Generally chill but late-night disorder." },
+      { name: "San Frediano", borough: "Oltrarno", type: "nightlife", lat: 43.7678, lng: 11.2435, desc: "Bar district. Mostly safe; occasional petty incidents at closing time." }
+    ],
+    dangerZones: [
+      { name: "Cascine Park (after dark)", desc: "The only meaningful caution zone in central Florence. Drug dealing and isolated incidents at night. Daytime is entirely safe — locals jog here, Tuesday market is great. Park runs as a thin strip along the Arno.", polygon: [[43.7785, 11.2482], [43.7768, 11.2476], [43.7800, 11.2330], [43.7825, 11.2245], [43.7858, 11.2158], [43.7872, 11.2168], [43.7838, 11.2270], [43.7810, 11.2380]] },
+      { name: "SMN station rear (late night)", desc: "The few streets immediately west and north of Santa Maria Novella station get edgy after midnight. Front of the station and routes east are fine.", polygon: [[43.7790, 11.2455], [43.7790, 11.2490], [43.7760, 11.2490], [43.7760, 11.2455]] }
+    ],
+    attractions: [
+      { name: "Duomo (Cathedral)", desc: "Brunelleschi's dome; climb 463 steps to the top", lat: 43.7733, lng: 11.2558 },
+      { name: "Duomo Museum (Opera del Duomo)", desc: "Originals from cathedral; Donatello, Ghiberti's gates", lat: 43.7740, lng: 11.2575 },
+      { name: "Uffizi Gallery", desc: "Greatest Renaissance painting collection; Botticelli's Venus", lat: 43.7678, lng: 11.2553 },
+      { name: "Accademia (David)", desc: "Michelangelo's David and unfinished Prisoners", lat: 43.7766, lng: 11.2589 },
+      { name: "Pitti Palace", desc: "Medici palace; Boboli Gardens behind", lat: 43.7651, lng: 11.2500 },
+      { name: "Ponte Vecchio", desc: "14th-century bridge with hanging jewellery shops", lat: 43.7679, lng: 11.2530 },
+      { name: "Piazzale Michelangelo", desc: "Panoramic city view; classic sunset spot", lat: 43.7629, lng: 11.2649 },
+      { name: "Bargello", desc: "Donatello's David; Renaissance sculpture in former prison", lat: 43.7708, lng: 11.2585 }
+    ]
+  },
+  venice: {
+    name: "Venice",
+    subtitle: "Among Europe's safest cities for violent crime · Polizia Locale data, 2025",
+    center: [45.4408, 12.3325],
+    zoom: 13,
+    stats: [["Pickpocket epicentre", "San Marco + Rialto"], ["Violent crime", "Negligible on islands"], ["Real problem area", "Mestre (mainland)"]],
+    footnote: "Polizia Locale Venezia, Veneto regional stats.",
+    legend: "Venice the island is statistically one of the safest cities in Europe — escape routes are limited to boats, which deters violent crime entirely. Mestre (the mainland, west of the island) is a different city.",
+    hotspots: [
+      { name: "Piazza San Marco", borough: "San Marco", type: "theft", lat: 45.4341, lng: 12.3388, desc: "Biggest pickpocket density in Venice. Tour group bottlenecks, café crowds, Campanile queue." },
+      { name: "Rialto Bridge", borough: "San Polo", type: "theft", lat: 45.4380, lng: 12.3358, desc: "Iconic bottleneck. Tight crowds, phones out for photos, pickpockets work both approaches." },
+      { name: "Mercerie (San Marco–Rialto)", borough: "San Marco", type: "theft", lat: 45.4361, lng: 12.3378, desc: "Narrow shopping streets connecting the two main hotspots. Constant crowds." },
+      { name: "Strada Nova", borough: "Cannaregio", type: "theft", lat: 45.4421, lng: 12.3322, desc: "Main pedestrian artery from station to Rialto. Pickpockets work the steady tourist flow." },
+      { name: "Santa Lucia station", borough: "Cannaregio", type: "theft", lat: 45.4413, lng: 12.3209, desc: "Arrival point for most tourists = first pickpocket exposure. Active around platforms." },
+      { name: "Vaporetto Line 1", borough: "Various", type: "theft", lat: 45.4360, lng: 12.3300, desc: "Slow water bus along the Grand Canal. Functionally a pickpocket conveyor belt at peak times." },
+      { name: "Frari / San Polo", borough: "San Polo", type: "theft", lat: 45.4366, lng: 12.3265, desc: "Secondary pickpocket area around the Frari church and Scuola di San Rocco." },
+      { name: "Mestre station", borough: "Mestre", type: "robbery", lat: 45.4823, lng: 12.2336, desc: "Mainland transit hub. Drug-related issues, phone snatching." },
+      { name: "Mestre centre", borough: "Mestre", type: "violent", lat: 45.4900, lng: 12.2456, desc: "Mainland Venice has normal mid-sized Italian city crime. Around Piazza Ferretto." },
+      { name: "Cannaregio (Misericordia)", borough: "Cannaregio", type: "nightlife", lat: 45.4448, lng: 12.3322, desc: "Main island nightlife strip — fondamenta della Misericordia. Very safe overall." },
+      { name: "Campo Santa Margherita", borough: "Dorsoduro", type: "nightlife", lat: 45.4359, lng: 12.3247, desc: "Student nightlife square. Quietly busy, very safe by any measure." }
+    ],
+    dangerZones: [
+      { name: "Mestre (mainland)", desc: "Off the islands, on the mainland. Has normal Italian mid-city crime — drug-related issues around the station and Piazza Ferretto. Tourist Venice (the islands) has none of this.", polygon: [[45.495, 12.230], [45.495, 12.255], [45.488, 12.262], [45.478, 12.260], [45.475, 12.245], [45.478, 12.230]] }
+    ],
+    attractions: [
+      { name: "St. Mark's Basilica", desc: "Byzantine cathedral; golden mosaics, Pala d'Oro", lat: 45.4345, lng: 12.3398 },
+      { name: "Doge's Palace", desc: "Gothic seat of Venetian power; Bridge of Sighs", lat: 45.4337, lng: 12.3403 },
+      { name: "Rialto Bridge", desc: "16th-century stone bridge; Grand Canal market crowds", lat: 45.4380, lng: 12.3358 },
+      { name: "Frari Church", desc: "Titian's Assumption; vast Gothic friary", lat: 45.4366, lng: 12.3265 }
+    ]
+  },
+  siena: {
+    name: "Siena",
+    subtitle: "Medieval Tuscan gem · among Italy's safest cities",
+    center: [43.3188, 11.3308],
+    zoom: 16,
+    stats: [["Population", "~54,000"], ["Crime risk", "Among lowest in Italy"], ["Real concern", "Pickpockets at Il Campo (peak season)"]],
+    footnote: "Polizia Municipale di Siena, Tuscany regional stats.",
+    legend: "Siena is one of the safest cities in Italy. The historic centre is essentially crime-free. Pickpocketing concentrates at Piazza del Campo during peak tourist hours; otherwise nothing to flag.",
+    hotspots: [
+      { name: "Piazza del Campo (peak season)", borough: "Historic centre", type: "theft", lat: 43.3186, lng: 11.3320, desc: "The shell-shaped main square. Pickpocketing only during peak summer (Palio days especially). Off-season feels rural-village safe." },
+      { name: "Il Campo café terraces", borough: "Historic centre", type: "theft", lat: 43.3185, lng: 11.3324, desc: "Phone-on-table snatching from cafés ringing the Campo. Keep phones zipped." },
+      { name: "Stazione FF (Siena station)", borough: "North of centre", type: "theft", lat: 43.3261, lng: 11.3286, desc: "Train station ~1 km north of centre. Pickpocketing at peak times; deserted late at night." },
+      { name: "Around station after dark", borough: "North of centre", type: "violent", lat: 43.3252, lng: 11.3290, desc: "The only mildly sketchy spot in Siena. Drug-related issues at night around the station perimeter. Easily avoided." }
+    ],
+    dangerZones: [
+      { name: "Station perimeter (after dark)", desc: "The only minor caution zone in Siena. Drug-related issues at night near the train station. The historic centre itself, ~1 km south, is extraordinarily safe.", polygon: [[43.3275, 11.3270], [43.3275, 11.3305], [43.3245, 11.3305], [43.3245, 11.3270]] }
+    ],
+    attractions: [
+      { name: "Piazza del Campo", desc: "Shell-shaped main square; one of Europe's greatest", lat: 43.3186, lng: 11.3318 },
+      { name: "Palazzo Pubblico / Torre del Mangia", desc: "Civic museum; climb 400 steps for the best Tuscan view", lat: 43.3184, lng: 11.3322 },
+      { name: "Duomo (Siena Cathedral)", desc: "Striped marble Gothic cathedral; Pinturicchio's Piccolomini Library inside", lat: 43.3173, lng: 11.3289 },
+      { name: "Battistero di San Giovanni", desc: "Baptistery beneath the cathedral; Donatello, Ghiberti panels", lat: 43.3175, lng: 11.3286 },
+      { name: "Cripta del Duomo", desc: "Recently rediscovered crypt with 13th-century frescoes", lat: 43.3173, lng: 11.3286 },
+      { name: "Santa Maria della Scala", desc: "Former pilgrim hospital, now major museum complex", lat: 43.3175, lng: 11.3294 },
+      { name: "Pinacoteca Nazionale", desc: "Sienese painting from the 12th to 16th centuries", lat: 43.3158, lng: 11.3299 },
+      { name: "San Domenico (St. Catherine)", desc: "Gothic basilica; relics of Siena's patron saint", lat: 43.3197, lng: 11.3268 },
+      { name: "San Francesco", desc: "Franciscan basilica with Lorenzetti frescoes", lat: 43.3216, lng: 11.3343 },
+      { name: "Fortezza Medicea", desc: "16th-century fortress; now a park with sunset views", lat: 43.3216, lng: 11.3214 }
+    ]
+  },
+  hongkong: {
+    name: "Hong Kong",
+    subtitle: "One of the world's safest big cities · HK Police data, 2025",
+    center: [22.3120, 114.1700],
+    zoom: 11,
+    stats: [["Homicide rate", "~0.3 per 100k"], ["Vs. London", "~4× safer"], ["Real concern", "Tourist scams in TST"]],
+    footnote: "Hong Kong Police Force statistics, 2024–2025.",
+    legend: "HK is statistically safer than virtually any Western tourist city — homicide rate ~4× lower than London, ~10× lower than the US average. Pickpocketing is rare. The main risks are scams (gem, jewelry, fake tea ceremony) and very localized late-night issues. There are no real violent-crime danger zones.",
+    hotspots: [
+      { name: "Chungking Mansions", borough: "Tsim Sha Tsui", type: "theft", lat: 22.2964, lng: 114.1721, desc: "Iconic budget-hostel block with overblown reputation. Reality: mostly fine, some drug dealing in stairwells, commercial scams targeting newcomers. Wear a watch and you'll be approached." },
+      { name: "TST gem/tour scams", borough: "Tsim Sha Tsui", type: "theft", lat: 22.2982, lng: 114.1721, desc: "Gem scams, fake tour guides, jewelry overcharging along Nathan Road. Verbal cons, not violent crime. Politely refuse and walk on." },
+      { name: "Causeway Bay scams", borough: "Causeway Bay", type: "theft", lat: 22.2783, lng: 114.1828, desc: "Similar scam profile to TST but lower density. Tourist-targeting jewelry shops and 'tea ceremony' touts." },
+      { name: "Mong Kok markets", borough: "Kowloon", type: "theft", lat: 22.3193, lng: 114.1694, desc: "Dense market crowds. Pickpocketing in Ladies Market and Goldfish Market. Occasional triad-related disputes don't involve tourists." },
+      { name: "Yau Ma Tei (Temple Street)", borough: "Kowloon", type: "theft", lat: 22.3115, lng: 114.1707, desc: "Night market crowds plus drug-related issues in surrounding streets. Stay on the main strip." },
+      { name: "Sham Shui Po", borough: "Kowloon", type: "theft", lat: 22.3306, lng: 114.1622, desc: "Older grittier area. Some petty crime; mostly fine. Apliu Street electronics market is the tourist draw." },
+      { name: "Wan Chai (Lockhart Rd) at night", borough: "Hong Kong Island", type: "nightlife", lat: 22.2767, lng: 114.1734, desc: "Red-light bar strip. Inflated bills, drink-spiking, hostess-bar scams. Daytime is entirely fine — Wan Chai is a normal commercial district by day." },
+      { name: "Lan Kwai Fong late night", borough: "Central", type: "nightlife", lat: 22.2807, lng: 114.1559, desc: "Main expat bar district. Drunk altercations, occasional petty theft. Heavy police presence keeps it tame." },
+      { name: "Mong Kok streetside (after dark)", borough: "Kowloon", type: "nightlife", lat: 22.3210, lng: 114.1707, desc: "Dense and chaotic late at night. More overwhelming than dangerous; very rare violent incidents." }
+    ],
+    dangerZones: [
+      { name: "Wan Chai red-light strip (Lockhart Rd, late night)", desc: "Bar scams and drink-spiking on the strip. Not violent crime per se — overcharging cons rather than physical risk. Daytime entirely fine.", polygon: [[22.2785, 114.1720], [22.2785, 114.1755], [22.2755, 114.1755], [22.2755, 114.1720]] },
+      { name: "Mong Kok central (after midnight)", desc: "Dense, chaotic; pickpocketing in market crowds. Rarely escalates to anything more. More an awareness zone than a danger zone.", polygon: [[22.3215, 114.1685], [22.3215, 114.1715], [22.3175, 114.1715], [22.3175, 114.1685]] }
+    ],
+    attractions: [
+      { name: "Victoria Peak", desc: "City's highest point; tram up; harbour-and-skyline view", lat: 22.2759, lng: 114.1455 },
+      { name: "Star Ferry / TST Pier", desc: "Iconic green-and-white ferry crossing Victoria Harbour", lat: 22.2940, lng: 114.1684 },
+      { name: "Avenue of Stars / TST Promenade", desc: "Waterfront walkway; best skyline view, Symphony of Lights nightly", lat: 22.2934, lng: 114.1722 },
+      { name: "Hong Kong Park", desc: "Calm green oasis on HK Island; aviary, tea museum", lat: 22.2774, lng: 114.1623 },
+      { name: "Man Mo Temple", desc: "1847 incense-filled temple to literature and war gods", lat: 22.2848, lng: 114.1505 },
+      { name: "Mid-Levels Escalator / SoHo", desc: "World's longest outdoor escalator; foodie streets above", lat: 22.2828, lng: 114.1546 },
+      { name: "Tai Kwun (former Central Police Station)", desc: "Heritage compound; art galleries, restaurants, free entry", lat: 22.2818, lng: 114.1550 },
+      { name: "PMQ", desc: "Former Police Married Quarters; design and craft studios", lat: 22.2843, lng: 114.1517 },
+      { name: "Lan Kwai Fong", desc: "Main bar district; lively from sunset onwards", lat: 22.2807, lng: 114.1559 },
+      { name: "M+ Museum", desc: "Asia's largest visual culture museum; West Kowloon waterfront", lat: 22.3010, lng: 114.1573 },
+      { name: "Hong Kong Palace Museum", desc: "Forbidden City treasures next to M+", lat: 22.2999, lng: 114.1582 },
+      { name: "Hong Kong Museum of History", desc: "Comprehensive HK history; free entry", lat: 22.3015, lng: 114.1769 },
+      { name: "Wong Tai Sin Temple", desc: "Bustling Taoist temple; fortune-telling stalls outside", lat: 22.3424, lng: 114.1929 },
+      { name: "Chi Lin Nunnery & Nan Lian Garden", desc: "Tang-style wooden monastery + serene classical garden", lat: 22.3398, lng: 114.2050 },
+      { name: "Temple Street Night Market", desc: "Classic Kowloon night market; opera, fortune tellers, dai pai dongs", lat: 22.3115, lng: 114.1707 },
+      { name: "Ladies Market (Mong Kok)", desc: "Tung Choi Street stalls; bargaining required", lat: 22.3206, lng: 114.1707 },
+      { name: "Stanley Market", desc: "Beachside village on the south shore; market and bars", lat: 22.2196, lng: 114.2100 },
+      { name: "Repulse Bay", desc: "South-side beach with elaborate temples", lat: 22.2389, lng: 114.1958 },
+      { name: "Ocean Park", desc: "Marine theme park on the south shore", lat: 22.2467, lng: 114.1742 },
+      { name: "HK Disneyland (~25 km W, Lantau)", desc: "Smaller Disney park; easy MTR access", lat: 22.3133, lng: 114.0411 },
+      { name: "Big Buddha / Po Lin Monastery (Lantau)", desc: "34m bronze Buddha on Lantau; cable car up", lat: 22.2538, lng: 113.9050 },
+      { name: "Sai Kung", desc: "Fishing town; gateway to HK's wildest country parks", lat: 22.3795, lng: 114.2706 },
+      { name: "Cheung Chau Island", desc: "Car-free island; ferry trip, seafood, beaches", lat: 22.2086, lng: 114.0288 }
+    ]
+  }
+};
+
+const typeMeta = {
+  violent: { color: "#ef4444", label: "Knife / violent crime", radius: 20 },
+  robbery: { color: "#f59e0b", label: "Robbery / phone snatch", radius: 13 },
+  theft: { color: "#3b82f6", label: "Pickpocketing / theft", radius: 9 },
+  nightlife: { color: "#eab308", label: "Nightlife disorder", radius: 6 },
+};
+
+const touristIcon = L.divIcon({
+  className: "tourist-pin",
+  html: `<svg width="22" height="28" viewBox="0 0 22 28" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 0C4.92 0 0 4.92 0 11c0 8.25 11 17 11 17s11-8.75 11-17C22 4.92 17.08 0 11 0z" fill="#8b5cf6" stroke="white" stroke-width="1.5"/>
+    <text x="11" y="15" text-anchor="middle" fill="white" font-size="11" font-weight="bold" font-family="Arial,sans-serif">★</text>
+  </svg>`,
+  iconSize: [22, 28],
+  iconAnchor: [11, 28],
+  popupAnchor: [0, -28]
+});
+
+let currentCity = "london";
+let viewMode = "markers";
+let markers = [];
+let zonePolygons = [];
+let attractionMarkers = [];
+
+const map = L.map("map", { zoomControl: true, attributionControl: true })
+  .setView(cities.london.center, cities.london.zoom);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: "abcd", maxZoom: 19
+}).addTo(map);
+
+function clearLayer(arr) {
+  arr.forEach(m => { if (map.hasLayer(m)) map.removeLayer(m); });
+  arr.length = 0;
+}
+
+function buildMarkers() {
+  clearLayer(markers);
+  cities[currentCity].hotspots.forEach(h => {
+    const meta = typeMeta[h.type];
+    const marker = L.circleMarker([h.lat, h.lng], {
+      radius: meta.radius, color: meta.color, fillColor: meta.color,
+      fillOpacity: 0.55, weight: 2, opacity: 0.9
+    }).bindPopup(`
+      <div class="popup-title">${h.name}</div>
+      <div class="popup-borough">${h.borough}</div>
+      <span class="popup-tag" style="background:${meta.color}33;color:${meta.color}">${meta.label}</span>
+      <div class="popup-desc">${h.desc}</div>
+    `);
+    marker._hotspot = h;
+    markers.push(marker);
+  });
+}
+
+function buildZones() {
+  clearLayer(zonePolygons);
+  (cities[currentCity].dangerZones || []).forEach(z => {
+    const poly = L.polygon(z.polygon, {
+      color: "#dc2626", weight: 2, opacity: 0.7,
+      fillColor: "#ef4444", fillOpacity: 0.18
+    }).bindPopup(`
+      <div class="popup-title">${z.name}</div>
+      <span class="popup-tag" style="background:#ef444433;color:#ef4444">Elevated violent crime</span>
+      <div class="popup-desc">${z.desc}</div>
+    `);
+    zonePolygons.push(poly);
+  });
+}
+
+function buildAttractions() {
+  clearLayer(attractionMarkers);
+  (cities[currentCity].attractions || []).forEach(a => {
+    const descHtml = a.desc ? `<div class="popup-desc">${a.desc}</div>` : "";
+    const marker = L.marker([a.lat, a.lng], { icon: touristIcon })
+      .bindPopup(`<div class="popup-title">${a.name}</div><span class="popup-tag" style="background:#8b5cf633;color:#8b5cf6">Tourist attraction</span>${descHtml}`);
+    attractionMarkers.push(marker);
+  });
+}
+
+function getEnabledTypes() {
+  const enabled = {};
+  document.querySelectorAll(".filter input[data-type]").forEach(cb => enabled[cb.dataset.type] = cb.checked);
+  return enabled;
+}
+
+function applyView() {
+  const enabled = getEnabledTypes();
+  const showAttractions = document.getElementById("show-attractions").checked;
+
+  // Violent → zones (polygons). Other types → markers.
+  if (enabled.violent) {
+    zonePolygons.forEach(p => { if (!map.hasLayer(p)) p.addTo(map); });
+  } else {
+    zonePolygons.forEach(p => { if (map.hasLayer(p)) map.removeLayer(p); });
+  }
+  markers.forEach(m => {
+    const t = m._hotspot.type;
+    if (t !== "violent" && enabled[t]) { if (!map.hasLayer(m)) m.addTo(map); }
+    else { if (map.hasLayer(m)) map.removeLayer(m); }
+  });
+
+  attractionMarkers.forEach(m => {
+    if (showAttractions) { if (!map.hasLayer(m)) m.addTo(map); }
+    else { if (map.hasLayer(m)) map.removeLayer(m); }
+  });
+
+  let visible = (cities[currentCity].dangerZones || []).length * (enabled.violent ? 1 : 0);
+  cities[currentCity].hotspots.forEach(h => { if (h.type !== "violent" && enabled[h.type]) visible++; });
+  document.getElementById("stat-visible").textContent = visible;
+}
+
+function updateCounts() {
+  const counts = { violent: 0, robbery: 0, theft: 0, nightlife: 0 };
+  cities[currentCity].hotspots.forEach(h => counts[h.type]++);
+  Object.entries(counts).forEach(([type, n]) => {
+    const el = document.getElementById("count-" + type);
+    if (el) el.textContent = n;
+  });
+  document.getElementById("count-attractions").textContent = (cities[currentCity].attractions || []).length;
+}
+
+function renderStats() {
+  const c = cities[currentCity];
+  const total = c.hotspots.length;
+  const html = [
+    `<div class="stat"><span class="stat-label">Showing</span><span class="stat-value" id="stat-visible">${total} hotspots</span></div>`,
+    `<div class="stat"><span class="stat-label">Total hotspots</span><span class="stat-value">${total}</span></div>`,
+    `<div class="stat"><span class="stat-label">Danger zones</span><span class="stat-value">${(c.dangerZones || []).length}</span></div>`,
+    `<div class="stat"><span class="stat-label">Tourist sites</span><span class="stat-value">${(c.attractions || []).length}</span></div>`,
+    ...c.stats.map(([label, value]) => `<div class="stat"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`)
+  ].join("");
+  document.getElementById("stats-panel").innerHTML = html;
+}
+
+function switchCity(cityKey) {
+  if (cityKey === currentCity) return;
+
+  // Switching INTO compare mode
+  if (cityKey === "compare") {
+    document.getElementById("map").style.display = "none";
+    document.getElementById("compare-view").style.display = "block";
+    document.getElementById("city-controls").style.display = "none";
+    document.getElementById("compare-info").style.display = "block";
+    document.querySelectorAll(".city-tab").forEach(t => t.classList.toggle("active", t.dataset.city === "compare"));
+    renderCompareView();
+    currentCity = "compare";
+    return;
+  }
+
+  // Switching OUT of compare mode
+  if (currentCity === "compare") {
+    document.getElementById("map").style.display = "block";
+    document.getElementById("compare-view").style.display = "none";
+    document.getElementById("city-controls").style.display = "block";
+    document.getElementById("compare-info").style.display = "none";
+    map.invalidateSize();
+  }
+
+  currentCity = cityKey;
+  const c = cities[cityKey];
+  document.getElementById("city-name").textContent = c.name;
+  document.getElementById("city-subtitle").textContent = c.subtitle;
+  document.getElementById("footnote").innerHTML = "<strong>Sources:</strong> " + c.footnote;
+  document.getElementById("legend-meta").innerHTML = "<strong>Reading the map:</strong> " + c.legend;
+  document.querySelectorAll(".city-tab").forEach(t => t.classList.toggle("active", t.dataset.city === cityKey));
+
+  buildMarkers();
+  buildZones();
+  buildAttractions();
+  renderStats();
+  updateCounts();
+  applyView();
+  map.flyTo(c.center, c.zoom, { duration: 1.2 });
+}
+
+const compareData = {
+  metrics: [
+    {
+      label: "Homicide rate",
+      unit: "per 100,000 / year",
+      max: 5,
+      color: "#ef4444",
+      reference: { label: "US avg 4.0", value: 4.0 },
+      explanation: "Most objective measure. All seven cities sit at or well below the Western European average of ~1.0. The US national average (~4.0) is shown for scale.",
+      cities: [
+        { city: "siena", value: 0.1 },
+        { city: "venice", value: 0.1 },
+        { city: "hongkong", value: 0.3 },
+        { city: "florence", value: 0.3 },
+        { city: "rome", value: 0.5 },
+        { city: "paris", value: 1.1 },
+        { city: "london", value: 1.2 }
+      ]
+    },
+    {
+      label: "Pickpocket density",
+      unit: "1–10 subjective scale",
+      max: 10,
+      color: "#3b82f6",
+      explanation: "How aggressively pickpockets work tourist areas. Rome and Paris are global outliers; pickpocket density in tourist Rome is genuinely the highest in Western Europe.",
+      cities: [
+        { city: "siena", value: 1 },
+        { city: "hongkong", value: 2 },
+        { city: "florence", value: 3 },
+        { city: "venice", value: 5 },
+        { city: "london", value: 5 },
+        { city: "paris", value: 9 },
+        { city: "rome", value: 10 }
+      ]
+    },
+    {
+      label: "Tourist scam intensity",
+      unit: "1–10 subjective scale",
+      max: 10,
+      color: "#f59e0b",
+      explanation: "Active scammers — gem cons, friendship bracelets, fake petitions, jewelry overcharging, fake tea ceremonies. Rome's centurions and bracelet hustlers are unmatched in volume.",
+      cities: [
+        { city: "siena", value: 1 },
+        { city: "florence", value: 2 },
+        { city: "london", value: 3 },
+        { city: "venice", value: 3 },
+        { city: "hongkong", value: 4 },
+        { city: "paris", value: 7 },
+        { city: "rome", value: 10 }
+      ]
+    },
+    {
+      label: "Late-night street safety",
+      unit: "1–10 (higher = safer)",
+      max: 10,
+      color: "#10b981",
+      explanation: "How comfortable a tourist feels walking the streets after midnight. Paris drops because of the NE quadrant; HK and the Italian cities are world-class. London depends entirely on which neighbourhood.",
+      cities: [
+        { city: "paris", value: 4 },
+        { city: "london", value: 6 },
+        { city: "rome", value: 7 },
+        { city: "florence", value: 8 },
+        { city: "venice", value: 9 },
+        { city: "hongkong", value: 9 },
+        { city: "siena", value: 9 }
+      ]
+    }
+  ],
+  verdicts: {
+    siena: { tier: "safest", text: "Among the safest cities in Italy. Population ~54,000. Crime risk close to zero outside peak Palio crowds at Il Campo." },
+    hongkong: { tier: "safest", text: "One of the world's safest big cities — 22M people, homicide rate ~4× lower than London. Real risk is tourist scams in TST, not physical danger." },
+    venice: { tier: "very-safe", text: "Island geography suppresses violent crime almost entirely. Pickpocketing concentrates at San Marco and Rialto; everywhere else essentially safe." },
+    florence: { tier: "very-safe", text: "Compact medieval centre, very low violence. Pickpockets at the Duomo and SMN station; everywhere else essentially safe." },
+    rome: { tier: "moderate", text: "Pickpocket capital of Western Europe — but violent crime concentrates 10+ km from the historic centre. Tourist risk is theft and scams, not physical danger." },
+    london: { tier: "moderate", text: "Violent crime exists but concentrates in outer boroughs tourists rarely visit. Phone snatching is the real central-London risk; theft heavy in tourist West End." },
+    paris: { tier: "moderate", text: "Trickiest profile of the seven. Pickpocketing rampant in tourist zones; genuine danger zone in the 18e/19e (incl. Sacré-Cœur perimeter). Stay centre-and-south, you're fine." }
+  }
+};
+
+function renderCompareView() {
+  // Charts
+  let html = "";
+  compareData.metrics.forEach(metric => {
+    html += `<div class="compare-section"><h2>${metric.label}<span class="unit">${metric.unit}</span></h2>`;
+    metric.cities.forEach(item => {
+      const cityName = cities[item.city].name;
+      const widthPct = (item.value / metric.max) * 100;
+      let refLine = "";
+      if (metric.reference) {
+        const refPct = (metric.reference.value / metric.max) * 100;
+        refLine = `<div class="reference-line" style="left:${refPct}%;" data-label="${metric.reference.label}"></div>`;
+      }
+      html += `<div class="bar-row"><div class="city-label">${cityName}</div><div class="bar-track"><div class="bar-fill" style="width:${widthPct}%; background:${metric.color};"></div>${refLine}</div><div class="bar-value">${item.value}</div></div>`;
+    });
+    html += `<p class="metric-explanation">${metric.explanation}</p></div>`;
+  });
+  document.getElementById("compare-charts").innerHTML = html;
+
+  // Verdict cards (sorted by safety tier)
+  const cardOrder = ["siena", "hongkong", "venice", "florence", "rome", "london", "paris"];
+  const tierLabels = { "safest": "Safest", "very-safe": "Very safe", "moderate": "Moderate" };
+  let cardsHtml = '<div class="compare-cards">';
+  cardOrder.forEach(cityKey => {
+    const verdict = compareData.verdicts[cityKey];
+    const cityName = cities[cityKey].name;
+    cardsHtml += `<div class="city-card"><div class="card-head"><h3>${cityName}</h3><span class="tier tier-${verdict.tier}">${tierLabels[verdict.tier]}</span></div><p>${verdict.text}</p></div>`;
+  });
+  cardsHtml += "</div>";
+  document.getElementById("compare-cards-container").innerHTML = cardsHtml;
+}
+
+function init() {
+  const c = cities[currentCity];
+  document.getElementById("city-name").textContent = c.name;
+  document.getElementById("city-subtitle").textContent = c.subtitle;
+  document.getElementById("footnote").innerHTML = "<strong>Sources:</strong> " + c.footnote;
+  document.getElementById("legend-meta").innerHTML = "<strong>Reading the map:</strong> " + c.legend;
+  buildMarkers();
+  buildZones();
+  buildAttractions();
+  renderStats();
+  updateCounts();
+  applyView();
+}
+init();
+
+document.querySelectorAll(".city-tab").forEach(btn => btn.addEventListener("click", () => switchCity(btn.dataset.city)));
+document.querySelectorAll(".filter input").forEach(cb => cb.addEventListener("change", applyView));
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    viewMode = btn.dataset.mode;
+    applyView();
+  });
+});
+
+function download(filename, content, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function exportJSON() {
+  download(`${currentCity}-crime-hotspots.json`, JSON.stringify(cities[currentCity], null, 2), "application/json");
+}
+function exportCSV() {
+  const headers = ["category", "name", "borough_or_area", "type", "lat", "lng", "description"];
+  const rows = [headers.join(",")];
+  cities[currentCity].hotspots.forEach(h => {
+    rows.push(["hotspot", `"${h.name.replace(/"/g, '""')}"`, `"${h.borough}"`, h.type, h.lat, h.lng, `"${h.desc.replace(/"/g, '""')}"`].join(","));
+  });
+  (cities[currentCity].attractions || []).forEach(a => {
+    rows.push(["attraction", `"${a.name.replace(/"/g, '""')}"`, "", "tourist", a.lat, a.lng, ""].join(","));
+  });
+  (cities[currentCity].dangerZones || []).forEach(z => {
+    const c = z.polygon.reduce((acc, p) => [acc[0]+p[0], acc[1]+p[1]], [0,0]).map(v => v / z.polygon.length);
+    rows.push(["zone", `"${z.name.replace(/"/g, '""')}"`, "", "danger_zone", c[0], c[1], `"${z.desc.replace(/"/g, '""')}"`].join(","));
+  });
+  download(`${currentCity}-crime-hotspots.csv`, rows.join("\n"), "text/csv");
+}
+</script>
+</body>
+</html>
