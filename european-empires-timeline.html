@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>European Empires Timeline — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-background-tertiary: #edecea;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+  --font-sans: 'Inter', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); text-decoration: none; transition: color 0.15s; }
+nav a:hover { color: var(--color-text-primary); }
+nav h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); }
+.panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; }
+.tl-wrap { padding-top: 0; font-family: var(--font-sans); }
+.axis { display: flex; margin-left: 130px; margin-bottom: 6px; position: relative; height: 20px; }
+.axis-label { position: absolute; font-size: 11px; color: var(--color-text-tertiary); transform: translateX(-50%); }
+.rows { display: flex; flex-direction: column; gap: 5px; }
+.row { display: flex; align-items: center; gap: 0; cursor: pointer; }
+.row-label { width: 130px; flex-shrink: 0; font-size: 12px; color: var(--color-text-secondary); text-align: right; padding-right: 10px; line-height: 1.3; }
+.row-track { flex: 1; height: 22px; position: relative; background: var(--color-background-secondary); border-radius: 2px; }
+.row:hover .row-track { background: var(--color-background-tertiary); }
+.bar { position: absolute; height: 100%; border-radius: 3px; top: 0; transition: opacity 0.15s; }
+.row:hover .bar { opacity: 0.85; }
+.row.active .bar { opacity: 1; }
+.bar-label { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); font-size: 10px; font-weight: 500; white-space: nowrap; overflow: hidden; pointer-events: none; }
+.detail { margin-top: 12px; padding: 12px 14px; background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); display: none; }
+.detail.visible { display: block; }
+.detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+.detail-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.detail-dates { font-size: 12px; color: var(--color-text-tertiary); }
+.detail-body { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 8px; }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 500; }
+.badge-cities-yes { background: #E1F5EE; color: #0F6E56; }
+.badge-cities-partial { background: #FAEEDA; color: #633806; }
+.badge-cities-no { background: #F1EFE8; color: #5F5E5A; }
+.badge-region { background: #EEEDFE; color: #3C3489; }
+.ask-btn { font-size: 11px; padding: 4px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.12s; }
+.ask-btn:hover { background: var(--color-background-primary); }
+.ask-btn.copied { color: #0F6E56; border-color: #5DCAA5; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-tertiary); }
+.leg-dot { width: 10px; height: 10px; border-radius: 2px; }
+.gridline { position: absolute; top: 0; bottom: 0; width: 0.5px; background: var(--color-border-tertiary); pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="life.html"><i class="ti ti-arrow-left"></i> History</a>
+    <h1>European Empires</h1>
+    <span></span>
+  </nav>
+  <div class="panel">
+    <div class="tl-wrap">
+      <div class="legend">
+        <div class="leg"><div class="leg-dot" style="background:#534AB7"></div> Classical Roman</div>
+        <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div> Medieval</div>
+        <div class="leg"><div class="leg-dot" style="background:#D85A30"></div> Early modern</div>
+        <div class="leg"><div class="leg-dot" style="background:#888780"></div> Modern</div>
+      </div>
+      <div class="axis" id="axis"></div>
+      <div class="rows" id="rows"></div>
+      <div class="detail" id="detail"></div>
+    </div>
+  </div>
+</div>
+<script>
+const START = -500;
+const END = 2000;
+const SPAN = END - START;
+
+function pct(y) { return ((y - START) / SPAN * 100).toFixed(3); }
+function w(s, e) { return (((e - s) / SPAN) * 100).toFixed(3); }
+
+const empires = [
+  { name:'Roman Republic', short:'Roman Republic', start:-509, end:-27, color:'#534AB7', textColor:'#EEEDFE', region:'Mediterranean', cities:'yes', duration:'482 years', desc:'Governed by the Senate and two annually elected consuls. Conquered the Mediterranean world through a combination of military genius and political flexibility. Ended when Julius Caesar\'s heir Octavian defeated Mark Antony and became Augustus.', prompt:'How did the Roman Republic actually function — Senate, consuls, and how it transitioned to empire' },
+  { name:'Roman Empire (West)', short:'Roman Empire', start:-27, end:476, color:'#3C3489', textColor:'#CECBF6', region:'Europe / Mediterranean', cities:'yes', duration:'503 years', desc:'The imperial period. Augustus to Romulus Augustulus. Transformed the republic into a monarchy in all but name. At its peak under Trajan (117 AD) controlled ~5 million km². The western half fell in 476 AD, the eastern continued as Byzantium.', prompt:'What actually caused the fall of the western Roman Empire — and was 476 AD the real end?' },
+  { name:'Byzantine Empire', short:'Byzantine', start:330, end:1453, color:'#1D9E75', textColor:'#E1F5EE', region:'Eastern Mediterranean', cities:'partial', duration:'1,123 years', desc:'The direct continuation of the Roman Empire in the east. Called itself Roman throughout. Preserved Greek and Roman learning through the medieval period. Lost territory steadily to Arabs, Seljuks, and finally Ottomans. Fell with the Ottoman conquest of Constantinople in 1453.', prompt:'Why do we call it the Byzantine Empire when it called itself Roman — and does that distinction matter?' },
+  { name:'Carolingian Empire', short:'Carolingian', start:800, end:888, color:'#085041', textColor:'#9FE1CB', region:'Western/Central Europe', cities:'no', duration:'88 years', desc:'Charlemagne\'s empire, crowned by the Pope on Christmas Day 800 AD. Briefly unified most of Western Europe. Aachen was the capital. Collapsed rapidly after Charlemagne\'s death — the Treaty of Verdun (843) split it into three, roughly prefiguring France, Germany, and Italy.', prompt:'Was Charlemagne\'s coronation in 800 AD a genuine revival of Rome or political theatre?' },
+  { name:'Holy Roman Empire', short:'Holy Roman Empire', start:962, end:1806, color:'#0F6E56', textColor:'#9FE1CB', region:'Central Europe', cities:'no', duration:'844 years', desc:'Neither holy, nor Roman, nor an empire (Voltaire). A loose confederation of German states under an elected emperor. Never achieved genuine centralisation. Its cities — Aachen, Frankfurt, Regensburg, Vienna, Prague — matter for other reasons. Dissolved by Napoleon in 1806.', prompt:'What was the Holy Roman Empire actually like to live in — how did it actually function day to day?' },
+  { name:'Mongol Golden Horde', short:'Golden Horde', start:1240, end:1502, color:'#BA7517', textColor:'#FAEEDA', region:'Eastern Europe', cities:'no', duration:'262 years', desc:'The western khanate of the Mongol Empire. Destroyed Kyiv (1240), devastated Poland and Hungary, and controlled the Russian steppe for 250 years. Extractive rather than urban — collected tribute from Russian principalities. Sarai on the Volga was its capital. Collapsed through internal fragmentation.', prompt:'How did Mongol rule shape Russia — did it delay or accelerate Russian development?' },
+  { name:'Ottoman Empire', short:'Ottoman (Europe)', start:1354, end:1912, color:'#993C1D', textColor:'#F5C4B3', region:'Southeast Europe', cities:'partial', duration:'558 years in Europe', desc:'Entered Europe at Gallipoli in 1354. Took Constantinople in 1453. At its peak controlled the Balkans, Greece, Hungary, and the Black Sea coast. Edirne (Adrianople) was its European capital before Constantinople. Retreated slowly through the Balkan Wars — lost most of its European territory by 1912.', prompt:'What did Ottoman rule actually look like in the Balkans — how did local populations experience it?' },
+  { name:'Habsburg Empire', short:'Habsburg / Austria', start:1282, end:1918, color:'#712B13', textColor:'#F5C4B3', region:'Central/Eastern Europe', cities:'partial', duration:'636 years', desc:'The most legitimate candidate for a Roman-style cities investigation after Rome itself. Vienna, Prague, Budapest, Kraków, Bratislava, Zagreb, Sarajevo, Lviv — all Habsburg-shaped cities with a coherent imperial culture. Collapsed after WWI into the successor states of Central Europe.', prompt:'Which Habsburg cities are most worth visiting for their imperial heritage today?' },
+  { name:'Spanish Empire', short:'Spanish Empire', start:1492, end:1898, color:'#D85A30', textColor:'#FAEEDA', region:'Iberia + global', cities:'no', duration:'406 years', desc:'First global empire. Within Europe controlled the Netherlands, Milan, Naples, Sicily, and Iberia itself. But its imperial identity was the Americas — Seville and Madrid matter as imperial centers but aren\'t distinctly "Spanish Empire cities" in the way Roman cities are Roman.', prompt:'Why did Seville become the hub of the Spanish colonial empire rather than Madrid or Lisbon?' },
+  { name:'Russian Empire', short:'Russian Empire', start:1721, end:1917, color:'#5F5E5A', textColor:'#D3D1C7', region:'Eastern Europe', cities:'no', duration:'196 years', desc:'Peter the Great declared Russia an empire in 1721. St. Petersburg was built from scratch as a western-facing imperial capital — the most deliberate city-founding since Constantinople. Expanded westward into Poland, Finland, and the Baltics. Collapsed in the 1917 revolution.', prompt:'Why did Peter the Great build St. Petersburg from scratch — why not just use Moscow?' },
+  { name:'British Empire', short:'British Empire', start:1583, end:1997, color:'#444441', textColor:'#D3D1C7', region:'Global (base: Britain)', cities:'no', duration:'414 years', desc:'The largest empire in history by territory. European base but global reach — its significant cities are in India, Canada, and Africa, not Europe. London is obviously enormous but is London\'s identity "British Empire" in the way Rome\'s is? Debatable.', prompt:'When and why did the British Empire actually end — was it a decision or a collapse?' },
+  { name:'Napoleonic Empire', short:'Napoleonic', start:1804, end:1815, color:'#888780', textColor:'#F1EFE8', region:'Western/Central Europe', cities:'no', duration:'11 years', desc:'Napoleon controlled most of continental Europe at its peak. Too short-lived to build a distinct urban culture. Paris was already Paris. His lasting legacy was legal (Napoleonic Code), administrative, and cartographic — he redrew European borders more than he built cities.', prompt:'What was Napoleon\'s actual lasting impact on Europe — what did he change permanently?' },
+  { name:'Soviet Union', short:'Soviet Union', start:1922, end:1991, color:'#2C2C2A', textColor:'#B4B2A9', region:'Eastern Europe', cities:'no', duration:'69 years', desc:'The successor to the Russian Empire. Controlled Eastern Europe through satellite states post-1945. Did build a distinctive urban aesthetic — Stalinist architecture, the metro systems of Moscow and Kyiv are extraordinary. But "Soviet cities" is a different kind of investigation.', prompt:'What is Stalinist architecture and where are the best surviving examples in Europe?' },
+];
+
+const citiesLabel = { yes:'cities: full investigation', partial:'cities: partial overlap', no:'cities: not applicable' };
+const citiesCls = { yes:'badge-cities-yes', partial:'badge-cities-partial', no:'badge-cities-no' };
+
+let activeIdx = null;
+
+function buildAxis() {
+  const ax = document.getElementById('axis');
+  for (let y = -400; y <= 2000; y += 200) {
+    const el = document.createElement('div');
+    el.className = 'axis-label';
+    el.style.left = pct(y) + '%';
+    el.textContent = y < 0 ? Math.abs(y) + ' BC' : y === 0 ? 'AD' : y;
+    ax.appendChild(el);
+  }
+}
+
+function buildRows() {
+  const container = document.getElementById('rows');
+  empires.forEach((e, i) => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.onclick = () => selectRow(i);
+
+    const label = document.createElement('div');
+    label.className = 'row-label';
+    label.textContent = e.short;
+
+    const track = document.createElement('div');
+    track.className = 'row-track';
+
+    [-400,-200,0,200,400,600,800,1000,1200,1400,1600,1800].forEach(y => {
+      const gl = document.createElement('div');
+      gl.className = 'gridline';
+      gl.style.left = pct(y) + '%';
+      track.appendChild(gl);
+    });
+
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    const s = Math.max(e.start, START);
+    const en = Math.min(e.end, END);
+    bar.style.left = pct(s) + '%';
+    bar.style.width = w(s, en) + '%';
+    bar.style.background = e.color;
+    bar.style.minWidth = '3px';
+
+    const barLabel = document.createElement('div');
+    barLabel.className = 'bar-label';
+    barLabel.style.color = e.textColor;
+    barLabel.textContent = parseFloat(w(s, en)) > 6 ? e.short : '';
+    bar.appendChild(barLabel);
+
+    track.appendChild(bar);
+    row.appendChild(label);
+    row.appendChild(track);
+    container.appendChild(row);
+  });
+}
+
+function selectRow(i) {
+  const rows = document.querySelectorAll('.row');
+  const detail = document.getElementById('detail');
+
+  if (activeIdx === i) {
+    rows[i].classList.remove('active');
+    detail.classList.remove('visible');
+    detail.innerHTML = '';
+    activeIdx = null;
+    return;
+  }
+
+  rows.forEach(r => r.classList.remove('active'));
+  rows[i].classList.add('active');
+  activeIdx = i;
+
+  const e = empires[i];
+  detail.innerHTML = `
+    <div class="detail-header">
+      <div>
+        <div class="detail-title">${e.name}</div>
+        <div class="detail-dates">${e.start < 0 ? Math.abs(e.start) + ' BC' : e.start + ' AD'} – ${e.end} AD &nbsp;·&nbsp; ${e.duration}</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge badge-region">${e.region}</span>
+      <span class="badge ${citiesCls[e.cities]}">${citiesLabel[e.cities]}</span>
+    </div>
+    <div class="detail-body">${e.desc}</div>
+    <button class="ask-btn" onclick="copyPrompt(this,'${e.prompt.replace(/'/g,"&#39;")}')">${e.prompt} ↗</button>
+  `;
+  detail.classList.add('visible');
+  detail.style.borderLeft = '3px solid ' + e.color;
+  detail.style.borderRadius = '0 var(--border-radius-lg) var(--border-radius-lg) 0';
+}
+
+function copyPrompt(btn, prompt) {
+  navigator.clipboard.writeText(prompt).then(() => {
+    btn.textContent = 'Copied to clipboard ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = prompt + ' ↗'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+buildAxis();
+buildRows();
+</script>
+</body>
+</html>
