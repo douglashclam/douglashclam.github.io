@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World History Timeline — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+  --font-sans: 'Inter', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.page-wrap { max-width: 740px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); text-decoration: none; transition: color 0.15s; }
+nav a:hover { color: var(--color-text-primary); }
+nav h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); }
+.panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-btn { padding: 5px 12px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); font-size: 12px; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+.filter-btn.active { border-color: transparent; color: #fff; }
+.filter-btn[data-cat="war"].active { background: #A32D2D; }
+.filter-btn[data-cat="empire"].active { background: #185FA5; }
+.filter-btn[data-cat="revolution"].active { background: #3B6D11; }
+.filter-btn[data-cat="genocide"].active { background: #5F5E5A; }
+.filter-btn[data-cat="all"].active { background: var(--color-text-primary); color: var(--color-background-primary); }
+.era-label { font-size: 11px; color: var(--color-text-tertiary); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin: 1.5rem 0 0.5rem; padding-left: 4px; }
+.event-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 0.75rem 1rem; margin-bottom: 8px; cursor: pointer; transition: border-color 0.15s; display: flex; align-items: flex-start; gap: 12px; }
+.event-card:hover { border-color: var(--color-border-primary); }
+.event-card.expanded { border-color: var(--color-border-primary); background: var(--color-background-secondary); }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.dot-war { background: #E24B4A; }
+.dot-empire { background: #378ADD; }
+.dot-revolution { background: #639922; }
+.dot-genocide { background: #888780; }
+.card-main { flex: 1; min-width: 0; }
+.card-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.card-year { font-size: 12px; color: var(--color-text-tertiary); flex-shrink: 0; }
+.card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.card-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; }
+.tag-war { background: #FCEBEB; color: #A32D2D; }
+.tag-empire { background: #E6F1FB; color: #185FA5; }
+.tag-revolution { background: #EAF3DE; color: #3B6D11; }
+.tag-genocide { background: #F1EFE8; color: #5F5E5A; }
+.card-detail { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-top: 8px; display: none; }
+.card-detail.show { display: block; }
+.deaths { font-size: 12px; color: var(--color-text-tertiary); margin-top: 4px; }
+.deaths span { color: var(--color-text-secondary); font-weight: 500; }
+.toggle-icon { font-size: 16px; color: var(--color-text-tertiary); flex-shrink: 0; transition: transform 0.2s; }
+.expanded .toggle-icon { transform: rotate(180deg); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="life.html"><i class="ti ti-arrow-left"></i> History</a>
+    <h1>World History</h1>
+    <span></span>
+  </nav>
+  <div class="panel">
+    <div class="filter-row" id="filters">
+      <button class="filter-btn active" data-cat="all">All events</button>
+      <button class="filter-btn" data-cat="war">Wars</button>
+      <button class="filter-btn" data-cat="empire">Empires & conquests</button>
+      <button class="filter-btn" data-cat="revolution">Revolutions</button>
+      <button class="filter-btn" data-cat="genocide">Atrocities</button>
+    </div>
+    <div id="timeline"></div>
+  </div>
+</div>
+<script>
+const events=[
+{era:"Ancient world",year:"499–479 BC",title:"Greco-Persian Wars",cat:"war",detail:"Greece vs the Achaemenid Empire. Thermopylae, Salamis, Marathon. Halted Persian westward expansion and defined Greek identity. The origin of 'marathon' as a race.",deaths:"~300,000"},
+{era:"Ancient world",year:"264–146 BC",title:"Punic Wars",cat:"war",detail:"Rome vs Carthage across three wars. Hannibal crossed the Alps with elephants. Ended with Rome burning Carthage to the ground and salting the earth. Rome becomes the Mediterranean superpower.",deaths:"~1.5 million"},
+{era:"Ancient world",year:"336–323 BC",title:"Alexander the Great's conquests",cat:"empire",detail:"Macedonia to Egypt to Persia to India in 13 years. Created the largest empire the ancient world had seen. Spread Greek culture (Hellenism) across three continents. Died at 32 in Babylon.",deaths:"~500,000"},
+{era:"Ancient world",year:"58–50 BC",title:"Caesar's Gallic Wars",cat:"war",detail:"Julius Caesar's conquest of Gaul (modern France/Belgium). Estimated 1 million killed, 1 million enslaved. Launched Caesar to political dominance and set up the fall of the Roman Republic.",deaths:"~1 million"},
+{era:"Medieval",year:"1206–1368",title:"Mongol conquests",cat:"empire",detail:"Genghis Khan and successors built the largest contiguous land empire in history. Baghdad destroyed in 1258 — ended the Islamic Golden Age. Killed an estimated 10% of the world's population.",deaths:"~40 million"},
+{era:"Medieval",year:"1095–1291",title:"The Crusades",cat:"war",detail:"Nine major military campaigns by European Christians to capture the Holy Land. Massacres of Jews and Muslims. Created centuries of Christian-Muslim enmity. Jerusalem changed hands repeatedly.",deaths:"~3 million"},
+{era:"Medieval",year:"1337–1453",title:"Hundred Years' War",cat:"war",detail:"England vs France. Joan of Arc emerges, is burned at the stake, becomes France's national saint. Ended feudal warfare and gave rise to national armies. France unifies.",deaths:"~3.5 million"},
+{era:"Medieval",year:"1347–1351",title:"Black Death",cat:"genocide",detail:"Bubonic plague killed 30–60% of Europe's population. Social order collapsed. Peasant revolts, religious flagellants, Jewish pogroms. Reset European society and arguably accelerated the Renaissance.",deaths:"~50 million"},
+{era:"Early modern",year:"1455–1487",title:"Wars of the Roses",cat:"war",detail:"House of Lancaster vs House of York for the English throne. Ended with Henry VII founding the Tudor dynasty. The Game of Thrones' direct inspiration.",deaths:"~100,000"},
+{era:"Early modern",year:"1618–1648",title:"Thirty Years' War",cat:"war",detail:"Started as a religious war in the Holy Roman Empire, became a European power struggle. Devastated Central Europe — Germany lost a third of its population. Ended with the Peace of Westphalia, which created the modern concept of national sovereignty.",deaths:"~8 million"},
+{era:"Early modern",year:"1492–1600s",title:"European conquest of the Americas",cat:"genocide",detail:"Columbus arrives 1492. Disease, enslavement and direct killing wiped out an estimated 90% of indigenous American populations. The largest demographic collapse in human history.",deaths:"~55 million"},
+{era:"Early modern",year:"1756–1763",title:"Seven Years' War",cat:"war",detail:"Fought across five continents — the first true world war. Britain vs France primarily. Britain wins Canada, India, dominance of the seas. Sets up both American independence and French Revolution.",deaths:"~1.4 million"},
+{era:"Revolutionary era",year:"1775–1783",title:"American Revolutionary War",cat:"revolution",detail:"13 colonies defeat Britain. First successful anti-colonial revolution. The Declaration of Independence and Constitution become templates for democracies worldwide. France's bankruptcy supporting the war helps trigger its own revolution.",deaths:"~50,000"},
+{era:"Revolutionary era",year:"1789–1799",title:"French Revolution",cat:"revolution",detail:"Monarchy overthrown. Reign of Terror — 17,000 officially executed, 40,000 died in prison. Napoleon emerges. Concepts of liberty, equality and citizenship spread across Europe. The modern political left-right spectrum originates here.",deaths:"~40,000"},
+{era:"Revolutionary era",year:"1803–1815",title:"Napoleonic Wars",cat:"war",detail:"France vs shifting European coalitions. Reshaped borders of Europe. Napoleon's invasion of Russia — 600,000 troops in, ~100,000 out. Waterloo. Ended with the Congress of Vienna creating a new European order.",deaths:"~5 million"},
+{era:"Industrial age",year:"1861–1865",title:"American Civil War",cat:"war",detail:"Union vs Confederacy over slavery and secession. More American deaths than any other war. Total war tactics pioneered. Emancipation Proclamation 1863. Lincoln assassinated five days after Confederate surrender.",deaths:"~620,000"},
+{era:"Industrial age",year:"1899–1902",title:"Boer War",cat:"war",detail:"Britain vs Dutch-descended settlers in South Africa. Britain invented the concentration camp here — 26,000 Boer women and children died in them. Shocked European opinion and accelerated anti-imperialism.",deaths:"~75,000"},
+{era:"20th century",year:"1914–1918",title:"World War I",cat:"war",detail:"Assassination of Franz Ferdinand triggers alliance system. Trench warfare. Mustard gas. Gallipoli. Somme — 57,000 British casualties in one day. Ended four empires: Ottoman, Austro-Hungarian, Russian, German. Set up everything that followed.",deaths:"~20 million"},
+{era:"20th century",year:"1917",title:"Russian Revolution",cat:"revolution",detail:"February revolution ends the Tsar. October revolution installs the Bolsheviks. Lenin. Creates the Soviet Union — which shapes the entire 20th century. Civil war kills millions more.",deaths:"~7 million (civil war)"},
+{era:"20th century",year:"1915–1923",title:"Armenian Genocide",cat:"genocide",detail:"Ottoman Empire systematically exterminated 1.5 million Armenians. Death marches into the Syrian desert. First genocide of the 20th century. Turkey still officially denies it. Directly influenced Hitler — 'Who remembers the Armenians?'",deaths:"~1.5 million"},
+{era:"20th century",year:"1939–1945",title:"World War II",cat:"war",detail:"The deadliest conflict in human history. Holocaust — 6 million Jews systematically murdered. Pacific theatre, D-Day, Stalingrad. Atomic bombs on Hiroshima and Nagasaki. Created the UN, NATO, the state of Israel and the Cold War.",deaths:"~70–85 million"},
+{era:"20th century",year:"1941–1945",title:"The Holocaust",cat:"genocide",detail:"Nazi Germany's systematic extermination of 6 million Jews plus 5–6 million others — Roma, disabled, homosexuals, political prisoners. Industrial-scale murder using gas chambers. The defining atrocity of the modern era.",deaths:"~11 million"},
+{era:"20th century",year:"1950–1953",title:"Korean War",cat:"war",detail:"UN forces vs North Korea/China. Forgotten war. Peninsula divided at the 38th parallel — still the world's most fortified border. Technically never ended — only an armistice was signed.",deaths:"~3 million"},
+{era:"20th century",year:"1955–1975",title:"Vietnam War",cat:"war",detail:"US vs North Vietnam/Viet Cong. Cold War proxy conflict. Agent Orange, napalm, My Lai massacre. 58,000 American deaths, 2–3 million Vietnamese. US humiliated. Reshapes American foreign policy for decades.",deaths:"~3.5 million"},
+{era:"20th century",year:"1975–1979",title:"Cambodian genocide",cat:"genocide",detail:"Khmer Rouge under Pol Pot. Year Zero ideology — evacuated cities, abolished money, killed intellectuals. 1.5–2 million dead — roughly 25% of Cambodia's entire population in four years.",deaths:"~2 million"},
+{era:"20th century",year:"1994",title:"Rwandan Genocide",cat:"genocide",detail:"Hutu extremists killed 500,000–800,000 Tutsi in 100 days. Machetes. Radio incitement. UN peacekeepers ordered not to intervene. The international community's greatest modern failure. Ended only when Tutsi RPF forces took the country.",deaths:"~800,000"},
+{era:"21st century",year:"2001–2021",title:"War on Terror / Afghanistan",cat:"war",detail:"9/11 triggers US-led invasion of Afghanistan. Twenty years, $2 trillion spent. Taliban regain control within weeks of US withdrawal in 2021. Exactly where the Soviet Union left off in 1989.",deaths:"~176,000"},
+{era:"21st century",year:"2003–2011",title:"Iraq War",cat:"war",detail:"US invasion on false WMD pretext. Saddam Hussein captured and executed. De-Baathification creates power vacuum. Islamic State emerges from the ruins. Destabilises the entire Middle East.",deaths:"~200,000"},
+{era:"21st century",year:"2022–present",title:"Russia-Ukraine War",cat:"war",detail:"Full-scale Russian invasion February 2022. Largest land war in Europe since WWII. Bakhmut, Mariupol, drone warfare. Rewired European security — Finland and Sweden joined NATO. Outcome still unresolved.",deaths:"~500,000+"},
+];
+
+const eras=["Ancient world","Medieval","Early modern","Revolutionary era","Industrial age","20th century","21st century"];
+let active="all";
+
+function render(){
+  const tl=document.getElementById("timeline");
+  tl.innerHTML="";
+  const filtered=active==="all"?events:events.filter(e=>e.cat===active);
+  const grouped={};
+  filtered.forEach(e=>{if(!grouped[e.era])grouped[e.era]=[];grouped[e.era].push(e);});
+  eras.forEach(era=>{
+    if(!grouped[era])return;
+    const el=document.createElement("div");
+    el.innerHTML=`<div class="era-label">${era}</div>`;
+    grouped[era].forEach((ev,i)=>{
+      const id=`ev-${era.replace(/\s/g,"-")}-${i}`;
+      const card=document.createElement("div");
+      card.className="event-card";
+      card.innerHTML=`<div class="dot dot-${ev.cat}"></div><div class="card-main"><div class="card-top"><span class="card-year">${ev.year}</span><span class="card-title">${ev.title}</span><span class="card-tag tag-${ev.cat}">${ev.cat}</span></div><div class="card-detail" id="${id}">${ev.detail}${ev.deaths?`<div class="deaths">Est. deaths: <span>${ev.deaths}</span></div>`:""}</div></div><i class="ti ti-chevron-down toggle-icon" aria-hidden="true"></i>`;
+      card.addEventListener("click",()=>{
+        const detail=card.querySelector(".card-detail");
+        const isOpen=detail.classList.contains("show");
+        document.querySelectorAll(".card-detail.show").forEach(d=>d.classList.remove("show"));
+        document.querySelectorAll(".event-card.expanded").forEach(c=>c.classList.remove("expanded"));
+        if(!isOpen){detail.classList.add("show");card.classList.add("expanded");}
+      });
+      el.appendChild(card);
+    });
+    tl.appendChild(el);
+  });
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const btn=e.target.closest(".filter-btn");
+  if(!btn)return;
+  active=btn.dataset.cat;
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
