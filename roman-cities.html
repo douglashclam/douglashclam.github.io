@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roman Cities — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); text-decoration: none; transition: color 0.15s; }
+nav a:hover { color: var(--color-text-primary); }
+nav h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); }
+.panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 0; margin-bottom: 1.25rem; }
+.filter-btn { padding: 5px 13px; border-radius: 999px; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+.filter-btn:hover { background: var(--color-background-secondary); }
+.filter-btn.active { background: #3C3489; border-color: #3C3489; color: #CECBF6; }
+.tier-section { margin-bottom: 1.5rem; }
+.tier-label { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.tier-label span { display: inline-block; height: 1px; flex: 1; background: var(--color-border-tertiary); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: .85rem 1rem; cursor: pointer; transition: border-color 0.15s; }
+.card:hover { border-color: var(--color-border-primary); }
+.card.expanded { border-color: #534AB7; }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 8px; }
+.city-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.city-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 1px; }
+.city-modern { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+.score-pill { flex-shrink: 0; font-size: 10px; padding: 2px 6px; border-radius: 999px; font-weight: 500; }
+.s-essential { background: #EEEDFE; color: #3C3489; }
+.s-major { background: #E1F5EE; color: #0F6E56; }
+.s-significant { background: #FAEEDA; color: #633806; }
+.bars { display: flex; flex-direction: column; gap: 5px; }
+.bar-row { display: flex; align-items: center; gap: 6px; }
+.bar-label { font-size: 11px; color: var(--color-text-tertiary); width: 54px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 4px; background: var(--color-background-secondary); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 2px; }
+.bar-hist { background: #534AB7; }
+.bar-recog { background: #1D9E75; }
+.detail { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 8px; margin-top: 8px; display: none; }
+.card.expanded .detail { display: block; }
+.note { font-size: 11px; color: var(--color-text-tertiary); font-style: italic; margin-bottom: 5px; }
+.ask-btn { margin-top: 8px; font-size: 11px; padding: 4px 8px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; width: 100%; text-align: left; font-family: 'Inter', sans-serif; transition: background 0.12s; }
+.ask-btn:hover { background: var(--color-background-secondary); }
+.ask-btn.copied { color: #0F6E56; border-color: #5DCAA5; }
+.legend { display: flex; gap: 14px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-tertiary); }
+.leg-dot { width: 8px; height: 8px; border-radius: 2px; }
+.new-badge { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 999px; background: #FAEEDA; color: #633806; margin-left: 5px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="life.html"><i class="ti ti-arrow-left"></i> History</a>
+    <h1>Roman Cities</h1>
+    <span></span>
+  </nav>
+  <div class="panel">
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('essential',this)">▲▲▲ Essential</button>
+      <button class="filter-btn" onclick="setFilter('major',this)">▲▲ Major</button>
+      <button class="filter-btn" onclick="setFilter('significant',this)">▲ Significant</button>
+      <button class="filter-btn" onclick="setFilter('east',this)">East</button>
+      <button class="filter-btn" onclick="setFilter('west',this)">West</button>
+      <button class="filter-btn" onclick="setFilter('new',this)">New additions</button>
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#534AB7"></div> Historical weight</div>
+      <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div> Roman-specific recognition</div>
+    </div>
+    <div id="root"></div>
+  </div>
+</div>
+<script>
+const cities = [
+  { name:'Rome', sub:'Roma', modern:'🇮🇹 Rome, Italy', tier:'essential', region:'west', hist:100, recog:100, isNew:false, note:'Uncontested on both axes.', detail:'The capital. ~1M at peak. Became ceremonially important even after the effective seat of power moved elsewhere post-286 AD. Every road, every province traces back here.', prompt:'When did Rome actually stop being the real capital of the empire?' },
+  { name:'Constantinople', sub:'Byzantium / Nova Roma', modern:'🇹🇷 Istanbul, Turkey', tier:'essential', region:'east', hist:98, recog:95, isNew:false, note:'Universally known as the Roman/Byzantine capital.', detail:'Founded by Constantine 330 AD. Eclipsed Rome within a generation. Eastern capital until 1453. The longest-running imperial capital in history.', prompt:'Why did Constantine choose Byzantium for his new capital?' },
+  { name:'Alexandria', sub:'Alexandreia', modern:'🇪🇬 Alexandria, Egypt', tier:'essential', region:'east', hist:92, recog:75, isNew:false, note:'Roman Egypt, Cleopatra — recognised as Roman, though Hellenistic framing competes.', detail:'Second city of the empire. Egypt\'s grain fed Rome. The Library, the Mouseion, the Pharos. Euclid, Eratosthenes, Hypatia. Intellectual capital of the Mediterranean world.', prompt:'What was Alexandria actually like as a Roman city?' },
+  { name:'Ephesus', sub:'Ephesos', modern:'🇹🇷 Selçuk, Turkey', tier:'major', region:'east', hist:78, recog:82, isNew:false, note:'Library of Celsus is one of the most recognised Roman ruins on Earth.', detail:'Largest city of Asia province, ~250k. Major port. Temple of Artemis. Paul\'s letters. The Library of Celsus facade is instantly recognisable — people know it as Roman.', prompt:'What survives at Ephesus today and is it worth visiting?' },
+  { name:'Ravenna', sub:'Ravenna', modern:'🇮🇹 Ravenna, Italy', tier:'major', region:'west', hist:82, recog:72, isNew:false, note:'Specifically known as a late Roman/Byzantine capital.', detail:'Western capital 402–476 AD, then Ostrogothic, then Byzantine Exarchate to 751. 350 years of continuous capital status. Best Late Antique mosaics on Earth — 8 UNESCO sites.', prompt:'Tell me about Ravenna\'s mosaics — which ones are the must-sees?' },
+  { name:'Trier', sub:'Augusta Treverorum', modern:'🇩🇪 Trier, Germany', tier:'major', region:'west', hist:80, recog:68, isNew:false, note:'Porta Nigra is specifically Roman. Known as Rome of the North.', detail:'Biggest city north of the Alps. Tetrarchic western capital. Maximian, Constantius, Constantine all ruled from here. Porta Nigra, Basilica of Constantine, and Imperial Baths still stand.', prompt:'What Roman monuments survive in Trier and why is it so undervisited?' },
+  { name:'Antioch', sub:'Antiochia on the Orontes', modern:'🇹🇷 Antakya, Turkey', tier:'major', region:'east', hist:85, recog:58, isNew:false, note:'Historically third city of the empire. Known in Roman and early Christian context.', detail:'200–300k population. Frequent imperial residence. Gateway to the East. Where followers of Jesus were first called Christians.', prompt:'Tell me about Antioch — its role in eastern campaigns and early Christianity' },
+  { name:'Carthage', sub:'Carthago (Roman)', modern:'🇹🇳 Tunis (suburb), Tunisia', tier:'major', region:'west', hist:80, recog:50, isNew:false, note:'Punic Wars dominate public perception. Roman Carthage is barely in the conversation for most people.', detail:'Razed 146 BC, rebuilt by Augustus as Africa\'s capital. One of the wealthiest western cities. Recognition penalised because Hannibal owns its public identity, not Roman grain supply.', prompt:'How different was Roman Carthage from the Punic city Rome destroyed?' },
+  { name:'Thessalonika', sub:'Thessalonica', modern:'🇬🇷 Thessaloniki, Greece', tier:'major', region:'east', hist:74, recog:60, isNew:false, note:'Galerius arch, Edict of 380 AD — known in Roman context by those who know it.', detail:'Galerius\'s tetrarchic seat. Arch of Galerius still stands. Theodosius issued the Edict making Christianity the state religion here in 380 AD. Main city on the Via Egnatia.', prompt:'Tell me about the Edict of Thessalonica and why it mattered more than the Edict of Milan' },
+  { name:'Pergamon', sub:'Pergamum', modern:'🇹🇷 Bergama, Turkey', tier:'major', region:'east', hist:75, recog:60, isNew:false, note:'Pergamon Altar in Berlin lifts recognition among museum-goers.', detail:'Attalid capital bequeathed to Rome 133 BC. The Asclepion — most famous medical center of the ancient world, Galen trained here. Library second only to Alexandria. The Pergamon Altar in Berlin is one of the great museum objects.', prompt:'Tell me about the Pergamon Altar and why it ended up in Berlin' },
+  { name:'Mediolanum', sub:'Milan', modern:'🇮🇹 Milan, Italy', tier:'major', region:'west', hist:72, recog:45, isNew:false, note:'Modern Milan overwhelms the Roman identity.', detail:'Western capital 286–402 AD. Edict of Milan (313 AD) issued here. But modern Milan\'s identity is so dominant that its Roman phase barely registers in public perception.', prompt:'Why did western emperors choose Milan over Rome as their capital?' },
+  { name:'Leptis Magna', sub:'Lepcis Magna', modern:'🇱🇾 Al Khums, Libya', tier:'significant', region:'west', hist:65, recog:58, isNew:true, note:'Best-preserved Roman city in Africa. Septimius Severus poured imperial money into his hometown.', detail:'Septimius Severus (r. 193–211 AD) lavishly rebuilt his hometown — the Severan Basilica, forum, and arch are spectacular. Best-preserved Roman city in Africa, UNESCO site. Sadly inaccessible due to Libyan instability.', prompt:'Tell me about Leptis Magna — why did Septimius Severus rebuild it so extravagantly?' },
+  { name:'Palmyra', sub:'Tadmor', modern:'🇸🇾 Tadmor, Syria', tier:'significant', region:'east', hist:62, recog:65, isNew:true, note:'Zenobia briefly controlled half the eastern empire. ISIS destroyed much of it in 2015.', detail:'Major caravan city on the Syrian steppe. Queen Zenobia broke away from Rome and controlled Egypt and much of the East (270–272 AD) before Aurelian crushed her. ISIS destruction in 2015 brought it global attention.', prompt:'Tell me about Queen Zenobia — how did she nearly break the Roman empire in two?' },
+  { name:'Sirmium', sub:'Sirmium', modern:'🇷🇸 Sremska Mitrovica, Serbia', tier:'significant', region:'west', hist:72, recog:22, isNew:true, note:'Fourth tetrarchic capital. Birthplace of multiple emperors. Almost completely unknown today.', detail:'One of the four tetrarchic capitals under Diocletian. Birthplace of Decius, Aurelian, Probus, Maximian, and Gratian — more emperors than almost any other city. Strategically critical on the Danube. Almost nothing survives and the modern city has no profile.', prompt:'Why was Sirmium so important to the late Roman empire and why has it been forgotten?' },
+  { name:'Arles', sub:'Arelate', modern:'🇫🇷 Arles, France', tier:'significant', region:'west', hist:62, recog:62, isNew:true, note:'Constantine\'s preferred western city. Finest Roman monuments in France.', detail:'Constantine held councils here and built extensively. The amphitheatre, theatre, and Les Alyscamps necropolis are among the best-preserved Roman monuments in France. The Musée de l\'Arles antique has a recently discovered bust of Caesar.', prompt:'Tell me about Roman Arles and why Constantine favoured it over other western cities' },
+  { name:'Mérida', sub:'Emerita Augusta', modern:'🇪🇸 Mérida, Spain', tier:'significant', region:'west', hist:63, recog:48, isNew:true, note:'Capital of Lusitania. Best Roman remains in Iberia — theatre, amphitheatre, bridge, aqueduct all standing.', detail:'Founded by Augustus 25 BC for veterans of the Cantabrian Wars. Capital of Lusitania. The Roman theatre is one of the best preserved in the world and still used for performances. The bridge across the Guadiana (792m) is the longest surviving Roman bridge. UNESCO site.', prompt:'Tell me about Mérida — what Roman monuments survive and are they worth visiting?' },
+  { name:'Baalbek', sub:'Heliopolis', modern:'🇱🇧 Baalbek, Lebanon', tier:'significant', region:'east', hist:60, recog:62, isNew:true, note:'Largest temple complex in the entire empire. Temple of Bacchus is the best-preserved large Roman temple anywhere.', detail:'The Jupiter temple platform used stones weighing up to 800 tonnes — the largest dressed stones ever moved in antiquity. The Temple of Bacchus (2nd c. AD) is extraordinarily intact — better than anything in Rome itself.', prompt:'How did Baalbek end up with the largest temple complex in the Roman empire?' },
+  { name:'York', sub:'Eboracum', modern:'🇬🇧 York, United Kingdom', tier:'significant', region:'west', hist:58, recog:52, isNew:true, note:'Septimius Severus died here. Constantine proclaimed emperor here. Two emperors is a real credential.', detail:'Legionary fortress and colonia in northern Britain. Septimius Severus used it as his base for Scottish campaigns and died here in 211 AD. Constantine was proclaimed emperor by his troops here in 306 AD. The Multangular Tower and parts of the Roman wall survive.', prompt:'Tell me about Constantine\'s proclamation at York and what the city was like then' },
+  { name:'Caesarea Maritima', sub:'Caesarea', modern:'🇮🇱 Caesarea, Israel', tier:'significant', region:'east', hist:60, recog:52, isNew:true, note:'Herod\'s port city, Judaea\'s provincial capital. Pontius Pilate was based here, not Jerusalem.', detail:'Built by Herod the Great as a showcase Hellenistic-Roman port. Capital of Judaea/Syria Palaestina. The Roman governors including Pontius Pilate resided here. Paul was imprisoned here before his voyage to Rome.', prompt:'Why was Caesarea Maritima the real capital of Roman Judaea rather than Jerusalem?' },
+  { name:'Nicomedia', sub:'Nicomedia', modern:'🇹🇷 İzmit, Turkey', tier:'significant', region:'east', hist:78, recog:22, isNew:false, note:'Biggest gap on the list. Diocletian\'s actual personal capital. Almost zero recognition — nothing survives.', detail:'Diocletian\'s personal capital, effective seat of the whole empire ~286–305 AD. Constantine raised here. Catastrophic earthquake in 358 AD ended its prominence. Nothing above ground survives.', prompt:'Why did Diocletian choose Nicomedia as his capital over anywhere else?' },
+  { name:'Lugdunum', sub:'Lugdunum', modern:'🇫🇷 Lyon, France', tier:'significant', region:'west', hist:62, recog:42, isNew:false, note:'Capital of the Three Gauls, imperial mint — historically solid but recognition modest.', detail:'Administrative capital of three Gallic provinces. Imperial mint. Claudius born here. Bronze tablet of his Senate speech survives in Lyon\'s museum.', prompt:'What Roman remains survive in Lyon and are they worth visiting?' },
+  { name:'Capua', sub:'Capua', modern:'🇮🇹 Santa Maria Capua Vetere, Italy', tier:'significant', region:'west', hist:55, recog:55, isNew:false, note:'Spartacus starts here. Hannibal winters here. Recognition well-matched to its weight.', detail:'Largest Campanian city after Rome. Hannibal wintered here after Cannae. Spartacus\'s revolt began at the gladiatorial school here 73 BC. Both stories are specifically Roman-era.', prompt:'Tell me about the Spartacus revolt — how did it start at Capua and why did it nearly succeed?' },
+  { name:'Corinth', sub:'Corinthus', modern:'🇬🇷 Ancient Corinth, Greece', tier:'significant', region:'east', hist:58, recog:50, isNew:false, note:'Paul\'s letters give it Roman-era recognition. Controls the isthmus commercially.', detail:'Refounded by Caesar 44 BC, capital of Achaea. Paul spent 18 months here. Controls all land traffic between northern Greece and the Peloponnese.', prompt:'What did Paul actually do in Corinth and why did he write two letters to it?' },
+  { name:'Aquileia', sub:'Aquileia', modern:'🇮🇹 Aquileia, Italy', tier:'significant', region:'west', hist:68, recog:28, isNew:false, note:'Its destruction by Attila literally created Venice. Almost no public profile.', detail:'Fourth-largest city in Italy for centuries. Marcus Aurelius based here for the Marcomannic Wars. Attila sacked it so thoroughly in 452 AD that refugees fled into the lagoons — founding Venice. The Basilica has the finest early Christian mosaic floor in existence.', prompt:'Tell me about Aquileia\'s mosaic floor and how its destruction by Attila created Venice' },
+  { name:'Athens', sub:'Athenai', modern:'🇬🇷 Athens, Greece', tier:'significant', region:'east', hist:45, recog:28, isNew:false, note:'Famous as a Greek city, not a Roman one. Roman contributions barely register.', detail:'30–50k people in the Roman period, politically irrelevant. Hadrian poured money in — finished the Temple of Olympian Zeus, built a new quarter, his arch still stands. But public perception is entirely classical Greek.', prompt:'What did Hadrian actually build in Athens and why was he so obsessed with it?' },
+  { name:'Syracuse', sub:'Syracusae', modern:'🇮🇹 Siracusa, Italy', tier:'significant', region:'west', hist:60, recog:30, isNew:false, note:'Greek identity completely dominates. Roman Syracuse barely exists in public perception.', detail:'Major Greek colonial city sacked by Rome in 212 BC. Archimedes died in the siege. Under Rome it declined significantly. Public perception is almost entirely Greek.', prompt:'Tell me about Archimedes and the Roman siege of Syracuse' },
+];
+
+const tiers = {
+  essential:   { label: '▲▲▲ Essential', cls: 's-essential' },
+  major:       { label: '▲▲ Major center', cls: 's-major' },
+  significant: { label: '▲ Significant', cls: 's-significant' },
+};
+
+let currentFilter = 'all';
+let expanded = null;
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function toggle(name) {
+  expanded = expanded === name ? null : name;
+  render();
+}
+
+function bar(val, cls) {
+  return `<div class="bar-track"><div class="bar-fill ${cls}" style="width:${val}%"></div></div>`;
+}
+
+function copyPrompt(btn, prompt) {
+  event.stopPropagation();
+  navigator.clipboard.writeText(prompt).then(() => {
+    btn.textContent = 'Copied to clipboard ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = prompt + ' ↗'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function render() {
+  const filtered = cities.filter(c => {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'new') return c.isNew;
+    if (currentFilter === 'east') return c.region === 'east';
+    if (currentFilter === 'west') return c.region === 'west';
+    return c.tier === currentFilter;
+  });
+
+  const grouped = { essential: [], major: [], significant: [] };
+  filtered.forEach(c => grouped[c.tier]?.push(c));
+
+  let html = '';
+  for (const [tier, list] of Object.entries(grouped)) {
+    if (!list.length) continue;
+    const t = tiers[tier];
+    html += `<div class="tier-section"><div class="tier-label">${t.label} <span></span></div><div class="grid">`;
+    list.forEach(c => {
+      const isOpen = expanded === c.name;
+      const escapedPrompt = c.prompt.replace(/'/g, "\\'");
+      html += `<div class="card ${isOpen ? 'expanded' : ''}" onclick="toggle('${c.name.replace(/'/g,"\\'")}')">
+        <div class="card-header">
+          <div>
+            <div class="city-name">${c.name}${c.isNew ? '<span class="new-badge">new</span>' : ''}</div>
+            <div class="city-sub">${c.sub}</div>
+            <div class="city-modern">${c.modern}</div>
+          </div>
+          <span class="score-pill ${t.cls}">${t.label.split(' ')[0]}</span>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><span class="bar-label">Historical</span>${bar(c.hist,'bar-hist')}</div>
+          <div class="bar-row"><span class="bar-label">Roman rec.</span>${bar(c.recog,'bar-recog')}</div>
+        </div>
+        <div class="detail">
+          <p class="note">${c.note}</p>
+          <p>${c.detail}</p>
+          <button class="ask-btn" onclick="copyPrompt(this,'${escapedPrompt}')">${c.prompt} ↗</button>
+        </div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  document.getElementById('root').innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
