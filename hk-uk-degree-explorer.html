@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HK & UK Degree Explorer — Douglas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.kg-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem }
+nav a { display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--color-text-tertiary);text-decoration:none;transition:color 0.15s }
+nav a:hover { color:var(--color-text-primary) }
+nav h1 { font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary) }
+.kg-panel { background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:1.5rem }
+
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem}
+.fb{font-size:12px;padding:4px 11px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.fb.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-bottom:1.25rem}
+.dc{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:13px;cursor:pointer;transition:border-color .15s}
+.dc:hover{border-color:var(--color-border-secondary)}
+.dc.sel{border-color:var(--color-border-primary);background:var(--color-background-secondary)}
+.dc-top{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.dico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.dname{font-size:13px;font-weight:500;line-height:1.3}
+.tbadge{font-size:10px;font-weight:500;padding:2px 6px;border-radius:4px;display:inline-block;margin-bottom:6px}
+.chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-size:10px;padding:2px 6px;border-radius:4px}
+.detail{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.dh{padding:14px 16px 12px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:12px}
+.dh-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.dh-name{font-size:17px;font-weight:500}
+.dh-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.mets{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:11px 16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.met{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 10px}
+.ml{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em}
+.mv{font-size:14px;font-weight:500;margin-top:3px}
+.bars{padding:11px 16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.br{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.br:last-child{margin-bottom:0}
+.bl{font-size:12px;color:var(--color-text-secondary);min-width:105px;flex-shrink:0}
+.bt{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.bf{height:100%;border-radius:3px}
+.bv{font-size:12px;font-weight:500;min-width:26px;text-align:right}
+.pcs{display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pc{padding:11px 16px}
+.pc:first-child{border-right:0.5px solid var(--color-border-tertiary)}
+.pch{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.pi{display:flex;gap:6px;padding:3px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);line-height:1.4}
+.pi:last-child{border-bottom:none;padding-bottom:0}
+.pdot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.ais{padding:11px 16px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.aih{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.ain{font-size:12px;color:var(--color-text-secondary);line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.progs{padding:11px 16px}
+.prog-tabs{display:flex;gap:0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;margin-bottom:10px;width:fit-content}
+.ptab{font-size:12px;padding:5px 14px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);transition:all .15s;font-family:'Inter',sans-serif}
+.ptab.on{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.ptab:first-child{border-right:0.5px solid var(--color-border-tertiary)}
+.prog-list{display:flex;flex-direction:column;gap:5px}
+.prog-item{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.prog-uni{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
+.prog-deg{font-size:13px;font-weight:500;margin-top:1px}
+.prog-note{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.prog-right{flex-shrink:0;text-align:right}
+.prog-tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.combos{padding:11px 16px;border-top:0.5px solid var(--color-border-tertiary)}
+.ch{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.ctags{display:flex;gap:5px;flex-wrap:wrap}
+.ctag{font-size:12px;padding:3px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
+</style>
+
+<div class="kg-wrap">
+  <nav>
+    <a href="area.html?id=career"><i class="ti ti-arrow-left"></i> Career capital</a>
+    <h1>Degree Explorer</h1>
+    <span></span>
+  </nav>
+  <div class="kg-panel">
+    <h2 style="font-size:16px;font-weight:600;margin-bottom:4px">HK & UK degree explorer</h2>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem">Employability, AI disruption scores, and specific programmes across HK and UK universities.</p>
+    <div class="filter-row" id="filters"></div>
+    <div class="cards" id="cards"></div>
+    <div id="detail"></div>
+  </div>
+</div>
+
+<script>
+const D=[
+  {id:'med',name:'Medicine',icon:'ti-stethoscope',color:'#e05252',tier:1,field:'Healthcare',salary:'HK$80-150K+',years:'5-6',supply:'Very low',employ:98,sal_s:95,prestige:98,diff:99,ai_d:15,ai_a:85,pros:['Near-zero unemployment — structural shortage','HK$200K+ as attending physician','Ageing population = demand only grows','Respected socially across HK and mainland'],cons:['Longest path: 6yr + residency + fellowship','Extremely competitive DSE entry (top 1-2%)','High stress, long hours as junior doctor','Late financial start vs finance peers'],ai_note:'AI augments rather than replaces. Diagnostic AI (radiology, pathology) needs physician oversight. Administrative burden is being reduced, freeing doctors for clinical work. Medical AI is a growing subspecialty worth considering.',combos:['Medicine + research','Medicine + healthcare AI','Medicine + health policy','Medicine + med-tech startup'],hk:[{uni:'HKU',deg:'MBBS',note:'6 years · Most prestigious HK medical degree · Strong research culture',rank:'#11 QS'},{uni:'CUHK',deg:'MBChB',note:'6 years · Problem-based learning · Strong clinical training',rank:'#36 QS'}],uk:[{uni:'Oxford',deg:'BM BCh',note:'6 years · Preclinical then clinical · World #1',rank:'#3 QS'},{uni:'Cambridge',deg:'MB BChir',note:'6 years · Strong biomedical science foundation',rank:'#5 QS'},{uni:'Imperial',deg:'MBBS',note:'6 years · London teaching hospitals · Strong research',rank:'#2 Medicine'},{uni:'UCL',deg:'MBBS',note:'6 years · Affiliated with UCLH · Global outlook',rank:'#9 QS'},{uni:"King's",deg:'MBBS (GKT)',note:'5 years · 3 major London teaching hospitals',rank:'Top 10 UK'},{uni:'Edinburgh',deg:'MBChB',note:'6 years · Historic medical school · Strong reputation',rank:'Top 5 UK'}]},
+  {id:'cs',name:'Computer science',icon:'ti-code',color:'#4caf7d',tier:1,field:'Technology',salary:'HK$40-100K',years:'4',supply:'Low',employ:85,sal_s:82,prestige:78,diff:80,ai_d:40,ai_a:90,pros:['Structurally undersupplied in HK — no Silicon Valley-style glut','Every sector hiring: banks, hospitals, government, startups','AI tools multiply strong engineer output 3-5x','Strong salary growth trajectory'],cons:['Floor rising — mediocre coders increasingly exposed by AI','Requires continuous upskilling — skills depreciate faster','Less prestige than medicine/law in traditional HK view','Pure CS without domain knowledge increasingly commoditised'],ai_note:'HK never had the overhiring boom, so no correction happening locally. AI displaces junior boilerplate coding but amplifies strong engineers significantly. Engineers who adapt to AI-augmented workflows are more valuable than ever.',combos:['CS + finance (quant)','CS + healthcare AI','CS + ML specialisation','CS + Mandarin'],hk:[{uni:'HKUST',deg:'BSc Computer Science',note:'4 years · Best CS faculty in HK · Strong industry links',rank:'#34 QS'},{uni:'HKU',deg:'BEng Computer Science',note:'4 years · Engineering-oriented · Strong research',rank:'#11 QS'},{uni:'CUHK',deg:'BSc Computer Science',note:'4 years · Solid programme · Good Shenzhen links',rank:'#36 QS'},{uni:'PolyU',deg:'BSc Computing',note:'4 years · Applied focus · Strong industry partnerships',rank:'#57 QS'},{uni:'CityU',deg:'BSc Computer Science',note:'4 years · Up-and-coming · Strong internship culture',rank:'#62 QS'}],uk:[{uni:'Imperial',deg:'MEng Computing',note:'4 years · Integrated Masters · Top UK CS school',rank:'#6 QS'},{uni:'Cambridge',deg:'BA Computer Science',note:'3 years · Rigorous maths foundation',rank:'#2 QS'},{uni:'Oxford',deg:'BA Computer Science',note:'3 years · Theory-heavy · Excellent alumni network',rank:'#3 QS'},{uni:'UCL',deg:'BSc Computer Science',note:'3 years · London tech ecosystem access',rank:'#9 QS'},{uni:'Edinburgh',deg:'BSc Computer Science',note:'4 years · Strong AI research · Scotland',rank:'#22 QS'},{uni:'Manchester',deg:'BSc Computer Science',note:'3 years · Large cohort · Good placement record',rank:'#32 QS'}]},
+  {id:'fin',name:'Finance / FinTech',icon:'ti-building-bank',color:'#5b9cf6',tier:1,field:'Finance',salary:'HK$50-120K',years:'4',supply:'Moderate',employ:88,sal_s:90,prestige:88,diff:75,ai_d:45,ai_a:70,pros:["HK's core industry — structural long-term demand",'HKMA FinTech 2025 creating entirely new job categories','Digital asset licensing = new frontier','Diverse exits: banking, PE, startups, regtech'],cons:['Competitive at top (Goldman, JPM require top grades)','Market-sensitive — hiring freezes in downturns','Long hours in investment banking','Generic finance degree saturated without specialisation'],ai_note:'Mid-level analysis and reporting roles face real disruption. AI handles basic equity research, credit scoring, compliance screening. Relationship banking, complex structuring, and senior advisory are AI-resistant. FinTech engineers building AI systems are in extreme demand.',combos:['Finance + CS (quant)','Finance + law','Finance + Mandarin','Finance + data science'],hk:[{uni:'HKUST',deg:'BSc Finance',note:'4 years · Top finance faculty · CFA pipeline · Wall St recruiting',rank:'#34 QS'},{uni:'HKU',deg:'BBA Finance',note:'4 years · Strong banking alumni network · HK establishment',rank:'#11 QS'},{uni:'CUHK',deg:'BBA Finance & Investment',note:'4 years · Good mainland China connections',rank:'#36 QS'},{uni:'PolyU',deg:'BSc FinTech',note:'4 years · Dedicated FinTech degree · Industry-aligned',rank:'#57 QS'},{uni:'CityU',deg:'BSc Applied Finance',note:'4 years · Professional focus · CPA/CFA pathway',rank:'#62 QS'}],uk:[{uni:'LSE',deg:'BSc Finance',note:'3 years · Premier finance school globally · City of London access',rank:'#45 QS'},{uni:'Imperial',deg:'BSc Finance & Accounting',note:'4 years · Business School · Quant-heavy',rank:'#6 QS'},{uni:'Oxford',deg:'BA PPE',note:'3 years · Philosophy Politics Economics · Elite generalist',rank:'#3 QS'},{uni:'Warwick',deg:'BSc Accounting & Finance',note:'3 years · Strong City recruitment · WBS',rank:'#67 QS'},{uni:'UCL',deg:'BSc Economics',note:'3 years · Quantitative focus · London network',rank:'#9 QS'}]},
+  {id:'law',name:'Law',icon:'ti-scale',color:'#9b8ec4',tier:2,field:'Law',salary:'HK$40-90K',years:'5',supply:'Moderate',employ:80,sal_s:78,prestige:90,diff:82,ai_d:55,ai_a:60,pros:["HK as Asia's arbitration hub — sustained structural demand",'China business law is uniquely valuable (only common law China gateway)','Magic circle firms (Freshfields, Linklaters) recruit well','Versatile: finance, compliance, government paths'],cons:['Glutted at mid-tier — not every law grad gets a good job','5-year path: LLB + PCLL mandatory','AI disrupting document review and drafting significantly','Salary lower than medicine or top finance unless magic circle'],ai_note:"Law is AI's most active disruption target. Document review, due diligence, contract drafting all being automated. Junior solicitor roles under real pressure. Complex cross-border structuring, China-specific expertise, and courtroom advocacy are genuinely hard to automate. Specialise early.",combos:['Law + Mandarin (essential)','Law + finance','Law + tech/IP law','Law + arbitration focus'],hk:[{uni:'HKU',deg:'LLB',note:'4 years + PCLL · Most prestigious HK law degree · Top firms recruit directly',rank:'#11 QS'},{uni:'CUHK',deg:'LLB',note:'4 years + PCLL · Good mainland China law focus',rank:'#36 QS'},{uni:'CityU',deg:'LLB',note:'4 years + PCLL · Applied focus · Growing reputation',rank:'#62 QS'}],uk:[{uni:'Oxford',deg:'BA Jurisprudence',note:'3 years · Highest global legal prestige · Academic focus',rank:'#3 QS'},{uni:'Cambridge',deg:'BA Law',note:'3 years · Rigorous · Strong magic circle pipeline',rank:'#2 QS'},{uni:'LSE',deg:'LLB',note:'3 years · Commercial law focus · City law firm pipeline',rank:'#45 QS'},{uni:'UCL',deg:'LLB',note:'3 years · London · Strong commercial law programme',rank:'#9 QS'},{uni:"King's",deg:'LLB',note:'3 years · London · Internationally oriented · Good mooting',rank:'Top 10 UK'}]},
+  {id:'acc',name:'Accounting / CPA',icon:'ti-calculator',color:'#c8a84b',tier:2,field:'Finance',salary:'HK$25-70K',years:'4',supply:'Moderate',employ:88,sal_s:72,prestige:70,diff:65,ai_d:60,ai_a:55,pros:['Near-zero unemployment with CPA qualification','Big 4 recruit heavily from all major HK universities','Reliable pathway into finance and corporate roles','Predictable career progression with clear milestones'],cons:['Salary ceiling lower than CS or investment banking','AI hitting audit and compliance work meaningfully','Perceived as less exciting — harder to pivot later','Big 4 culture demanding with limited early upside'],ai_note:'Probably the degree most visibly impacted by AI right now. Audit sampling, tax compliance, bookkeeping, financial reporting all being automated rapidly. The CPA who survives moves into advisory, M&A support, or CFO-track roles. Pure compliance accounting is genuinely threatened.',combos:['Accounting + data analytics','Accounting + finance','Accounting + technology (ERP/SAP)','Accounting + law'],hk:[{uni:'HKUST',deg:'BSc Accounting & Finance',note:'4 years · HKICPA accredited · Strong Big 4 recruitment',rank:'#34 QS'},{uni:'HKU',deg:'BBA Accounting',note:'4 years · HKICPA accredited · Prestigious employer access',rank:'#11 QS'},{uni:'CUHK',deg:'BBA Accounting',note:'4 years · HKICPA + ICAEW dual accreditation',rank:'#36 QS'},{uni:'PolyU',deg:'BSc Accounting & Finance',note:'4 years · HKICPA accredited · Strong industry links',rank:'#57 QS'},{uni:'CityU',deg:'BSc Accountancy',note:'4 years · HKICPA accredited · International exposure',rank:'#62 QS'}],uk:[{uni:'LSE',deg:'BSc Accounting & Finance',note:'3 years · Highly quantitative · Big 4 direct pipeline',rank:'#45 QS'},{uni:'Warwick',deg:'BSc Accounting & Finance',note:'3 years · ICAEW accredited · WBS reputation',rank:'#67 QS'},{uni:'Edinburgh',deg:'BCom Accounting',note:'4 years · ICAS pathway · Scottish CA qualification',rank:'#22 QS'},{uni:'Manchester',deg:'BSc Accounting',note:'3 years · ICAEW · Large alumni network',rank:'#32 QS'}]},
+  {id:'eng',name:'Civil / structural engineering',icon:'ti-building-bridge',color:'#20b2aa',tier:2,field:'Engineering',salary:'HK$30-65K',years:'4',supply:'Very low',employ:90,sal_s:68,prestige:72,diff:76,ai_d:20,ai_a:50,pros:['8,400 professional shortage in HK (Construction Industry Council)','Northern Metropolis + Lantau Tomorrow = decade of projects','Government direct hiring — very high job security','Relatively insulated from tech disruption'],cons:['Moderate salary vs CS or finance','Site work and physical demands required','Slower progression vs professional services','Underappreciated relative to societal contribution'],ai_note:'One of the safest degrees from AI disruption. Physical infrastructure design, project management, and on-site engineering require human judgment AI cannot replicate. BIM and AI design tools augment but do not replace. Comfortable careers for decades ahead.',combos:['Civil eng + BIM/digital twin','Civil eng + project management','Civil eng + sustainability/ESG','Civil eng + Mandarin (China projects)'],hk:[{uni:'HKU',deg:'BEng Civil Engineering',note:'4 years · HKICSC accredited · Strong research output',rank:'#11 QS'},{uni:'HKUST',deg:'BEng Civil & Environmental Engineering',note:'4 years · Research-intensive',rank:'#34 QS'},{uni:'PolyU',deg:'BEng Civil Engineering',note:'4 years · Applied focus · Strong industry ties',rank:'#57 QS'},{uni:'CityU',deg:'BEng Civil Engineering',note:'4 years · Infrastructure-focused curriculum',rank:'#62 QS'}],uk:[{uni:'Imperial',deg:'MEng Civil Engineering',note:'4 years · Top UK engineering school · Strong global placement',rank:'#6 QS'},{uni:'UCL',deg:'MEng Civil Engineering',note:'4 years · London · Strong infrastructure focus',rank:'#9 QS'},{uni:'Edinburgh',deg:'MEng Civil Engineering',note:'5 years · ICE accredited · Strong Scottish infrastructure',rank:'#22 QS'},{uni:'Manchester',deg:'MEng Civil Engineering',note:'4 years · ICE accredited · Northern powerhouse projects',rank:'#32 QS'}]},
+  {id:'ds',name:'Data science / AI',icon:'ti-brain',color:'#f59e0b',tier:1,field:'Technology',salary:'HK$45-110K',years:'4',supply:'Very low',employ:87,sal_s:85,prestige:80,diff:82,ai_d:30,ai_a:95,pros:['Every HK sector hiring: banks, hospitals, logistics, govt','ML engineers most in-demand technical role globally','First-mover advantage — HK supply extremely thin','Cross-sector mobility: finance today, healthcare tomorrow'],cons:['Requires strong maths foundation — not for everyone','Fast-moving field — continuous learning required','Basic data analysis being commoditised by AutoML','Domain expertise essential — pure data science less valuable alone'],ai_note:'Paradoxically the field least disrupted by AI — you are building the tools. Demand growing faster than supply globally. The risk is commoditisation of basic analysis. Specialise in ML engineering, LLM fine-tuning, or domain-specific AI deployment.',combos:['Data science + finance','Data science + healthcare/bio','Data science + NLP/LLMs','Data science + MLOps engineering'],hk:[{uni:'HKUST',deg:'BSc Data Science & Technology',note:'4 years · Dedicated DST programme · Industry projects',rank:'#34 QS'},{uni:'HKU',deg:'BEng Data Science',note:'4 years · Engineering-based · Strong stat foundation',rank:'#11 QS'},{uni:'CUHK',deg:'BSc Statistics & Data Science',note:'4 years · Maths-heavy · Strong research pipeline',rank:'#36 QS'},{uni:'CityU',deg:'BSc Data Science',note:'4 years · Applied focus · FinTech and smart city projects',rank:'#62 QS'}],uk:[{uni:'Imperial',deg:'BSc Mathematics & Computer Science',note:'3 years · Rigorous maths-CS bridge · Top placement',rank:'#6 QS'},{uni:'UCL',deg:'BSc Data Science',note:'3 years · Stats + CS + domain · London tech links',rank:'#9 QS'},{uni:'Edinburgh',deg:'BSc Data Science',note:'4 years · Strong AI research group · Turing Institute links',rank:'#22 QS'},{uni:'Warwick',deg:'BSc Data Science',note:'3 years · Stats department world-class',rank:'#67 QS'}]},
+  {id:'cyber',name:'Cybersecurity',icon:'ti-shield-lock',color:'#6366f1',tier:2,field:'Technology',salary:'HK$40-90K',years:'4',supply:'Very low',employ:88,sal_s:80,prestige:72,diff:78,ai_d:25,ai_a:80,pros:['Critical shortage globally and in HK specifically','Financial sector compliance driving demand','AI creating new attack surfaces — paradoxically increasing demand','Government sector actively hiring'],cons:['Smaller talent community in HK vs Silicon Valley','Requires constant upskilling as threats evolve','High stress in incident response roles','Less visible career path than CS or finance'],ai_note:'Another field where AI increases demand rather than reducing it. AI-powered cyberattacks create an arms race requiring skilled defenders. Automated threat detection tools amplify security professionals rather than replace them. Very safe long-term outlook.',combos:['Cybersecurity + finance','Cybersecurity + law (cyber law)','Cybersecurity + AI/ML','Cybersecurity + cloud infrastructure'],hk:[{uni:'PolyU',deg:'BSc Cybersecurity',note:'4 years · Most dedicated HK programme · HKPC partnerships',rank:'#57 QS'},{uni:'CityU',deg:'BSc Computer Science (Cybersecurity stream)',note:'4 years · Security specialisation',rank:'#62 QS'},{uni:'HKUST',deg:'BSc Information Systems Technology',note:'4 years · Business-oriented InfoSec',rank:'#34 QS'}],uk:[{uni:'Imperial',deg:'MEng Electrical & Electronic Engineering',note:'4 years · Security specialisation available',rank:'#6 QS'},{uni:'UCL',deg:'MSc Information Security',note:'1 year postgrad · GCHQ certified · Strong industry links',rank:'#9 QS'},{uni:'Edinburgh',deg:'BSc Computer Science (Security)',note:'4 years · Security stream within CS programme',rank:'#22 QS'},{uni:'Royal Holloway',deg:'BSc Cyber Security',note:"3 years · NCSC certified · UK's dedicated cyber school",rank:'Specialist'}]},
+  {id:'esg',name:'ESG / green finance',icon:'ti-leaf',color:'#3b82f6',tier:2,field:'Finance',salary:'HK$35-75K',years:'4',supply:'Low',employ:78,sal_s:72,prestige:70,diff:65,ai_d:35,ai_a:65,pros:["HK positioning as Asia's green finance hub",'HKMA and SFC pushing mandatory ESG disclosure','First-mover advantage — field still young','Cross-sector: finance, consulting, government all hiring'],cons:['Field still being defined — role titles inconsistent','Regulatory risk — policy changes reshape demand overnight','Salary currently lower than core finance','Requires combining finance and science knowledge'],ai_note:'ESG data analysis and reporting is being automated. Sustainability strategy, stakeholder engagement, and regulatory interpretation require human judgment. Risk: ESG becomes a box-ticking compliance function. Specialise in green finance products not pure ESG reporting.',combos:['ESG + finance','ESG + law (climate law)','ESG + engineering','ESG + data science'],hk:[{uni:'HKU',deg:'BSc Environmental Management & Technology',note:'4 years · Science-policy bridge · HK govt pipeline',rank:'#11 QS'},{uni:'HKUST',deg:'BSc Environmental Engineering',note:'4 years · Technical focus · Carbon engineering',rank:'#34 QS'},{uni:'PolyU',deg:'BSc Environment & Sustainable Development',note:'4 years · Applied sustainability',rank:'#57 QS'}],uk:[{uni:'LSE',deg:'BSc Environmental Policy with Economics',note:'3 years · Policy-finance bridge · Green finance focus',rank:'#45 QS'},{uni:'Imperial',deg:'BSc Environmental Science',note:'3 years · Technical + policy · Strong research',rank:'#6 QS'},{uni:'Edinburgh',deg:'BSc Environmental Science',note:'4 years · Field-based · Strong ecology + policy',rank:'#22 QS'},{uni:'UCL',deg:'BSc Geography with Economics',note:'3 years · Spatial + ESG thinking · London',rank:'#9 QS'}]},
+  {id:'biz',name:'Business (BBA)',icon:'ti-briefcase',color:'#888',tier:3,field:'Business',salary:'HK$20-55K',years:'4',supply:'Very high',employ:72,sal_s:58,prestige:60,diff:50,ai_d:50,ai_a:45,pros:['Flexible — keeps options open across sectors','Accessible entry requirements vs medicine or law','Networking opportunities especially at HKU/HKUST/CUHK','MBA useful for career pivot later'],cons:['Saturated — thousands of BBA graduates annually','Generic without strong internship record','Lower starting salary than technical degrees','Employers increasingly prefer specialist degrees'],ai_note:"Middle management and generalist business analyst roles are AI's clearest displacement target. Strategy consulting, market research, and basic analysis being automated at junior levels. BBA most valuable when combined with a technical skill — alone it is increasingly insufficient.",combos:['Business + CS','Business + data analytics','Business + Mandarin','Business + finance (double major)'],hk:[{uni:'HKUST',deg:'BBA',note:'4 years · Top HK business school · Strong exchange programme',rank:'#34 QS'},{uni:'HKU',deg:'BBA',note:'4 years · Prestigious HK establishment · Banking alumni',rank:'#11 QS'},{uni:'CUHK',deg:'BBA',note:'4 years · Strong China connections · AACSB accredited',rank:'#36 QS'},{uni:'PolyU',deg:'BA Business Administration',note:'4 years · Applied focus · Professional certifications',rank:'#57 QS'},{uni:'CityU',deg:'BBA',note:'4 years · Internship-focused · Good employer links',rank:'#62 QS'}],uk:[{uni:'LSE',deg:'BSc Management',note:'3 years · Rigorous quantitative approach · City pipeline',rank:'#45 QS'},{uni:'Warwick',deg:'BSc Business',note:'3 years · WBS · Strong consulting recruitment',rank:'#67 QS'},{uni:'Manchester',deg:'BSc Management',note:'3 years · Alliance MBS · Large employer network',rank:'#32 QS'},{uni:'Edinburgh',deg:'BCom Business',note:'4 years · Edinburgh Business School · Good international links',rank:'#22 QS'}]},
+  {id:'allied',name:'Allied health / nursing',icon:'ti-heart-rate-monitor',color:'#e05252',tier:2,field:'Healthcare',salary:'HK$30-60K',years:'4',supply:'Very low',employ:95,sal_s:68,prestige:72,diff:70,ai_d:20,ai_a:60,pros:['Critical shortage — 1,600+ nurse deficit by 2026 (Hospital Authority)','Essentially guaranteed employment anywhere in HK','Government salary scales provide strong security','Physiotherapy, OT, pharmacy all have strong demand'],cons:['Physically demanding with shift work','Salary significantly lower than medicine','Emotionally taxing — high burnout rates','Less social prestige than medical degree in HK culture'],ai_note:'Very safe from AI displacement. Hands-on patient care, therapeutic relationships, and physical assessment cannot be automated. AI assists monitoring and documentation but human caregivers remain essential. Shortage will persist regardless of AI advancement.',combos:['Nursing + healthcare tech','Nursing + management','Allied health + research','Pharmacy + clinical specialisation'],hk:[{uni:'HKU',deg:'BNurs (Nursing)',note:'4 years · HA hospital placements · Strong academic reputation',rank:'#11 QS'},{uni:'PolyU',deg:'BNurs',note:'4 years · Largest nursing programme in HK · Clinical focus',rank:'#57 QS'},{uni:'CUHK',deg:'BNurs',note:'4 years · CUHKMC teaching hospital · Strong postgrad pathway',rank:'#36 QS'},{uni:'PolyU',deg:'BSc Physiotherapy',note:'4 years · Top HK physiotherapy · HA accredited',rank:'#57 QS'},{uni:'HKU',deg:'BPharm',note:'4 years · Pharmacy · Hospital Authority pipeline',rank:'#11 QS'}],uk:[{uni:"King's",deg:'BSc Nursing',note:'3 years · London teaching hospitals · NHS pathway',rank:'Top 10 UK'},{uni:'Edinburgh',deg:'BNurs',note:'4 years · NHS Scotland · Strong clinical training',rank:'#22 QS'},{uni:'Manchester',deg:'BNurs',note:'3 years · Manchester NHS · Large placement network',rank:'#32 QS'},{uni:'UCL',deg:'BSc Physiotherapy',note:'3 years · UCLH · Research-active programme',rank:'#9 QS'}]}
+];
+
+const FIELDS=['All','Healthcare','Finance','Technology','Law','Engineering','Business'];
+const TIERS=['All','Tier 1','Tier 2','Tier 3'];
+let aF='All',aT='All',sel='med',pTab='hk';
+
+function tc(t){return t===1?'#4caf7d':t===2?'#c8a84b':'#888'}
+function sc(s){return s>=85?'#4caf7d':s>=65?'#c8a84b':'#e05252'}
+function tierN(d){return d.employ>=90&&d.sal_s>=85?1:d.employ>=80&&d.sal_s>=70?2:3}
+
+function renderF(){
+  document.getElementById('filters').innerHTML=[
+    ...FIELDS.map(f=>`<button class="fb ${aF===f?'on':''}" onclick="sF('${f}')">${f}</button>`),
+    '<span style="width:1px;height:16px;background:var(--color-border-tertiary);align-self:center"></span>',
+    ...TIERS.map(t=>`<button class="fb ${aT===t?'on':''}" onclick="sT('${t}')">${t}</button>`)
+  ].join('');
+}
+
+function sF(f){aF=f;render()}
+function sT(t){aT=t;render()}
+function sPT(t){pTab=t;renderDetail()}
+function pick(id){sel=id;render()}
+
+function filt(){
+  return D.filter(d=>{
+    const ti=tierN(d);
+    return(aF==='All'||d.field===aF)&&(aT==='All'||aT===`Tier ${ti}`);
+  });
+}
+
+function render(){
+  renderF();
+  const list=filt();
+  const g=document.getElementById('cards');
+  if(!list.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px">No degrees match this filter</div>';document.getElementById('detail').innerHTML='';return}
+  if(!list.find(d=>d.id===sel))sel=list[0].id;
+  g.innerHTML=list.map(d=>{
+    const ti=tierN(d);
+    return`<div class="dc ${sel===d.id?'sel':''}" onclick="pick('${d.id}')">
+      <div class="dc-top"><div class="dico" style="background:${d.color}18;color:${d.color}"><i class="ti ${d.icon}"></i></div><div class="dname">${d.name}</div></div>
+      <span class="tbadge" style="background:${tc(ti)}18;color:${tc(ti)};border:0.5px solid ${tc(ti)}30">Tier ${ti}</span>
+      <div class="chips">
+        <span class="chip" style="background:${sc(d.employ)}15;color:${sc(d.employ)};border:0.5px solid ${sc(d.employ)}25">Employ ${d.employ}%</span>
+        <span class="chip" style="background:${sc(100-d.ai_d)}15;color:${sc(100-d.ai_d)};border:0.5px solid ${sc(100-d.ai_d)}25">AI risk ${d.ai_d}%</span>
+      </div>
+    </div>`;
+  }).join('');
+  renderDetail();
+}
+
+function bRow(label,val,color){
+  return`<div class="br"><div class="bl">${label}</div><div class="bt"><div class="bf" style="width:${val}%;background:${color}"></div></div><div class="bv" style="color:${color}">${val}%</div></div>`;
+}
+
+function renderDetail(){
+  const d=D.find(x=>x.id===sel);
+  if(!d){document.getElementById('detail').innerHTML='';return}
+  const ti=tierN(d);
+  const progs=pTab==='hk'?d.hk:d.uk;
+  document.getElementById('detail').innerHTML=`
+  <div class="detail">
+    <div class="dh">
+      <div class="dh-ico" style="background:${d.color}18;color:${d.color}"><i class="ti ${d.icon}"></i></div>
+      <div style="flex:1"><div class="dh-name">${d.name}</div><div class="dh-sub">${d.years}-year degree · Starting salary ${d.salary}</div></div>
+      <span class="tbadge" style="background:${tc(ti)}18;color:${tc(ti)};border:0.5px solid ${tc(ti)}30">Tier ${ti} · HK supply: ${d.supply}</span>
+    </div>
+    <div class="mets">
+      <div class="met"><div class="ml">Employability</div><div class="mv" style="color:${sc(d.employ)}">${d.employ}%</div></div>
+      <div class="met"><div class="ml">Salary potential</div><div class="mv" style="color:${sc(d.sal_s)}">${d.sal_s}%</div></div>
+      <div class="met"><div class="ml">AI disruption</div><div class="mv" style="color:${sc(100-d.ai_d)}">${d.ai_d}%</div></div>
+      <div class="met"><div class="ml">AI augment</div><div class="mv" style="color:${sc(d.ai_a)}">${d.ai_a}%</div></div>
+    </div>
+    <div class="bars">
+      ${bRow('Employability',d.employ,'#4caf7d')}
+      ${bRow('Salary potential',d.sal_s,'#5b9cf6')}
+      ${bRow('HK prestige',d.prestige,'#9b8ec4')}
+      ${bRow('Entry difficulty',d.diff,'#c8a84b')}
+    </div>
+    <div class="pcs">
+      <div class="pc"><div class="pch" style="color:#4caf7d">Pros</div>${d.pros.map(p=>`<div class="pi"><div class="pdot" style="background:#4caf7d"></div><div>${p}</div></div>`).join('')}</div>
+      <div class="pc"><div class="pch" style="color:#e05252">Cons</div>${d.cons.map(c=>`<div class="pi"><div class="pdot" style="background:#e05252"></div><div>${c}</div></div>`).join('')}</div>
+    </div>
+    <div class="ais">
+      <div class="aih">AI impact</div>
+      ${bRow('Disruption risk',d.ai_d,d.ai_d>50?'#e05252':'#c8a84b')}
+      ${bRow('AI augmentation',d.ai_a,'#4caf7d')}
+      <div class="ain">${d.ai_note}</div>
+    </div>
+    <div class="progs">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary)">Specific programmes</div>
+        <div class="prog-tabs">
+          <button class="ptab ${pTab==='hk'?'on':''}" onclick="sPT('hk')">HK universities</button>
+          <button class="ptab ${pTab==='uk'?'on':''}" onclick="sPT('uk')">UK universities</button>
+        </div>
+      </div>
+      <div class="prog-list">${progs.map(p=>`
+        <div class="prog-item">
+          <div class="prog-left">
+            <div class="prog-uni">${p.uni}</div>
+            <div class="prog-deg">${p.deg}</div>
+            <div class="prog-note">${p.note}</div>
+          </div>
+          <div class="prog-right"><span class="prog-tag" style="background:${d.color}15;color:${d.color};border:0.5px solid ${d.color}30">${p.rank}</span></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="combos">
+      <div class="ch">Power combinations</div>
+      <div class="ctags">${d.combos.map(c=>`<span class="ctag">${c}</span>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+render();
+</script>
+</body>
+</html>
