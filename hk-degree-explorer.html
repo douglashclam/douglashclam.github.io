@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HK Degree Explorer — Douglas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.kg-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem }
+nav a { display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--color-text-tertiary);text-decoration:none;transition:color 0.15s }
+nav a:hover { color:var(--color-text-primary) }
+nav h1 { font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary) }
+.kg-panel { background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:1.5rem }
+.sb,.ft,.ptab { font-family: 'Inter', sans-serif; }
+</style>
+
+<div class="kg-wrap">
+  <nav>
+    <a href="area.html?id=career"><i class="ti ti-arrow-left"></i> Career capital</a>
+    <h1>HK Degree Explorer</h1>
+    <span></span>
+  </nav>
+  <div class="kg-panel">
+    <h2 style="font-size:16px;font-weight:600;margin-bottom:2px">HK degree explorer</h2>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem">35 degrees ranked by composite score — HK-specific salary data, AI disruption, employability, and work-life balance.</p>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.root{padding:.75rem 0;font-family:var(--font-sans)}
+.ctrl-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:.35rem}
+.ctrl-lbl{font-size:11px;color:var(--color-text-tertiary);font-weight:500;flex-shrink:0}
+.sb{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all .15s;white-space:nowrap}
+.sb.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary);font-weight:600}
+.fn{font-size:10px;color:var(--color-text-tertiary);margin-bottom:.6rem;padding:0 2px}
+.fr{display:flex;align-items:center;gap:8px;margin-bottom:.75rem}
+.fac-tabs{display:flex;overflow-x:auto;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);flex:1;scrollbar-width:none}
+.fac-tabs::-webkit-scrollbar{display:none}
+.ft{flex-shrink:0;padding:6px 11px;font-size:12px;cursor:pointer;border:none;background:transparent;color:var(--color-text-secondary);border-right:0.5px solid var(--color-border-tertiary);transition:all .15s;white-space:nowrap}
+.ft:last-child{border-right:none}
+.ft.on{background:var(--color-text-primary);color:var(--color-background-primary);font-weight:600}
+.list{display:flex;flex-direction:column;gap:5px}
+.fhdr{display:flex;align-items:center;gap:8px;padding:14px 2px 8px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:4px;margin-top:6px}
+.fhdr:first-child{margin-top:0;padding-top:4px}
+.fhdr i{font-size:14px;color:var(--color-text-tertiary)}
+.fhdr span{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary)}
+.arow{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;transition:border-color .15s}
+.arow.open{border-color:var(--color-border-primary)}
+.ah{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;background:var(--color-background-primary);transition:background .12s}
+.ah:hover,.arow.open .ah{background:var(--color-background-secondary)}
+.stars{font-size:12px;letter-spacing:1px;flex-shrink:0;min-width:46px}
+.dico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.di{flex:1;min-width:0}
+.dn{font-size:13px;font-weight:500;line-height:1.2}
+.dt{font-size:11px;color:var(--color-text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rbars{display:flex;flex-direction:column;gap:4px;flex-shrink:0;min-width:110px}
+.rb{display:flex;align-items:center;gap:5px}
+.rbl{font-size:9px;color:var(--color-text-tertiary);width:42px;text-align:right;flex-shrink:0;white-space:nowrap}
+.rbt{width:54px;height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden;flex-shrink:0}
+.rbf{height:100%;border-radius:2px}
+.chev{font-size:12px;color:var(--color-text-tertiary);transition:transform .2s;flex-shrink:0;margin-left:2px}
+.arow.open .chev{transform:rotate(90deg)}
+.ab{display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.arow.open .ab{display:block}
+.dbox{padding:11px 13px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.dlbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:4px}
+.dtxt{font-size:13px;line-height:1.6}
+.mets{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:10px 13px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.met{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px}
+.metscore{background:linear-gradient(135deg,rgba(76,175,125,.14),rgba(91,156,246,.09));border:1px solid rgba(76,175,125,.3);border-radius:var(--border-radius-md);padding:8px 10px}
+.ml{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
+.mv{font-size:14px;font-weight:700;margin-top:2px}
+.mvs{font-size:12px;font-weight:500;margin-top:2px}
+.mvsrc{font-size:10px;color:var(--color-text-tertiary);margin-top:1px;line-height:1.3}
+.salbox{padding:10px 13px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.salh{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;color:var(--color-text-tertiary)}
+.salg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.salc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px}
+.sall{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
+.salv{font-size:14px;font-weight:600;margin-top:2px}
+.sals{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
+.pcg{display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid var(--color-border-tertiary)}
+.pc{padding:10px 13px}
+.pc:first-child{border-right:0.5px solid var(--color-border-tertiary)}
+.pch{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.bi{font-size:12px;color:var(--color-text-secondary);padding:3px 0;border-bottom:0.5px solid var(--color-border-tertiary);line-height:1.4;display:flex;gap:5px}
+.bi:last-child{border-bottom:none}
+.dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.hk{font-size:9px;font-weight:600;padding:1px 4px;border-radius:3px;background:rgba(91,156,246,.12);color:#5b9cf6;border:0.5px solid rgba(91,156,246,.25);margin-left:4px;vertical-align:middle}
+.ais{padding:10px 13px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;gap:10px;align-items:flex-start}
+.aibw{flex-shrink:0;width:130px}
+.br{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.br:last-child{margin-bottom:0}
+.brl{font-size:10px;color:var(--color-text-secondary);min-width:68px;flex-shrink:0}
+.brt{flex:1;height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden}
+.brf{height:100%;border-radius:2px}
+.brv{font-size:10px;font-weight:500;min-width:22px;text-align:right}
+.ain{font-size:12px;color:var(--color-text-secondary);line-height:1.5;flex:1}
+.botg{display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid var(--color-border-tertiary)}
+.bc{padding:10px 13px}
+.bc:first-child{border-right:0.5px solid var(--color-border-tertiary)}
+.bch{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.btags{display:flex;gap:4px;flex-wrap:wrap}
+.btag{font-size:11px;padding:2px 8px;border-radius:4px;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
+.btag.top{font-weight:700;border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.ptag{font-size:11px;padding:2px 8px;border-radius:4px;background:rgba(200,168,75,.08);border:0.5px solid rgba(200,168,75,.25);color:#c8a84b}
+.us{padding:10px 13px}
+.uh{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:7px}
+.ug{display:flex;flex-direction:column;gap:4px}
+.ur{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.ub{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;min-width:42px;text-align:center;flex-shrink:0;margin-top:2px}
+.up{font-size:13px;font-weight:500}
+.un{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.srcn{font-size:10px;color:var(--color-text-tertiary);padding:7px 13px;background:var(--color-background-secondary);border-top:0.5px solid var(--color-border-tertiary);line-height:1.4}
+</style>
+<div class="root">
+<div class="ctrl-row" id="sr"></div>
+<div class="fn">Score = Salary 28% · Employability 25% · AI Safety 16% · Stability 14% · Flexibility 10% · Work-Life 7% &nbsp;·&nbsp; ★★★★ = Medicine · ★★★ = 77+ · ★★ = 63+ · ★ = 50+</div>
+<div class="fr"><span class="ctrl-lbl">Filter:</span><div class="fac-tabs" id="ft"></div></div>
+<div class="list" id="list"></div>
+</div>
+<script>
+const UC={HKU:'#378ADD',HKUST:'#1D9E75',CUHK:'#D85A30',PolyU:'#7F77DD',CityU:'#BA7517',HKBU:'#D4537E'};
+const FI={'Medicine & Health':'ti-stethoscope','Engineering & Tech':'ti-cpu','Business & Finance':'ti-building-bank','Science':'ti-flask','Social Sciences':'ti-world','Law':'ti-scale','Arts & Humanities':'ti-book','Architecture & Built Env':'ti-building'};
+const SORTS=[{k:'score',l:'Score'},{k:'employ',l:'Employability'},{k:'aisafe',l:'AI Safety'},{k:'wlb',l:'Work-Life'},{k:'faculty',l:'Faculty'}];
+function bc(v){return v>=75?'#4caf7d':v>=50?'#c8a84b':'#e05252'}
+function wlbL(v){return v>=80?'Excellent':v>=65?'Good':v>=50?'Fair':v>=35?'Poor':'Very Poor'}
+function stabL(v){return v>=80?'Very High':v>=65?'High':v>=50?'Medium':'Low'}
+function ov(d){return Math.round(d.salary*.28+d.employ*.25+(100-d.ai_d)*.16+d.stab*.14+d.flex*.10+d.wlb*.07)}
+function starColor(d,s){return d.id==='medicine'?'#c8a84b':s>=77?'#4caf7d':s>=63?'#5b9cf6':s>=50?'#c8a84b':'#888'}
+function starS(d,s){if(d.id==='medicine')return'★★★★';if(s>=77)return'★★★';if(s>=63)return'★★';if(s>=50)return'★';return'☆'}
+
+const D=[
+{id:'medicine',name:'Medicine',tl:'Train to diagnose and treat — HK\'s most rewarded degree',fac:'Medicine & Health',ico:'ti-stethoscope',col:'#e05252',employ:99,salary:95,ai_d:15,flex:60,stab:97,entry_d:99,wlb:30,hk_sal:'HK$60–80K/mo',hk_sal_src:'HA pay scale 2024',top_job:'Hospital resident',employ_src:'HA Annual Report — virtually all MBBS/MBChB absorbed',
+desc:'You spend 6 years learning how the human body works and how to treat people when they\'re sick. You start in lectures and labs, then move into real hospitals seeing real patients. After graduation, you spend more years training in a specific area like surgery or paediatrics. The longest and hardest degree in HK — but it pays the most and you\'ll never struggle to find a job.',
+pros:['Near-zero unemployment — HA absorbs virtually all graduates [HK]','HK$60–80K starting, HK$200K+ as senior specialist [HK]','Ageing HK population means demand grows permanently [HK]'],cons:['Top 1–2% DSE entry — most competitive degree in HK [HK]','6yr + years of residency and specialisation','Extremely long hours and high stress in public hospitals [HK]'],
+ai_note:'AI will help doctors with scanning and paperwork — but won\'t replace the judgment, care, and responsibility of being a doctor.',ai_a:85,
+careers:['Hospital resident (HA)','Specialist physician [HK]','GP / family medicine [HK]','Private practice [HK]','Medical researcher'],
+pivots:['Healthcare venture capital','Medical device / pharma strategy','Health policy advisory [HK govt]','Medical AI product'],
+unis:[{u:'HKU',p:'MBBS',n:'6yr · Problem-based learning · HA teaching hospitals · #11 QS'},{u:'CUHK',p:'MBChB',n:'6yr · System-based curriculum · CUHKMC hospital · #36 QS'}]},
+
+{id:'nursing',name:'Nursing',tl:'Direct patient care — 1,600+ nurse deficit in HK',fac:'Medicine & Health',ico:'ti-heart-rate-monitor',col:'#e05252',employ:98,salary:65,ai_d:20,flex:45,stab:95,entry_d:72,wlb:45,hk_sal:'HK$24–30K/mo',hk_sal_src:'HA nursing pay scale 2024',top_job:'Registered nurse (HA)',employ_src:'HA Workforce Report 2023 — 1,600+ projected deficit by 2026',
+desc:'You train to look after patients directly — giving medication, checking vital signs, and supporting people through illness and recovery. You rotate through different wards during your studies. Physically and emotionally demanding, but HK desperately needs nurses — there\'s essentially a job waiting for every graduate.',
+pros:['HK is short over 1,600 nurses — near-guaranteed employment [HK]','Government pay scales provide stable income [HK]','Genuinely rewarding work that directly helps people'],cons:['Shift work, physically demanding [HK]','Salary significantly lower than medicine','High burnout rates in HK hospitals [HK]'],
+ai_note:'Caring for patients requires human hands, judgment, and emotional care that machines simply cannot provide.',ai_a:80,
+careers:['Registered nurse (HA)','ICU / specialist nurse [HK]','Nurse educator [HK]','Ward manager [HK]'],
+pivots:['Healthcare education','Medical device clinical specialist','NGO health programmes [HK]'],
+unis:[{u:'HKU',p:'BNurs',n:'HA placements · Research culture'},{u:'CUHK',p:'BNurs',n:'CUHKMC network · Postgrad pathway'},{u:'PolyU',p:'BNurs',n:'Largest HK programme · Highly practical'}]},
+
+{id:'allied',name:'Allied Health',tl:'Physio, OT, pharmacy, optometry — all in shortage',fac:'Medicine & Health',ico:'ti-wheelchair',col:'#e05252',employ:95,salary:67,ai_d:22,flex:50,stab:90,entry_d:70,wlb:65,hk_sal:'HK$22–28K/mo',hk_sal_src:'HA allied health pay scale 2024',top_job:'Physiotherapist / Pharmacist',employ_src:'UGC GES and HA workforce data — shortage across all allied health disciplines',
+desc:'A group of clinical degrees — Physiotherapy, OT, Pharmacy, Optometry, Medical Lab Science — each focused on a specific part of patient care. All require professional registration before you can work. Physiotherapists and optometrists can open their own practice.',
+pros:['HK is short-staffed across all these roles [HK]','Professional registration means employers can\'t easily replace you [HK]','Physio and optometry allow private practice [HK]'],cons:['Salary lower than medicine across all roles','Physically demanding — especially physio and OT','Management roles require further study'],
+ai_note:'Hands-on care involving physical contact and individual patient adaptation cannot be automated.',ai_a:78,
+careers:['Physiotherapist — HA / private [HK]','Occupational therapist [HK]','Clinical pharmacist [HK]','Optometrist [HK]'],
+pivots:['Medical device clinical specialist','Healthcare startup advisor','Health tech product development'],
+unis:[{u:'PolyU',p:'BSc Physiotherapy',n:'Top HK physio · HA accredited'},{u:'PolyU',p:'BSc Occupational Therapy',n:'Elderly and paediatric focus'},{u:'HKU',p:'BPharm',n:'Only HK pharmacy degree'},{u:'PolyU',p:'BSc Optometry',n:'Private practice dominant'},{u:'PolyU',p:'BSc Medical Laboratory Science',n:'HA pipeline · Research pathway'}]},
+
+{id:'biomedical',name:'Biomedical Sciences',tl:'Molecular science — gateway to medicine or research',fac:'Medicine & Health',ico:'ti-dna',col:'#e05252',employ:68,salary:50,ai_d:30,flex:55,stab:58,entry_d:65,wlb:70,hk_sal:'HK$16–22K/mo',hk_sal_src:'UGC GES — research assistant grade',top_job:'Research assistant / postgrad student',employ_src:'UGC GES — lower rate reflects majority proceeding to postgraduate study',
+desc:'You study biology and chemistry at a deep level — how cells work, how viruses infect us, how drugs affect the body. Most students use it as a stepping stone to postgrad medicine or a research PhD. You\'ll spend a lot of time in labs. The degree alone doesn\'t lead directly to a well-paying job.',
+pros:['Gateway to postgrad graduate-entry medicine [HKU / CUHK]','Pharmaceutical and biotech pathway','Bioinformatics / coding adds AI-era relevance'],cons:['Very few direct jobs from this degree alone [UGC GES]','Postgrad almost required','Modest salary without further study'],
+ai_note:'AI protein folding and drug discovery are transforming the field. Graduates who add coding/bioinformatics are in growing demand.',ai_a:60,
+careers:['Research assistant / postgrad student','Pharmaceutical industry','Graduate medicine (postgrad)','Clinical research coordinator'],
+pivots:['Computational biology (with coding)','Medical affairs in pharma','Healthcare consulting'],
+unis:[{u:'HKU',p:'BSc Biomedical Sciences',n:'Medical school links · Research-active'},{u:'CUHK',p:'BSc Biomedical Sciences',n:'CUHK medical affiliation · Active research'}]},
+
+{id:'cs',name:'Computer Science',tl:'Build software — every HK sector is hiring',fac:'Engineering & Tech',ico:'ti-code',col:'#4caf7d',employ:88,salary:82,ai_d:40,flex:85,stab:75,entry_d:75,wlb:72,hk_sal:'HK$22–38K/mo',hk_sal_src:'Jobsdb HK Tech Salary Report 2024',top_job:'Software / application developer',employ_src:'UGC GES computing graduates — HK-specific, no Silicon Valley overhiring correction',
+desc:'You learn to write software — building apps, websites, systems, and tools. As you progress you study algorithms, databases, security, and increasingly how to build AI features. In HK, almost every large organisation needs software engineers: banks, hospitals, government, and startups. One of the most versatile degrees you can do.',
+pros:['HK is genuinely short of software engineers [HK]','Banks, hospitals, govt and startups all actively hiring [HK]','AI tools multiply what a good engineer can build by 3–5x','Most varied career paths of any STEM degree'],cons:['Average coders increasingly exposed — AI raises the bar','Skills go out of date faster than any other degree','Without a second domain, getting more competitive'],
+ai_note:'HK never overhired engineers so no local correction. Strong engineers who use AI tools well are more valuable than ever.',ai_a:90,
+careers:['Software / application developer','ML engineer [HK]','Quant developer [HK financial sector]','Tech lead / engineering manager'],
+pivots:['IB technology division → front office [HK banks]','FinTech product management [HK]','Healthcare informatics [HK]','Startup founder'],
+unis:[{u:'HKUST',p:'BSc Computer Science',n:'Best CS faculty in HK · Wall St and mainland tech recruiting'},{u:'HKU',p:'BEng Computer Science',n:'Engineering-rooted · Strong research'},{u:'CUHK',p:'BSc Computer Science',n:'Solid · Strong Shenzhen / GBA tech links'},{u:'PolyU',p:'BSc Computing',n:'Applied and practical · FinTech and smart city projects'},{u:'CityU',p:'BSc Computer Science',n:'Leading HK CS programme · 9-month IT Professional Placement'}]},
+
+{id:'ds',name:'Data Science & AI',tl:'Find patterns in data — most in-demand tech skill in HK',fac:'Engineering & Tech',ico:'ti-brain',col:'#4caf7d',employ:86,salary:85,ai_d:30,flex:80,stab:78,entry_d:77,wlb:70,hk_sal:'HK$28–45K/mo',hk_sal_src:'Michael Page HK Salary Guide 2024',top_job:'Data analyst / data scientist',employ_src:'UGC GES — estimated from computing/maths combined; HK supply extremely thin',
+desc:'You learn to find patterns in huge amounts of data and build systems that make predictions automatically — which patients might deteriorate, which loans might go bad, which products customers will buy. Combines coding, statistics, and industry knowledge. Currently the most in-demand technical skill across almost every HK industry, and one of the rarest.',
+pros:['HK doesn\'t have enough of these graduates — first-mover advantage [HK]','Works in every sector: finance, healthcare, logistics [HK]','You\'re building the AI tools, not being replaced by them'],cons:['Strong maths foundation required — not for everyone','Field moves fast — continuous learning required','Basic data analysis being automated by AutoML tools'],
+ai_note:'Paradoxically the least disrupted by AI because you\'re building the tools. Specialise in ML engineering or domain-specific AI.',ai_a:95,
+careers:['Data analyst / data scientist','ML engineer [HK]','Quantitative analyst [HK financial sector]','AI product manager'],
+pivots:['Quantitative hedge fund / prop trading [HK]','FinTech startup co-founder [HK]','Healthcare AI specialist [HK]'],
+unis:[{u:'HKUST',p:'BSc Data Science & Technology',n:'Best ML faculty in HK · Industry projects'},{u:'HKU',p:'BEng Data Science',n:'Engineering-rooted · Finance sector pathway'},{u:'CUHK',p:'BSc Statistics & Data Science',n:'Maths-heavy · Strong PhD pipeline'},{u:'CityU',p:'BSc Data Science',n:'Applied and practical · FinTech projects'}]},
+
+{id:'cyber',name:'Cybersecurity / Information Security',tl:'Stop hackers — critical shortage in HK',fac:'Engineering & Tech',ico:'ti-shield-lock',col:'#6366f1',employ:87,salary:80,ai_d:25,flex:60,stab:82,entry_d:68,wlb:55,hk_sal:'HK$25–40K/mo',hk_sal_src:'Michael Page HK Salary Guide 2024',top_job:'IT security analyst',employ_src:'UGC GES — estimated; HKMA and financial sector demand driving shortage',
+desc:'You learn to protect computer systems from attackers — finding weaknesses before criminals do, building defences, and responding when breaches happen. In HK, banks and financial institutions are the biggest employers. PolyU offers the only dedicated UGC-funded information security UG degree in HK; CityU has a standalone cybersecurity degree.',
+pros:['HK is short of cybersecurity people — HKMA compliance driving demand [HK]','AI-powered attacks paradoxically increase demand for defenders','Every bank in HK needs people in this role [HK]'],cons:['Technology changes constantly — permanent upskilling required','Incident response can be very stressful (breaches happen at 3am)','Smaller professional community in HK vs US or UK'],
+ai_note:'AI-powered attacks create an arms race. Defenders benefit from AI tools too. One of the safer tech careers long-term.',ai_a:80,
+careers:['IT security analyst [HK banks / regulators]','Cybersecurity consultant [HK]','Penetration tester [HK]','CISO pathway'],
+pivots:['Financial crime compliance at HK bank','Cyber law (with LLB)','RegTech startup [HK]'],
+unis:[{u:'PolyU',p:'BSc(Hons) Information Security',n:'Only UGC-funded cybersecurity UG degree in HK · Under EEE Dept · HKMA and HKPC links'},{u:'CityU',p:'BSc Cybersecurity',n:'Standalone cybersecurity degree · System/software security tracks · Industry placements'}]},
+
+{id:'ce_bba',name:'Computer Engineering + BBA (Dual Degree)',tl:'★ Special: HKUST dual degree — engineering meets business',fac:'Engineering & Tech',ico:'ti-device-laptop',col:'#4caf7d',employ:87,salary:85,ai_d:38,flex:88,stab:72,entry_d:82,wlb:68,hk_sal:'HK$28–45K/mo',hk_sal_src:'HKUST placement data / Michael Page HK 2024',top_job:'Product manager / FinTech analyst',employ_src:'HKUST dual degree placement survey — CS+business combination commands premium',
+desc:'A dual degree at HKUST that gives you a proper BEng in Computer Engineering alongside a full BBA — in Finance, Management, or other concentrations. You graduate with two degrees and skills in both software engineering and business. In HK, this combination is genuinely rare and highly sought after: banks want engineers who understand business, and tech companies want people who understand both code and commercial reality.',
+pros:['Rarest combination in HK — CS + business is what every bank and FinTech wants [HK]','Higher starting salary than pure CS or pure finance [HK]','Two degrees: BEng Computer Engineering + BBA — opens both engineering and business doors [HK]'],cons:['Very demanding — workload of two disciplines simultaneously','Most competitive HKUST entry [HK]','Longer programme — typically 5 years to complete both degrees'],
+ai_note:'The CS + business combination is what AI cannot replicate at the person level. These graduates understand both the technical and commercial dimensions of AI deployment.',ai_a:88,
+careers:['Product manager [HK FinTech / tech companies]','FinTech analyst [HK banks]','Management consultant [McKinsey, BCG HK]','Software engineer [HK]'],
+pivots:['IB technology → front office [HK banks]','FinTech startup founder [HK]','Quant developer with business context [HK hedge funds]'],
+unis:[{u:'HKUST',p:'BEng Computer Engineering + BBA (Finance / Management / Economics)',n:'Dual degree · 5yr programme · BEng CE + full BBA simultaneously · FinTech and consulting recruitment'}]},
+
+{id:'ee',name:'Electrical / Electronic Engineering',tl:'Circuits, chips, hardware — well-known finance pivot',fac:'Engineering & Tech',ico:'ti-cpu',col:'#4caf7d',employ:84,salary:70,ai_d:28,flex:70,stab:75,entry_d:72,wlb:68,hk_sal:'HK$19–28K/mo',hk_sal_src:'Jobsdb HK Engineering Salary 2024',top_job:'Electronics / electrical engineer',employ_src:'UGC GES engineering graduates — significant portion pivots to finance in HK',
+desc:'You study how electricity works and how to design circuits, chips, and electronic devices. In HK, graduates often work at MTR, CLP, or the airport — or go into Chinese tech companies like Huawei and DJI. Strong HKUST EE graduates are also actively recruited into quantitative finance, because the analytical skills are prized by hedge funds.',
+pros:['AI hardware boom driving global demand for chip engineers','HKUST EE → quantitative finance is a real documented path in HK [HK]','MTR, CLP, and HK Airport are stable prestigious employers [HK]'],cons:['Manufacturing jobs mostly in mainland China, not HK [HK]','Finance pivot requires active preparation — doesn\'t happen automatically','Moderate starting salary if staying in engineering'],
+ai_note:'AI chip design creates massive demand. The quant finance pivot is the most documented engineering → finance route in HK.',ai_a:72,
+careers:['Electronics / electrical engineer [MTR, CLP]','R&D engineer [mainland China]','Semiconductor design'],
+pivots:['★ Quant analyst / trader — HKUST EE pipeline documented [HK hedge funds]','IB engineering analyst [HK banks]','Robotics startup'],
+unis:[{u:'HKUST',p:'BEng Electronic Engineering',n:'Semiconductor and comms · Strong mainland R&D links'},{u:'HKU',p:'BEng Electrical Engineering',n:'Power systems · IoT · Smart grid'},{u:'CUHK',p:'BEng Electronic Engineering',n:'Photonics and communications'},{u:'CityU',p:'BEng Electronic Engineering',n:'Consumer electronics · Industry mentors'}]},
+
+{id:'me',name:'Mechanical Engineering',tl:'Machines, buildings, robots — path to finance possible',fac:'Engineering & Tech',ico:'ti-settings',col:'#4caf7d',employ:81,salary:68,ai_d:28,flex:65,stab:72,entry_d:70,wlb:68,hk_sal:'HK$18–26K/mo',hk_sal_src:'Jobsdb HK Engineering Salary 2024',top_job:'Building services / HVAC engineer',employ_src:'UGC GES engineering graduates — many in building services and construction in HK',
+desc:'You study how physical things move and are built — engines, machines, robots, and the heating and cooling systems inside skyscrapers. In HK, most traditional manufacturing happens across the border, so local mech eng graduates often go into building services, robotics, or use their analytical skills to pivot into finance or consulting.',
+pros:['Robotics and automation are growing fields globally','Building services engineering in high demand — HK construction boom [HK]','Strong analytical training that banks and consultancies recognise'],cons:['Traditional manufacturing is mostly in mainland China [HK]','Finance is possible but less common than from EE or IEDA','Moderate starting salary if staying in engineering'],
+ai_note:'Engineers designing robots and automated systems are in growing demand. Clean energy and EVs are opening new areas.',ai_a:65,
+careers:['Building services / HVAC engineer [HK]','Mechanical / robotics engineer','Product design engineer'],
+pivots:['IB engineering analyst → infrastructure finance [HK banks]','Clean energy / EV startup','Medical device company'],
+unis:[{u:'HKU',p:'BEng Mechanical Engineering',n:'Thermofluids · Materials · Robotics modules'},{u:'HKUST',p:'BEng Mechanical Engineering',n:'Robotics research world-class · Drone systems'}]},
+
+{id:'ieda',name:'Industrial Engineering & Decision Analytics',tl:'Optimise systems with data — top finance pivot rate',fac:'Engineering & Tech',ico:'ti-chart-dots',col:'#4caf7d',employ:83,salary:74,ai_d:32,flex:88,stab:73,entry_d:75,wlb:60,hk_sal:'HK$22–40K/mo',hk_sal_src:'HKUST IEDA placement data 2024',top_job:'Management consultant / operations analyst',employ_src:'HKUST IEDA graduate survey — documented high placement in finance and consulting',
+desc:'A unique degree at HKUST teaching you to make complex systems run better using data and maths — hospital scheduling, warehouse logistics, bank transaction processing. Graduates end up roughly evenly in finance, consulting, and operations. It has the highest rate of entering investment banking and management consulting of any engineering degree in HK.',
+pros:['★ Highest finance pivot rate of any engineering degree in HK [HKUST IEDA data]','McKinsey and BCG recruit directly from IEDA at HK offices [HK]','Operations research + AI is exactly what HK banks and logistics need [HK]'],cons:['Only available at HKUST — one university in all of HK','Some employers don\'t immediately understand the hybrid degree','Finance still requires extra preparation on top of degree'],
+ai_note:'Operations combined with AI optimisation is what banks, logistics, and supply chains urgently need. The best single engineering degree for getting into finance in HK.',ai_a:88,
+careers:['Management consultant / operations analyst','Quant analyst (with further prep) [HK hedge funds]','Supply chain manager [HK logistics]'],
+pivots:['★ Quantitative finance — best engineering→finance route in HK','McKinsey / BCG HK consulting','FinTech product operations [HK]'],
+unis:[{u:'HKUST',p:'BEng Industrial Engineering & Decision Analytics',n:'Unique HK programme · Best engineering→finance pivot · Operations research + data analytics'}]},
+
+{id:'civil',name:'Civil / Structural Engineering',tl:'Design roads, bridges, tunnels — decade of HK work',fac:'Engineering & Tech',ico:'ti-building-bridge',col:'#4caf7d',employ:90,salary:67,ai_d:20,flex:52,stab:90,entry_d:68,wlb:58,hk_sal:'HK$19–27K/mo',hk_sal_src:'CIC Graduate Pay Survey 2024',top_job:'Graduate civil / structural engineer',employ_src:'Construction Industry Council — 8,400 professional shortage reported 2024',
+desc:'You learn to design and build physical infrastructure — bridges, tunnels, roads, buildings, and drainage systems. In HK this is an exceptionally stable career: the Northern Metropolis and Lantau Tomorrow Vision are running simultaneously, creating a decade-long pipeline. Civil engineers work for government departments, MTR, major contractors, and consultancies.',
+pros:['HK has an 8,400 engineer shortage right now [CIC 2024] [HK]','Northern Metropolis + Lantau = 10 years of guaranteed project work [HK]','Government, MTR, and DSD are very stable employers [HK]','Least disrupted engineering discipline by AI'],cons:['Salary noticeably lower than finance or software in HK','Site work required — not purely an office job','Finance pivot uncommon from civil engineering'],
+ai_note:'Physical infrastructure has to be designed, built, and checked by humans. AI design tools help but don\'t replace on-site engineers.',ai_a:50,
+careers:['Graduate civil / structural engineer [Govt / MTR / DSD]','Project engineer [Northern Metropolis, Lantau]','Geotechnical engineer [HK]'],
+pivots:['Infrastructure project finance — with CFA [HK banks]','PropTech startup [HK]','ESG infrastructure advisory [HK]'],
+unis:[{u:'HKU',p:'BEng Civil Engineering',n:'HKICSC accredited · Research-active'},{u:'HKUST',p:'BEng Civil & Environmental Engineering',n:'Research-intensive · Environmental dual track'},{u:'PolyU',p:'BEng Civil Engineering',n:'Applied · Government and contractor pipeline'},{u:'CityU',p:'BEng Civil Engineering',n:'Smart city integration · Urban focus'}]},
+
+{id:'chemeng',name:'Chemical / Environmental Engineering',tl:'Industrial processes and materials — pharma and ESG',fac:'Engineering & Tech',ico:'ti-flask',col:'#4caf7d',employ:76,salary:63,ai_d:25,flex:45,stab:68,entry_d:65,wlb:65,hk_sal:'HK$18–25K/mo',hk_sal_src:'Jobsdb HK Engineering Salary 2024',top_job:'Environmental consultant / process engineer',employ_src:'UGC GES engineering graduates — estimated; limited HK chemical manufacturing',
+desc:'Chemical engineers design industrial processes that turn raw materials into useful products. Environmental engineers tackle pollution, water treatment, and waste management. In HK there\'s very little chemical manufacturing locally, so most graduates work in environmental consulting, pharmaceutical companies, or pivot to ESG roles.',
+pros:['Pharmaceutical and biotech pathway exists','Growing demand from HK\'s ESG push [HK]','Less crowded than CS or EE'],cons:['Very few chemical manufacturing jobs in HK [HK]','Narrower employer pool than other engineering degrees','Moderate salary'],
+ai_note:'AI is speeding up drug discovery and materials design — computational chemical engineers are a new hybrid profile in demand.',ai_a:50,
+careers:['Environmental consultant [HK EPD]','Process / pharmaceutical engineer','Quality assurance engineer'],
+pivots:['ESG / green finance advisory [HK]','Carbon credit market [HK]','Environmental policy [HK EPD]'],
+unis:[{u:'HKU',p:'BEng Chemical Engineering',n:'Process engineering · Environmental track · Pharma'},{u:'HKUST',p:'BEng Chemical & Biological Engineering',n:'Bio-chemical hybrid · Research-intensive'}]},
+
+{id:'ibgm',name:'IBGM (International Business & Global Management)',tl:'★ Special: HKU elite business degree — far better than BBA',fac:'Business & Finance',ico:'ti-globe',col:'#5b9cf6',employ:91,salary:82,ai_d:42,flex:80,stab:70,entry_d:85,wlb:63,hk_sal:'HK$22–40K/mo',hk_sal_src:'HKU IBGM alumni survey / Michael Page HK 2024',top_job:'Management consultant / MNC management trainee',employ_src:'HKU IBGM placement data — significantly higher placement than generic BBA',
+desc:'HKU\'s flagship business programme for students who want more than a generic BBA. Highly selective, internationally oriented, with a deliberately small and global-minded cohort. Focuses on international business, cross-cultural management, and global strategy. Employment outcomes are significantly better than any standard BBA — graduates regularly land at top consulting firms, MNCs, and international banks.',
+pros:['Far better employment outcomes than any standard BBA [HKU IBGM data] [HK]','Highly selective cohort — networking value is exceptional [HK]','Internationally oriented — much more substance than a generic BBA [HK]'],cons:['Even higher entry requirement than standard HKU BBA','Still AI-vulnerable at junior analyst level','Salary not quite as high as HKUST Finance or CS graduates'],
+ai_note:'Stronger critical thinking and international business context than BBA means IBGM graduates are better positioned to survive AI displacement of junior roles.',ai_a:62,
+careers:['Management consultant [McKinsey, BCG, Bain HK]','MNC management trainee [HK]','International banking analyst [HK]'],
+pivots:['FinTech (with technical upskilling) [HK]','Government policy / civil service [HK]','Social enterprise and impact investing [HK]'],
+unis:[{u:'HKU',p:'BBA (IBGM)',n:'Highly selective · International cohort · Much better employment than standard BBA · Small class sizes'}]},
+
+{id:'finance',name:'Finance / Economics & Finance',tl:'How money moves — HK is a top 3 global financial centre',fac:'Business & Finance',ico:'ti-building-bank',col:'#5b9cf6',employ:87,salary:90,ai_d:42,flex:75,stab:62,entry_d:77,wlb:25,hk_sal:'HK$25–60K/mo',hk_sal_src:'Michael Page HK Finance Salary 2024 — IB HK$35-60K, general HK$25-35K',top_job:'Financial / investment analyst',employ_src:'UGC GES business graduates + HK financial services sector data',
+desc:'You learn how money moves around the world — how companies borrow money, how banks price risk, how investors decide where to put their cash. In HK, this is the most popular business degree because the city is one of the world\'s top three financial centres. Investment banks recruit directly from HK universities. Competitive, well-paid — and notoriously long hours.',
+pros:['HK is a top 3 global financial centre — structural demand [HK]','HK\'s digital asset licensing creates completely new roles [HK]','Huge variety of exits: IB, PE, hedge fund, FinTech, regulator [HK]'],cons:['Very competitive — Goldman, JPM, HSBC need top grades + internships [HK]','HK finance hiring froze significantly in 2023–24 [HK]','Investment banking means extremely long hours — notoriously poor WLB [HK]'],
+ai_note:'AI is replacing junior analysts doing repetitive research. Relationship banking, deal-making, and complex structuring remain firmly human.',ai_a:70,
+careers:['Financial / investment analyst [HK banks / hedge funds]','Asset management / PE analyst [HK]','Portfolio manager [HK funds]'],
+pivots:['FinTech startup founder (with coding) [HK]','SFC / HKMA regulatory career [HK]','Family office management [HK]','Digital asset fund [HK licensed exchanges]'],
+unis:[{u:'HKUST',p:'BSc Finance',n:'Top finance faculty HK · CFA pipeline · IB and quant recruiting'},{u:'HKUST',p:'BSc Economics & Finance',n:'Quant-heavy dual · Quant finance pathway'},{u:'HKU',p:'BBA Finance',n:'HK establishment · HKEX and regulator connections'},{u:'CUHK',p:'BBA Finance',n:'Strong mainland China finance · CICC, BOC, CITIC'},{u:'CityU',p:'BSc Applied Finance',n:'Professional focus · CFA and CPA pathway'}]},
+
+{id:'fintech_d',name:'FinTech',tl:'Finance meets technology — HK building a digital asset hub',fac:'Business & Finance',ico:'ti-currency-bitcoin',col:'#5b9cf6',employ:81,salary:80,ai_d:38,flex:72,stab:65,entry_d:60,wlb:55,hk_sal:'HK$25–40K/mo',hk_sal_src:'HKMA FinTech 2025 industry data — estimated',top_job:'FinTech product analyst',employ_src:'HKMA FinTech 2025 industry data — degree too new for full UGC GES tracking',
+desc:'A newer degree combining finance knowledge with technology skills — blockchain, digital payments, automated trading, and compliance systems. HK is deliberately positioning itself as Asia\'s digital asset hub (HashKey and OSL are already licensed here), making this degree increasingly forward-looking. Currently only offered at PolyU.',
+pros:['The only dedicated FinTech UG degree in HK is at PolyU [HK]','HKMA\'s FinTech 2025 plan directly creates the jobs this degree trains for [HK]','HK\'s digital asset licensing is a real competitive advantage [HK]'],cons:['New degree — some employers less familiar than with traditional finance degrees','Less respected than HKUST or HKU finance for IB roles [HK IB]','Starting salary currently below investment banking track'],
+ai_note:'Graduates who understand both HK\'s financial regulations and AI or blockchain are rare and increasingly sought after.',ai_a:72,
+careers:['FinTech product analyst [HK]','Digital asset compliance [HK licensed exchanges]','Blockchain developer [HK]'],
+pivots:['Traditional banking technology division [HK banks]','Financial services startup founder [HK]','Web3 / DeFi developer'],
+unis:[{u:'PolyU',p:'BSc FinTech',n:'Only dedicated HK FinTech UG · HKMA and SFC links · Blockchain modules'}]},
+
+{id:'accounting',name:'Accounting',tl:'Track the numbers — Big 4 firms hire from every HK uni',fac:'Business & Finance',ico:'ti-calculator',col:'#5b9cf6',employ:87,salary:70,ai_d:60,flex:55,stab:78,entry_d:65,wlb:42,hk_sal:'HK$16–22K/mo',hk_sal_src:'Big 4 HK published graduate salary grades 2024',top_job:'Big 4 audit / assurance associate',employ_src:'UGC GES business graduates — Big 4 HK offices absorb large cohort',
+desc:'You learn to record, organise, and report a company\'s financial information — preparing financial statements, auditing accounts, and calculating taxes. The Big 4 (PwC, Deloitte, KPMG, EY) are the main employers and hire heavily from every major HK university. Most people work towards the HKICPA CPA qualification after graduation. Warning: AI is automating a large chunk of routine accounting work faster than almost any other business degree.',
+pros:['Essentially zero unemployment once you have HKICPA CPA [HK]','All four Big 4 firms recruit from every major HK university [HK]','Clear and predictable career progression [HK]'],cons:['★ AI automating audit sampling, tax filing, and bookkeeping fastest of any business degree [HK Big 4]','Salary ceiling lower than finance or technology in HK','Busy season at Big 4 means very long hours — poor WLB at peak times'],
+ai_note:'Routine accounting work is being automated rapidly. Safe path: move into advisory, M&A support, or CFO-track roles — not pure compliance.',ai_a:55,
+careers:['Big 4 audit / assurance associate [HK]','Corporate accountant [HK]','Financial controller [HK]','M&A advisor [HK]'],
+pivots:['M&A advisory [HK Big 4 deal advisory]','CFO track at HK tech company','Private equity fund accounting [HK PE]'],
+unis:[{u:'HKUST',p:'BSc Accounting & Finance',n:'HKICPA accredited · Finance double track · Big 4 pipeline'},{u:'HKU',p:'BBA Accounting',n:'Prestigious employer access · Law firm links'},{u:'CUHK',p:'BBA Professional Accountancy',n:'HKICPA + ICAEW dual — opens UK practice rights'},{u:'PolyU',p:'BSc Accounting & Finance',n:'HKICPA accredited · Applied · Mid-tier firm focus'},{u:'CityU',p:'BSc Accountancy',n:'HKICPA accredited · International exchange'}]},
+
+{id:'bba',name:'Business Administration (BBA)',tl:'General management — most common degree in HK',fac:'Business & Finance',ico:'ti-briefcase',col:'#888',employ:79,salary:58,ai_d:50,flex:60,stab:58,entry_d:60,wlb:65,hk_sal:'HK$14–20K/mo',hk_sal_src:'Jobsdb HK Business Salary 2024',top_job:'Management trainee (bank / MNC)',employ_src:'UGC GES business graduates — employment rate lower than specialist degrees',
+desc:'A broad business degree covering management, marketing, finance, operations, and strategy — without going deep into any single area. The most commonly chosen degree in HK by volume, which is both its strength (lots of career options) and its weakness (everyone else has the same degree). Without strong internships or a second specialisation, it\'s genuinely hard to stand out.',
+pros:['Flexible — leads to many different types of career','Entry requirements lower than medicine or law','Networking at HKUST, HKU, or CUHK genuinely opens doors [HK]'],cons:['Thousands of BBA graduates compete for the same HK jobs every year [HK]','Without strong internships you look identical to everyone else [HK employers]','AI directly replacing the junior analyst roles that BBA graduates traditionally entered [HK]'],
+ai_note:'Generic business analysis and junior management roles are exactly what AI is being used to replace. A BBA needs technical skills or an exceptional internship record.',ai_a:45,
+careers:['Management trainee (bank / MNC) [HK]','Corporate strategy analyst [HK]','Operations manager [HK]'],
+pivots:['Tech product management (with coding) [HK]','Consulting (exceptional academic record) [HK Big 3]','Finance (with CFA prep) [HK]'],
+unis:[{u:'HKUST',p:'BBA',n:'Top HK business school · International recruiting'},{u:'HKU',p:'BBA',n:'Prestigious HK establishment · Banking alumni'},{u:'CUHK',p:'BBA',n:'Strong China connections · AACSB accredited'},{u:'PolyU',p:'BA Business Administration',n:'Applied · Professional certifications'},{u:'CityU',p:'BBA',n:'Internship-focused · Good employer links'},{u:'HKBU',p:'BBA',n:'Smaller school · Media business crossover'}]},
+
+{id:'marketing',name:'Marketing',tl:'Understand consumers and build brands — AI disrupting fast',fac:'Business & Finance',ico:'ti-speakerphone',col:'#888',employ:75,salary:60,ai_d:55,flex:55,stab:55,entry_d:58,wlb:65,hk_sal:'HK$15–22K/mo',hk_sal_src:'Jobsdb HK Marketing Salary 2024',top_job:'Marketing executive',employ_src:'UGC GES business graduates — estimated; oversupplied field',
+desc:'You study how companies attract and keep customers — advertising, branding, digital campaigns, and consumer psychology. AI tools are already handling much of the routine work, so the roles that survive are in strategy, brand direction, and cultural insight.',
+pros:['Brand strategy and cultural marketing are hard for AI to replicate [HK luxury market]','Data-driven digital marketing is growing in HK [HK]','Path into tech product management for analytical marketers [HK tech]'],cons:['AI generating content and running ads at scale — directly threatening junior roles [HK]','Oversupplied — many marketing graduates in HK each year [HK]','Salary significantly below finance or technology'],
+ai_note:'AI handles commodity execution. Marketers who focus on brand strategy and cultural insight survive well.',ai_a:45,
+careers:['Marketing executive [HK FMCG / luxury]','Digital marketing lead [HK]','Marketing analytics [HK]'],
+pivots:['Tech product management (with analytics) [HK]','Brand consultancy [HK]','PR and corporate communications [HK MNCs]'],
+unis:[{u:'HKUST',p:'BBA Marketing',n:'Data-driven · Product management pathway'},{u:'HKU',p:'BBA Global Management',n:'International business · Exchange programme'},{u:'CUHK',p:'BBA Marketing',n:'China and luxury goods focus · Advertising pipeline'},{u:'HKBU',p:'BBA Marketing',n:'Media and creative blend · SME-focused'}]},
+
+{id:'hospitality',name:'Hospitality & Tourism',tl:'Run hotels and tourism — CUHK SHTM is Asia\'s top school',fac:'Business & Finance',ico:'ti-building-hotel',col:'#888',employ:77,salary:57,ai_d:35,flex:40,stab:65,entry_d:55,wlb:40,hk_sal:'HK$16–22K/mo',hk_sal_src:'CUHK SHTM employment survey 2024',top_job:'Hotel management trainee',employ_src:'CUHK SHTM employment survey and PolyU graduate data',
+desc:'You learn to manage hotels, restaurants, events, and tourist experiences. CUHK runs Asia\'s top hospitality school and places students into 5-star hotels like the Mandarin Oriental and The Peninsula. The work is very people-focused — making it one of the safer degrees from AI automation — but hours are irregular and salaries lower than most business degrees.',
+pros:['CUHK SHTM is Asia\'s #1 hospitality school [HK]','5-star HK hotel placements built into the programme [HK]','Looking after guests is genuinely hard to automate'],cons:['Salary clearly lower than finance or tech in HK','Irregular shift work — early mornings, weekends, holidays','Poor work-life balance at hotel management level'],
+ai_note:'AI manages reservations and room pricing. But the guest experience — the warmth and problem-solving — stays human.',ai_a:65,
+careers:['Hotel management trainee [HK 5-star hotels]','F&B director [HK]','Events / MICE manager [HK]'],
+pivots:['Luxury retail management [HK luxury market]','Cathay Pacific guest experience [HK]','Serviced apartments [HK property]'],
+unis:[{u:'CUHK',p:'BBA Hotel & Tourism Mgmt (SHTM)',n:'Asia\'s #1 hospitality school · 5-star HK hotel placements'},{u:'PolyU',p:'BA Hospitality Management',n:'IHG, Marriott, Shangri-La partnerships · Practical'}]},
+
+{id:'maths',name:'Mathematics / Statistics',tl:'Numbers, proofs, and data — strong path into HK finance',fac:'Science',ico:'ti-math-function',col:'#c8a84b',employ:76,salary:70,ai_d:38,flex:80,stab:72,entry_d:72,wlb:72,hk_sal:'HK$20–35K/mo',hk_sal_src:'Jobsdb HK 2024 — varies; actuarial / quant at higher end',top_job:'Actuary trainee / financial analyst',employ_src:'UGC GES science graduates — significant portion goes to finance/actuarial',
+desc:'You study pure and applied mathematics — proofs, statistics, probability, calculus, and linear algebra. In HK, a strong maths degree is highly respected by banks and hedge funds, who actively recruit maths graduates to model financial risk and build trading systems. Many also become actuaries — professionals who calculate insurance risk — a stable, well-paid career in HK\'s large insurance industry.',
+pros:['HK banks and hedge funds actively recruit strong maths graduates [HK quant finance]','Actuarial qualification is well-respected in HK\'s insurance sector [HK]','Strong quant finance pivot especially from HKUST [HK]'],cons:['Degree alone doesn\'t directly lead anywhere — you need to build a career around it','Professional qualification or postgrad almost always needed','Routine calculation automated — analytical thinking is what matters'],
+ai_note:'Mathematical reasoning and proof are not easily automated. Maths graduates pivoting to quantitative finance or data science are extremely valuable in HK.',ai_a:80,
+careers:['Actuary trainee [HK insurance sector]','Financial analyst [HK hedge funds, banks]','Data scientist [HK]'],
+pivots:['★ Quant trading / hedge fund analyst [HK hedge funds — documented]','Machine learning research (with postgrad)','Banking model validation [HK banks]'],
+unis:[{u:'HKU',p:'BSc Mathematics',n:'Pure and applied tracks · Actuarial pathway'},{u:'HKUST',p:'BSc Mathematics',n:'Applied maths · Quant finance pipeline'},{u:'CUHK',p:'BSc Mathematics',n:'Strong statistics · Actuarial focus'}]},
+
+{id:'physics',name:'Physics',tl:'How the universe works — most graduates end up in finance',fac:'Science',ico:'ti-atom',col:'#c8a84b',employ:65,salary:60,ai_d:35,flex:75,stab:60,entry_d:70,wlb:70,hk_sal:'HK$18–30K/mo',hk_sal_src:'UGC GES — varies widely by career path',top_job:'Financial analyst / postgrad student',employ_src:'UGC GES science graduates — raw rate low as many go to postgrad',
+desc:'You study the fundamental rules of the universe — how objects move, how electricity flows, how atoms behave. Very few HK physics graduates end up as physicists. The most common path is into quantitative finance, where hedge funds and investment banks value the rigour and analytical thinking that physics training develops.',
+pros:['HK hedge funds and banks actively recruit physics graduates for analytical skills [HK]','Quant finance path from physics is well-established in HK [HK]','Quantum computing is the next major technology frontier — HKUST is a serious research hub'],cons:['You need to actively build a career path — physics doesn\'t lead anywhere on its own','Employment statistics look low because many go to postgrad first','Quantum computing remains years away from commercial relevance'],
+ai_note:'Physics graduates increasingly hired by AI companies and quant funds. Finance is the most common HK path.',ai_a:75,
+careers:['Financial analyst / postgrad student','Quantitative analyst [HK hedge funds]','Data scientist [HK]'],
+pivots:['★ Quantitative hedge fund / prop trading [HK — documented path]','AI hardware research','FinTech engineering [HK]'],
+unis:[{u:'HKU',p:'BSc Physics',n:'Theoretical and applied · Quant finance pathway'},{u:'HKUST',p:'BSc Physics',n:'World-class research · Quantum computing track'}]},
+
+{id:'biology',name:'Biology / Life Sciences',tl:'Study living things — further study almost always needed',fac:'Science',ico:'ti-dna',col:'#c8a84b',employ:61,salary:50,ai_d:32,flex:50,stab:55,entry_d:65,wlb:70,hk_sal:'HK$14–20K/mo',hk_sal_src:'UGC GES — research assistant grade',top_job:'Research assistant / postgrad student',employ_src:'UGC GES science graduates — low direct employment reflects high postgrad progression',
+desc:'You study living things — how cells divide, how genes work, how diseases spread, how ecosystems function. As a standalone undergraduate degree, very few jobs come directly from it. Most graduates either do a research PhD, apply for graduate-entry medicine, or join pharmaceutical companies.',
+pros:['Can be used as a stepping stone to postgraduate medicine [HKU / CUHK]','Pharmaceutical and biotech pathway exists','Bioinformatics / coding skills make you increasingly employable'],cons:['One of the lowest direct employment rates of any degree [UGC GES data]','Almost everyone needs to continue studying','HK\'s biotech industry is still quite small [HK]'],
+ai_note:'AI is transforming biological research. Biologists who can code are in growing demand at biotech companies.',ai_a:60,
+careers:['Research assistant / postgrad student','Pharmaceutical industry','Clinical research coordinator [HK hospitals]'],
+pivots:['Computational biology (with coding)','Medical affairs in pharma [HK pharma]','Healthcare consulting'],
+unis:[{u:'HKU',p:'BSc Biology',n:'Ecology · Marine biology · Strong research'},{u:'HKUST',p:'BSc Biochemistry',n:'Research-intensive · Drug discovery · PhD pipeline'},{u:'CUHK',p:'BSc Life Sciences',n:'Broad foundation · Research-active'}]},
+
+{id:'enviro',name:'Environmental Science / Engineering',tl:'Study pollution and climate — ESG demand rising in HK',fac:'Science',ico:'ti-leaf',col:'#c8a84b',employ:70,salary:58,ai_d:25,flex:55,stab:72,entry_d:60,wlb:68,hk_sal:'HK$18–25K/mo',hk_sal_src:'Jobsdb HK Engineering Salary 2024',top_job:'Environmental consultant',employ_src:'UGC GES science/engineering — estimated; growing demand from HK EPD and ESG compliance',
+desc:'You study how humans are damaging the natural environment and how to fix it — pollution, climate change, water contamination, waste management. Environmental engineering adds a more technical angle. In HK, demand is growing as the government pushes companies to disclose their environmental impact and funds major green infrastructure projects.',
+pros:['HK\'s government ESG push and HKMA green finance drive creating new demand [HK]','Government environmental roles stable — HK EPD always hiring [HK]','Northern Metropolis requires significant environmental impact work [HK]'],cons:['Salary noticeably lower than most engineering disciplines in HK','Government funding cycles can affect job availability','To get into green finance, you also need financial knowledge on top'],
+ai_note:'Monitoring equipment is increasingly automated. But policy design and real-world environmental assessment still require human experts.',ai_a:55,
+careers:['Environmental consultant [HK EPD / consultancies]','ESG analyst [HK financial sector]','Green finance analyst [HK]'],
+pivots:['ESG and green finance (with finance knowledge) [HK]','Carbon project developer [HK carbon exchange]','Sustainability consulting [Big 4 ESG HK]'],
+unis:[{u:'HKU',p:'BSc Environmental Science',n:'Policy and science bridge · Conservation track'},{u:'HKUST',p:'BSc Environmental Engineering',n:'Carbon engineering · Water treatment'},{u:'PolyU',p:'BSc Environment & Sustainable Development',n:'Applied sustainability focus'}]},
+
+{id:'economics',name:'Economics',tl:'How markets and societies work — path into finance and policy',fac:'Social Sciences',ico:'ti-chart-bar',col:'#20b2aa',employ:77,salary:68,ai_d:50,flex:72,stab:65,entry_d:70,wlb:65,hk_sal:'HK$18–28K/mo',hk_sal_src:'Jobsdb HK Business Salary 2024',top_job:'Financial / economic analyst',employ_src:'UGC GES social science graduates — finance and government absorption keeps employment relatively high',
+desc:'You study how people and organisations make decisions about money and resources — why prices change, why unemployment rises, what makes economies grow or shrink. In HK, economics graduates go into banking, government policy, consulting, and research. The more quantitative your training, the more attractive you are to financial employers.',
+pros:['Analytical training valued by HK banks, consulting firms, and government [HK]','HKMA, SFC, and Competition Commission hire economics graduates [HK regulators]','Finance pivot well-trodden especially from quantitative economics [HK]'],cons:['AI replacing junior analysts doing routine economic modelling','HK banks increasingly hire finance or maths graduates over pure economics [HK]','No direct job from economics alone — needs to be combined with something'],
+ai_note:'Junior analysis is being automated. Economic interpretation, policy design, and high-stakes forecasting still require deep human expertise.',ai_a:65,
+careers:['Financial / economic analyst [HK banks / HKMA / SFC]','Management consultant [McKinsey, BCG HK]','Finance analyst [HK]'],
+pivots:['★ Quant finance (add econometrics + Python) [HK quant funds]','Regulatory economist — SFC, HKMA [HK]','McKinsey / BCG HK consulting'],
+unis:[{u:'HKU',p:'BSocSc Economics',n:'Theory-heavy · Policy and finance pathway'},{u:'CUHK',p:'BSocSc Economics',n:'Applied microeconomics · Finance crossover'},{u:'HKUST',p:'BSocSc Economics',n:'Quantitative focus · Finance school adjacent'}]},
+
+{id:'psychology',name:'Psychology',tl:'Why people behave the way they do — postgrad needed for clinical',fac:'Social Sciences',ico:'ti-brain',col:'#20b2aa',employ:67,salary:52,ai_d:40,flex:60,stab:68,entry_d:65,wlb:65,hk_sal:'HK$15–22K/mo',hk_sal_src:'Jobsdb HK 2024 — clinical psychologist higher post-postgrad',top_job:'Research assistant / HR officer',employ_src:'UGC GES social science graduates — majority of clinical-track graduates proceed to postgrad',
+desc:'You study why people think, feel, and behave the way they do — covering mental health treatment, child development, and workplace behaviour. In HK, you can\'t practise as a clinical psychologist after just the undergraduate degree — you need an additional postgraduate qualification. Without further study, graduates tend to go into HR, education, or UX research at tech companies.',
+pros:['Clinical psychology postgrad pathway growing in HK as mental health awareness rises [HK]','HR and organisational psychology useful in almost every HK corporation [HK MNCs]','UX research at HK tech companies is a growing well-paid option [HK tech]'],cons:['Undergraduate alone insufficient for clinical work in HK [HK registration rules]','Salary modest without a postgraduate qualification','Commercial roles need extra technical or analytical skills'],
+ai_note:'Human empathy and therapeutic relationships can\'t be automated. UX research and people analytics are growing non-clinical options.',ai_a:70,
+careers:['Research assistant / HR officer','Clinical psychologist (postgrad required) [HK]','UX researcher [HK tech companies]'],
+pivots:['UX research at HK tech company or bank','People analytics at HK bank','Mental health policy advisory [HK Health Bureau]'],
+unis:[{u:'HKU',p:'BSocSc Psychology',n:'Clinical and research track · Strong postgrad programme'},{u:'CUHK',p:'BSocSc Psychology',n:'Clinical and educational focus · Strong clinical postgrad'},{u:'CityU',p:'BSocSc Applied Psychology',n:'Work and organisational focus · More direct employment at UG'}]},
+
+{id:'poliadmin',name:'Politics & Public Administration',tl:'How governments work — civil service pathway in HK',fac:'Social Sciences',ico:'ti-world',col:'#20b2aa',employ:68,salary:52,ai_d:42,flex:55,stab:65,entry_d:60,wlb:70,hk_sal:'HK$16–22K/mo',hk_sal_src:'HKSAR civil service officer trainee pay scale 2024',top_job:'Civil service officer trainee',employ_src:'UGC GES social science graduates — civil service and NGO absorption keeps rate moderate',
+desc:'You study how governments make decisions, how laws and policies are created, and how political systems around the world work. In HK, this degree leads mainly to the civil service and the NGO sector. A good choice if you genuinely want to work in public service, but the political environment since 2020 has made some opportunities more limited.',
+pros:['HKSAR civil service recruitment is active [HK]','Public policy and NGO sector provides stable employment [HK]','Geopolitics knowledge valued by HK banks and think tanks [HK]'],cons:['HK\'s political environment since 2020 has affected certain career paths [HK]','Civil service officer exam is genuinely competitive [HK]','Limited private sector relevance without supplementary skills'],
+ai_note:'Policy design and political judgment involve stakeholder management that AI can\'t replicate.',ai_a:58,
+careers:['Civil service officer trainee [HKSAR]','Policy researcher [HK think tanks]','NGO programme officer [HK]'],
+pivots:['Political risk analyst at HK bank','Government relations at MNC in HK','International organisation — UN, ADB, World Bank'],
+unis:[{u:'HKU',p:'BSocSc Politics & Public Admin',n:'Civil service pathway · Policy research · GBA governance'},{u:'CUHK',p:'BSocSc Government & Public Admin',n:'China governance focus · Cross-border policy'}]},
+
+{id:'socialwork',name:'Social Work',tl:'Help vulnerable people — most AI-resistant professional degree',fac:'Social Sciences',ico:'ti-users',col:'#20b2aa',employ:76,salary:50,ai_d:25,flex:35,stab:88,entry_d:58,wlb:50,hk_sal:'HK$16–20K/mo',hk_sal_src:'HK Social Welfare Department pay scale 2024',top_job:'Registered social worker (SWD / NGO)',employ_src:'UGC GES social science + PolyU social work data — professional registration ensures employment',
+desc:'You train to support people in difficult situations — elderly people who can\'t look after themselves, children in unsafe homes, people struggling with mental illness or addiction. After graduation you register with the HKSWA before you can practise. Genuinely meaningful work and HK\'s rapidly ageing population means demand keeps rising — but salaries are modest and emotional demands significant.',
+pros:['Professional registration means there\'s essentially always a job waiting [HK HKSWA]','SWD and NGOs continuously hiring across HK [HK SWD data]','★ Safest professional degree from AI [HK]'],cons:['Among the lowest salaries of any professional degree in HK [HK salary benchmarks]','Heavy caseloads and emotionally draining work [HK SWD]','Limited private sector pathway in HK'],
+ai_note:'Social work requires human empathy, crisis response, and complex family assessment that AI genuinely cannot replicate.',ai_a:80,
+careers:['Registered social worker (SWD / NGO) [HK]','Medical social worker — HA [HK]','School social worker [HK Education Bureau]'],
+pivots:['Social enterprise management [HK]','NGO programme director [HK]','Healthcare social policy [HK Health Bureau]'],
+unis:[{u:'HKU',p:'BSW Social Work',n:'HA and SWD accredited · Medical social work pipeline'},{u:'CUHK',p:'BSocSc Social Work',n:'Community practice · Mental health track'},{u:'PolyU',p:'BSc Social Policy & Administration',n:'Policy + welfare blend · Applied government focus'}]},
+
+{id:'law',name:'Law (LLB)',tl:'The rules of society — HK is Asia\'s arbitration hub',fac:'Law',ico:'ti-scale',col:'#9b8ec4',employ:79,salary:78,ai_d:55,flex:70,stab:68,entry_d:83,wlb:38,hk_sal:'HK$25–45K/mo',hk_sal_src:'HK Law Society Graduate Survey 2024 — trainee solicitor',top_job:'Trainee solicitor (law firm)',employ_src:'HK Law Society employment data — overall placement rate higher post-PCLL',
+desc:'You study the rules that govern society — contracts, criminal law, company law, property rights, and in HK specifically, how common law interacts with China\'s legal system. After four years you complete a one-year PCLL before you can practise. HK is Asia\'s most important arbitration centre, which creates strong long-term demand for HK-trained lawyers.',
+pros:['HK is Asia\'s premier arbitration centre — structural demand [HKIAC data]','Magic circle firms — Freshfields, Linklaters, Slaughter & May — recruit directly [HK]','HK\'s unique common law + China position can\'t be replicated anywhere else [HK]'],cons:['AI already automating document review and contract drafting at HK law firms [HK]','Five years total including the PCLL — late start to earning','Mid-tier law market in HK is genuinely oversupplied [HK Law Society]'],
+ai_note:'Document review and contract drafting are the most disrupted legal tasks. Complex cross-border deals and China-specific expertise are much harder to automate.',ai_a:60,
+careers:['Trainee solicitor (law firm) [HK]','Barrister [HK Bar]','In-house counsel [HK MNCs]','SFC / HKMA regulator [HK]'],
+pivots:['Compliance and regulatory affairs at HK bank [growing fast]','Legal tech startup founder [HK]','International arbitration specialist [HKIAC]'],
+unis:[{u:'HKU',p:'LLB',n:'Most prestigious · Magic circle direct recruitment · Arbitration track'},{u:'CUHK',p:'LLB',n:'Mainland China law focus · Cross-border legal work'},{u:'CityU',p:'LLB',n:'Maritime law niche strong · Commercial focus'}]},
+
+{id:'languages',name:'Languages / Linguistics / Translation',tl:'Language and communication — live interpretation still safe',fac:'Arts & Humanities',ico:'ti-language',col:'#9b8ec4',employ:67,salary:48,ai_d:56,flex:50,stab:65,entry_d:58,wlb:72,hk_sal:'HK$13–18K/mo',hk_sal_src:'HK Education Bureau pay scale / Jobsdb HK 2024',top_job:'English / Chinese language teacher',employ_src:'UGC GES arts graduates — teaching pathway keeps employment moderate; general translation declining',
+desc:'These degrees study language itself — how it works, how people learn it, and how to translate it between cultures. In HK, the most practical paths are English teaching, Chinese language teaching, and professional translation or interpretation. AI translation tools are rapidly replacing basic written translation work, but live interpretation and high-stakes legal and medical translation remain hard to automate.',
+pros:['English and Chinese teaching reliably in demand across HK\'s schools [HK Education Bureau]','Live simultaneous interpretation remains AI-proof [HK courts, HKIAC]','Mandarin and Cantonese fluency genuinely valuable in HK\'s bilingual business world [HK]'],cons:['Basic written translation rapidly replaced by AI — direct threat [HK trend]','Salaries among the lower ones available to graduates in HK','Must specialise in high-stakes areas to be safe from automation'],
+ai_note:'AI does basic translation. Live interpretation and legal or medical translation — where mistakes have serious consequences — remain human.',ai_a:44,
+careers:['English / Chinese language teacher [HK schools]','Court and conference interpreter [HK courts, HKIAC]','Legal / medical translator [HK]'],
+pivots:['Computational linguistics at HK tech company','PR and corporate communications [HK MNCs]','Content strategy and localisation'],
+unis:[{u:'HKU',p:'BA English Studies',n:'Literature and language · Education and communications'},{u:'HKU',p:'BA Linguistics',n:'Language science · Computational linguistics pathway'},{u:'CUHK',p:'BA Chinese Language & Literature',n:'Traditional and modern Chinese · Education pathway'},{u:'HKBU',p:'BA Translation',n:'Professional translation · Simultaneous interpretation'}]},
+
+{id:'journalism',name:'Journalism & Communication',tl:'Report the news — HKBU is Asia\'s leading journalism school',fac:'Arts & Humanities',ico:'ti-microphone',col:'#9b8ec4',employ:68,salary:48,ai_d:58,flex:52,stab:50,entry_d:60,wlb:52,hk_sal:'HK$13–18K/mo',hk_sal_src:'Jobsdb HK Media Salary 2024',top_job:'PR / communications officer',employ_src:'HKBU graduate employment data — PR/corporate communications pivot keeps rate moderate',
+desc:'You learn to investigate stories, interview people, and communicate information clearly across articles, broadcasts, podcasts, and social media. HKBU runs Asia\'s most respected journalism school. HK\'s media industry has shrunk significantly since 2020, but investigative journalism and data journalism remain in demand, and many graduates move into corporate PR and communications within a few years.',
+pros:['HKBU journalism is one of the most recognised in Asia [HKBU ranking]','Investigative journalism requires skills AI cannot replicate','Path into PR and corporate communications is well-trodden from HKBU [HK]'],cons:['HK\'s media industry contracted significantly after 2020 [HK]','AI already writing routine news articles [HK newsrooms]','Salaries among the lowest of any graduate career in HK'],
+ai_note:'Investigative reporting and data journalism are AI-resistant. Routine news articles are already being automated in HK newsrooms.',ai_a:42,
+careers:['PR / communications officer [HK MNCs]','Journalist [SCMP, RTHK, HKFP]','Corporate communications manager [HK]'],
+pivots:['Corporate communications at MNC in HK','NGO communications director [HK]','Brand content strategy [HK]'],
+unis:[{u:'HKBU',p:'BA Journalism',n:'Asia\'s leading journalism school · Investigative track'},{u:'HKBU',p:'BA Communication Studies',n:'PR and advertising focus · Digital media'},{u:'CityU',p:'BA Media & Communication',n:'Digital media production · Practical curriculum'}]},
+
+{id:'arts',name:'Fine Arts / Creative Media / Design',tl:'Create visual work — UX design is the most employable track',fac:'Arts & Humanities',ico:'ti-brush',col:'#888',employ:62,salary:48,ai_d:48,flex:55,stab:45,entry_d:65,wlb:62,hk_sal:'HK$14–22K/mo',hk_sal_src:'Jobsdb HK Creative Salary 2024 — UX/product design at higher end',top_job:'Graphic / UX designer',employ_src:'UGC GES arts graduates — portfolio-dependent; UX/product design significantly higher than fine arts',
+desc:'Studio-based degrees where you spend most of your time creating visual work — paintings, graphic designs, product designs, digital media, or video games. Whether you find a job depends almost entirely on your individual portfolio and skills. The most employable tracks are UX/UI design (tech companies hire a lot), game design through CityU, and product design with a technology angle.',
+pros:['Creative direction and brand strategy are hard for AI to replicate [HK luxury market]','HK is one of the world\'s top 3 art markets [HK art market data]','HK tech companies and banks actively hiring UX and product designers [HK tech]'],cons:['AI image tools already replacing commercial illustration work [HK creative industry]','Career depends almost entirely on personal portfolio','Breaking into top-tier HK brands without exceptional portfolio is extremely hard'],
+ai_note:'AI handles commodity visual work. Senior UX design and brand strategy require human creativity and cultural judgment.',ai_a:52,
+careers:['Graphic / UX designer [HK tech, banks]','Brand designer [HK]','Game designer [CityU Creative Media pathway]','Gallery curator [HK art market]'],
+pivots:['UX design at HK tech company or bank [HK]','Brand consultancy [HK]','Christie\'s / Sotheby\'s HK art market roles'],
+unis:[{u:'HKU',p:'BA Fine Arts',n:'Traditional and contemporary · Curatorial pathway'},{u:'PolyU',p:'BA Design (Industrial)',n:'Product design · Design thinking'},{u:'PolyU',p:'BA Design (Communication)',n:'Graphic and visual communication'},{u:'CityU',p:'BA Creative Media',n:'Game design · Interactive media · Best for digital careers'}]},
+
+{id:'histphil',name:'History / Philosophy / Liberal Arts',tl:'Big ideas and critical thinking — career must be actively built',fac:'Arts & Humanities',ico:'ti-history',col:'#888',employ:63,salary:46,ai_d:45,flex:52,stab:55,entry_d:55,wlb:72,hk_sal:'HK$14–20K/mo',hk_sal_src:'UGC GES — management trainee / civil service officer grade',top_job:'Civil service officer trainee / postgrad student',employ_src:'UGC GES arts graduates — civil service and postgrad pathway keeps rate moderate; lowest salary outcomes',
+desc:'History teaches you to understand how the past created the present — analysing events, sources, and cause-and-effect across centuries. Philosophy asks the fundamental questions: what is knowledge? what is right and wrong? Neither degree leads directly to a specific job — you\'ll need to build a career yourself, usually through further study (law school, MBA) or strong internship experience. Philosophy is gaining real relevance as AI ethics becomes a serious field at tech companies.',
+pros:['Critical thinking and analytical writing valued by HK consulting and finance firms [HK employers]','Law school and MBA programmes are a realistic path from here','Philosophy becoming relevant to AI ethics roles at tech companies — a growing field'],cons:['No direct job path in HK — you need to construct one yourself','Lowest starting salaries of any degree in HK [UGC GES salary data]','AI tools starting to compete in research and writing tasks — the core skills of these degrees'],
+ai_note:'AI ethics is emerging as a real career where philosophy graduates have genuine advantage. Historical research requires deep contextual judgment.',ai_a:55,
+careers:['Civil service officer trainee [HKSAR]','Heritage and museum work [HK museums]','Law school postgrad gateway','AI ethics researcher'],
+pivots:['AI ethics researcher at tech company','HKSAR government policy advisory','Postgrad LLB → legal career [HKU law]'],
+unis:[{u:'HKU',p:'BA History',n:'Research skills · Critical analysis · Heritage and policy'},{u:'HKU',p:'BA Philosophy',n:'Ethics · Logic · AI ethics and law school pathway'},{u:'CUHK',p:'BA History',n:'Chinese history strength · Academic pipeline'}]},
+
+{id:'architecture',name:'Architecture',tl:'Design buildings and spaces — 7-year path, infrastructure boom',fac:'Architecture & Built Env',ico:'ti-building-arch',col:'#f59e0b',employ:75,salary:62,ai_d:25,flex:58,stab:72,entry_d:72,wlb:42,hk_sal:'HK$18–25K/mo',hk_sal_src:'HKIA Graduate Pay Survey 2024',top_job:'Architectural assistant',employ_src:'HKIA and UGC — estimated; infrastructure boom driving demand',
+desc:'You spend 5 years learning to design buildings and spaces — balancing how they look, how they\'re built, and how they affect the environment. Most of your time is in the studio creating drawings and 3D models. After graduating, you need 2 more years of work experience and a professional exam before you\'re officially registered as an architect.',
+pros:['HKIA registration creates a professional barrier — employers need licensed architects [HK]','Northern Metropolis and Lantau Tomorrow = a decade of planned work [HK govt]','Design thinking is transferable to tech, consulting, and proptech [HK]'],cons:['7+ years before fully qualified — 5yr degree + 2yr placement + professional exam [HKIA]','Salary noticeably lower than engineering or finance in HK','Studio culture means late nights — notably poor work-life balance [HK architecture industry]'],
+ai_note:'AI handles repetitive drafting. Creative direction, client management, and complex site challenges remain firmly human.',ai_a:60,
+careers:['Architectural assistant [HK]','Architect — HKIA registered [HK]','Urban designer [HK Planning Dept]'],
+pivots:['Developer-side project management [HK developers]','Architecture technology — BIM / digital twin [HK]','PropTech startup [HK]'],
+unis:[{u:'HKU',p:'BArch',n:'Only ARB/HKIA accredited HK architecture degree · 5yr programme · #11 QS'}]},
+
+{id:'construction',name:'Property & Construction Management',tl:'Manage buildings and projects — Northern Metropolis pipeline',fac:'Architecture & Built Env',ico:'ti-crane',col:'#f59e0b',employ:83,salary:64,ai_d:27,flex:50,stab:82,entry_d:60,wlb:55,hk_sal:'HK$19–27K/mo',hk_sal_src:'CIC Graduate Pay Survey 2024',top_job:'Graduate quantity surveyor / project engineer',employ_src:'CIC and PolyU graduate data — Northern Metropolis and Lantau projects driving shortage',
+desc:'You learn to manage construction projects from start to finish — coordinating contractors, managing budgets, and overseeing quality control. Quantity surveyors specialise in measuring and pricing every single material and element in a building. In HK right now, the government is simultaneously building the Northern Metropolis and the Lantau Tomorrow projects, creating at least a decade of steady demand.',
+pros:['Northern Metropolis + Lantau = 10 years of guaranteed project work [HK Govt]','HKIS professional accreditation gives you a recognised qualification [HK HKIS]','Developer and government employment both stable in HK [HK]'],cons:['Site visits and demanding project hours — not purely an office role','Salary moderate compared to software engineering or finance in HK','AI starting to automate cost estimation and quantity take-off'],
+ai_note:'BIM-based quantity take-off is advancing rapidly. But contract management and dispute resolution need experienced human judgment.',ai_a:55,
+careers:['Graduate quantity surveyor / project engineer [HK]','Building engineer / PM [HK]','Property manager [HK]'],
+pivots:['Infrastructure project finance — add CFA [HK banks]','PropTech startup [HK]','ESG building certification consultant [HK]'],
+unis:[{u:'PolyU',p:'BSc Building Eng & Management',n:'HKIS accredited · Northern Metropolis pipeline'},{u:'PolyU',p:'BSc Quantity Surveying & Construction Economics',n:'HKIS accredited · Cost management'},{u:'PolyU',p:'BSc Property Management',n:'HKIS accredited · Estate management · Smart building'},{u:'CityU',p:'BSc Building Eng & Management',n:'Smart building focus · Sustainability modules'}]},
+];
+
+const FACS=['All',...[...new Set(D.map(d=>d.fac))].sort()];
+let aFac='All',aSort='score',open=null;
+
+function sortKey(d){const s=ov(d);if(aSort==='score')return -s;if(aSort==='employ')return -d.employ;if(aSort==='aisafe')return d.ai_d;if(aSort==='wlb')return -d.wlb;if(aSort==='faculty')return d.fac+String(100-s).padStart(3,'0');return 0}
+
+function renderTop(){
+  document.getElementById('sr').innerHTML='<span class="ctrl-lbl">Sort:</span>'+SORTS.map(s=>`<button class="sb ${aSort===s.k?'on':''}" onclick="setSort('${s.k}')">${s.l}</button>`).join('');
+  document.getElementById('ft').innerHTML=FACS.map(f=>`<button class="ft ${aFac===f?'on':''}" onclick="setFac('${f}')">${f}</button>`).join('');
+}
+function setSort(s){aSort=s;render()}
+function setFac(f){aFac=f;render()}
+function toggle(id){open=open===id?null:id;render()}
+
+function rBar(l,v,c){return`<div class="rb"><span class="rbl">${l}</span><div class="rbt"><div class="rbf" style="width:${v}%;background:${c}"></div></div></div>`}
+
+function rowHTML(d){
+  const s=ov(d),sc=starColor(d,s),st=starS(d,s);
+  return`<div class="arow ${open===d.id?'open':''}">
+    <div class="ah" onclick="toggle('${d.id}')">
+      <span class="stars" style="color:${sc}">${st}</span>
+      <div class="dico" style="background:${d.col}18;color:${d.col}"><i class="ti ${d.ico}" aria-hidden="true"></i></div>
+      <div class="di"><div class="dn">${d.name}</div><div class="dt">${d.tl}</div></div>
+      <div class="rbars">
+        ${rBar('Employ',d.employ,bc(d.employ))}
+        ${rBar('Salary',d.salary,bc(d.salary))}
+        ${rBar('AI safe',100-d.ai_d,bc(100-d.ai_d))}
+        ${rBar('Work-life',d.wlb,bc(d.wlb))}
+      </div>
+      <i class="ti ti-chevron-right chev" aria-hidden="true"></i>
+    </div>
+    ${open===d.id?bodyHTML(d,s):''}
+  </div>`;
+}
+
+function bodyHTML(d,s){
+  return`<div class="ab">
+    <div class="dbox"><div class="dlbl">What is this degree?</div><div class="dtxt">${d.desc}</div></div>
+    <div class="mets">
+      <div class="metscore"><div class="ml">⭐ Overall Score</div><div class="mv" style="color:${starColor(d,s)}">${s}/100</div></div>
+      <div class="met"><div class="ml">Employability</div><div class="mv" style="color:${bc(d.employ)}">${d.employ}%</div><div class="mvsrc">${d.employ_src}</div></div>
+      <div class="met"><div class="ml">AI disruption risk</div><div class="mv" style="color:${bc(100-d.ai_d)}">${d.ai_d}%</div></div>
+      <div class="met"><div class="ml">Job stability</div><div class="mvs" style="color:${bc(d.stab)}">${stabL(d.stab)} (${d.stab}/100)</div></div>
+      <div class="met"><div class="ml">Work-life balance</div><div class="mvs" style="color:${bc(d.wlb)}">${wlbL(d.wlb)} (${d.wlb}/100)</div></div>
+      <div class="met"><div class="ml">Entry difficulty</div><div class="mv" style="color:${bc(100-d.entry_d)}">${d.entry_d}/100</div></div>
+    </div>
+    <div class="salbox">
+      <div class="salh">Expected HK salary</div>
+      <div class="salg">
+        <div class="salc"><div class="sall">Starting salary</div><div class="salv" style="color:#4caf7d">${d.hk_sal}</div><div class="sals">${d.hk_sal_src}</div></div>
+        <div class="salc"><div class="sall">Salary potential</div><div class="salv" style="color:${bc(d.salary)}">${d.salary}/100</div><div class="sals">Relative to other HK degrees</div></div>
+      </div>
+    </div>
+    <div class="pcg">
+      <div class="pc"><div class="pch" style="color:#4caf7d">Pros</div>${d.pros.map(p=>{const hk=p.includes('[HK');const t=p.replace(/\s*\[.*?\]/g,'');return`<div class="bi"><div class="dot" style="background:#4caf7d"></div><div>${t}${hk?'<span class="hk">HK</span>':''}</div></div>`}).join('')}</div>
+      <div class="pc"><div class="pch" style="color:#e05252">Cons</div>${d.cons.map(c=>{const hk=c.includes('[HK');const t=c.replace(/\s*\[.*?\]/g,'');return`<div class="bi"><div class="dot" style="background:#e05252"></div><div>${t}${hk?'<span class="hk">HK</span>':''}</div></div>`}).join('')}</div>
+    </div>
+    <div class="ais">
+      <div class="aibw">
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:7px">AI impact</div>
+        <div class="br"><div class="brl">Disruption</div><div class="brt"><div class="brf" style="width:${d.ai_d}%;background:${d.ai_d>55?'#e05252':d.ai_d>35?'#c8a84b':'#4caf7d'}"></div></div><div class="brv" style="color:${bc(100-d.ai_d)}">${d.ai_d}%</div></div>
+        <div class="br"><div class="brl">Augmentation</div><div class="brt"><div class="brf" style="width:${d.ai_a}%;background:#4caf7d"></div></div><div class="brv" style="color:#4caf7d">${d.ai_a}%</div></div>
+      </div>
+      <div class="ain">${d.ai_note}</div>
+    </div>
+    <div class="botg">
+      <div class="bc"><div class="bch" style="color:var(--color-text-tertiary)">Career pathways <span style="font-size:9px;font-weight:400">(bold = most common first job)</span></div>
+        <div class="btags">${d.careers.map(c=>{const hk=c.includes('[HK');const t=c.replace(/\s*\[.*?\]/g,'');const isTop=t.toLowerCase().includes(d.top_job.toLowerCase().split(' ')[0].replace(/[^a-z]/g,''));return`<span class="btag ${isTop?'top':''}">${t}${hk?'<span class="hk" style="font-size:9px">HK</span>':''}</span>`}).join('')}</div>
+      </div>
+      <div class="bc"><div class="bch" style="color:#c8a84b">★ Non-obvious pivots</div><div class="btags">${d.pivots.map(p=>{const hk=p.includes('[HK');const t=p.replace(/\s*\[.*?\]/g,'');return`<span class="ptag">${t}${hk?'<span class="hk" style="font-size:9px">HK</span>':''}</span>`}).join('')}</div></div>
+    </div>
+    <div class="us"><div class="uh">HK university programmes</div><div class="ug">${d.unis.map(u=>`<div class="ur"><span class="ub" style="background:${UC[u.u]||'#888'}18;color:${UC[u.u]||'#888'};border:0.5px solid ${UC[u.u]||'#888'}30">${u.u}</span><div><div class="up">${u.p}</div><div class="un">${u.n}</div></div></div>`).join('')}</div></div>
+    <div class="srcn">📊 Employability: ${d.employ_src} · Salary: ${d.hk_sal_src}</div>
+  </div>`;
+}
+
+function render(){
+  renderTop();
+  let list=D.filter(d=>aFac==='All'||d.fac===aFac);
+  list=[...list].sort((a,b)=>sortKey(a)<sortKey(b)?-1:sortKey(a)>sortKey(b)?1:0);
+  let html='';
+  if(aSort==='faculty'&&aFac==='All'){
+    const g={},o=[];
+    list.forEach(d=>{if(!g[d.fac]){g[d.fac]=[];o.push(d.fac)}g[d.fac].push(d)});
+    o.forEach(f=>{html+=`<div class="fhdr"><i class="ti ${FI[f]||'ti-circle'}" aria-hidden="true"></i><span>${f}</span></div>`;html+=g[f].map(rowHTML).join('');});
+  } else {
+    if(aFac!=='All')html+=`<div class="fhdr"><i class="ti ${FI[aFac]||'ti-circle'}" aria-hidden="true"></i><span>${aFac}</span></div>`;
+    html+=list.map(rowHTML).join('');
+  }
+  document.getElementById('list').innerHTML=html;
+}
+render();
+</script>
+
+  </div>
+</div>
+</body>
+</html>
