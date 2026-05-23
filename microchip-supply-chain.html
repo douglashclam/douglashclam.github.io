@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microchip Supply Chain — Douglas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f2;
+  --color-background-danger: #FCEBEB;
+  --color-background-warning: #FEF3E2;
+  --color-background-success: #E1F5EE;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-tertiary: #a0a09a;
+  --color-text-danger: #791F1F;
+  --color-text-warning: #633806;
+  --color-text-success: #085041;
+  --color-border-primary: #d0d0ca;
+  --color-border-secondary: #e0e0da;
+  --color-border-tertiary: #eaeae4;
+  --border-radius-lg: 12px;
+  --border-radius-md: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
+.kg-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem }
+nav a { display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--color-text-tertiary);text-decoration:none;transition:color 0.15s }
+nav a:hover { color:var(--color-text-primary) }
+nav h1 { font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary) }
+.kg-panel { background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:1.5rem }
+
+.sb{display:grid;grid-template-columns:190px 1fr;gap:14px;align-items:start;padding:4px 0}
+.si{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:0.5px solid transparent;cursor:pointer;transition:background .12s,border-color .12s;margin-bottom:3px;position:relative}
+.si:hover{background:var(--color-background-secondary)}
+.si.active{background:var(--color-background-secondary);border-color:var(--color-border-secondary)}
+.snum{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
+.sname{font-size:12px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.ssub{font-size:10px;color:var(--color-text-secondary)}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-left:auto}
+.dp{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.dph{padding:14px 16px 12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.dpb{padding:14px 16px}
+.rbadge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 6px;border-radius:6px;font-size:11px;font-weight:500;margin-top:6px}
+.desc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin:8px 0 0}
+.sec{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:9px}
+.cr{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cr:last-child{border-bottom:none}
+.cn{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.crole{font-size:11px;color:var(--color-text-secondary);line-height:1.3;margin-top:1px}
+.ctag{font-size:10px;padding:1px 6px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);flex-shrink:0}
+.grow{margin-bottom:6px}
+.gbar{height:5px;border-radius:3px;overflow:hidden;background:var(--color-background-secondary);margin-top:2px}
+.gfill{height:100%;border-radius:3px}
+.glabel{display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary)}
+.bnote{margin-top:14px;padding:10px 12px;border-radius:8px;border-left:2px solid;font-size:12px;line-height:1.55;color:var(--color-text-secondary)}
+.stacked{height:7px;border-radius:4px;overflow:hidden;display:flex;margin:0 0 10px}
+.legrow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.legitem{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--color-text-secondary)}
+.legdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.conn{position:absolute;left:21px;top:100%;width:2px;height:3px;background:var(--color-border-tertiary)}
+</style>
+
+<div class="kg-wrap">
+  <nav>
+    <a href="area.html?id=geopolitics"><i class="ti ti-arrow-left"></i> Geopolitics</a>
+    <h1>Microchip Supply Chain</h1>
+    <span></span>
+  </nav>
+
+  <div class="kg-panel">
+    <h2 style="font-size:16px;font-weight:600;margin-bottom:4px">Microchip fabrication pipeline</h2>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem">10-step production process — key companies and global supply chain bottlenecks. Click any step to see details.</p>
+
+    <div class="sb">
+      <div>
+        <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px">Production pipeline</div>
+        <div id="step-list"></div>
+      </div>
+      <div id="detail-panel" class="dp"></div>
+    </div>
+
+    <div style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D85A30"></span>Critical bottleneck</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#EF9F27"></span>Moderate risk</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1D9E75"></span>Stable supply</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const R={critical:{dot:"#D85A30",bg:"var(--color-background-danger)",tx:"var(--color-text-danger)",label:"Critical bottleneck"},moderate:{dot:"#EF9F27",bg:"var(--color-background-warning)",tx:"var(--color-text-warning)",label:"Moderate risk"},low:{dot:"#1D9E75",bg:"var(--color-background-success)",tx:"var(--color-text-success)",label:"Stable supply"}};
+const steps=[
+{name:"Silicon wafers",sub:"Raw material",risk:"moderate",rl:"Geographic concentration",desc:"Sand (SiO₂) is refined to 99.9999999% pure silicon via the Siemens process. Ingots are grown using the Czochralski method, then sliced and polished to atomic smoothness.",cos:[["Shin-Etsu Chemical","Japan","Largest global wafer supplier"],["SUMCO","Japan","Wafer manufacturing"],["Siltronic","Germany","European wafer maker"],["SK Siltron","S. Korea","Wafer manufacturing"]],geo:[["Japan",60,"#BA7517"],["Germany",15,"#639922"],["S. Korea",15,"#1D9E75"],["Other",10,"#888780"]],note:"Japan controls ~60% of silicon wafer supply. Limited global diversification means export controls or natural disasters there ripple across all major chipmakers."},
+{name:"Photoresist",sub:"Chemical prep",risk:"critical",rl:"Japan near-monopoly (~90%)",desc:"Wafers are coated with a photosensitive polymer that reacts to UV/EUV light to define circuit patterns. Extreme purity requirements (parts per trillion impurities) make this a hyper-specialty chemical with very few qualified producers.",cos:[["JSR Corporation","Japan","EUV photoresists"],["Tokyo Ohka Kogyo","Japan","KrF and ArF resists"],["Shin-Etsu Chemical","Japan","ArF immersion resists"],["DuPont","USA","Specialty resist materials"]],geo:[["Japan",90,"#BA7517"],["USA",8,"#378ADD"],["Other",2,"#888780"]],note:"Japan's 2023 semiconductor export restrictions explicitly targeted photoresist materials. Tokyo controls ~90% of production — making this the most geographically concentrated critical input in the entire supply chain."},
+{name:"Photolithography",sub:"Circuit patterning",risk:"critical",rl:"ASML global monopoly on EUV",desc:"A photomask projects UV or EUV light onto the resist-coated wafer, transferring circuit patterns. EUV (extreme ultraviolet) machines use 13.5nm light and are physically the most complex manufactured object on earth.",cos:[["ASML","Netherlands","Only EUV machine maker globally — $150M–$380M/unit"],["Nikon","Japan","DUV systems for mature nodes (≥14nm)"],["Canon","Japan","DUV systems for mature nodes"]],geo:[["Netherlands",100,"#7F77DD"]],note:"ASML produces ~50 EUV machines per year. Lead times are 12–18 months. The USA, Netherlands, and Japan have coordinated to ban EUV exports to China — making ASML machines a primary instrument of semiconductor geopolitics."},
+{name:"Etching",sub:"Material removal",risk:"moderate",rl:"US–Japan oligopoly",desc:"Plasma etching selectively removes material from exposed wafer areas to sculpt transistor structures down to atomic-scale precision. Dry etching dominates at advanced nodes.",cos:[["Lam Research","USA","Leading plasma etch systems globally"],["Applied Materials","USA","Etch and deposition"],["Tokyo Electron","Japan","Etch and CVD systems"]],geo:[["USA",55,"#378ADD"],["Japan",30,"#BA7517"],["Other",15,"#888780"]],note:"Lam Research, Applied Materials, and Tokyo Electron control ~80% of the global etch market. US export controls restrict advanced tool sales to Chinese fabs — creating a parallel Chinese supply chain push by companies like NAURA."},
+{name:"Deposition (CVD/ALD)",sub:"Thin film layers",risk:"moderate",rl:"Specialty gas dependency",desc:"Chemical Vapour Deposition and Atomic Layer Deposition build ultra-thin films of materials (oxides, nitrides, metals) layer by layer — sometimes just one atom thick per cycle.",cos:[["Applied Materials","USA","CVD market leader"],["Lam Research","USA","ALD and etch"],["Tokyo Electron","Japan","CVD systems"],["ASM International","Netherlands","ALD leader"]],geo:[["USA",50,"#378ADD"],["Japan",30,"#BA7517"],["Netherlands",15,"#7F77DD"],["Other",5,"#888780"]],note:"Specialty gases are a hidden bottleneck. Ukraine supplied ~70% of global neon (used in lithography lasers) pre-2022 — prices spiked 10× after Russia's invasion. China's 2023 export controls on gallium and germanium targeted deposition precursor materials."},
+{name:"Ion implantation",sub:"Doping",risk:"low",rl:"Stable, US-led supply",desc:"Ions (boron, phosphorus, arsenic) are accelerated into the silicon wafer to alter electrical properties and define p-type and n-type regions — the foundation of transistor operation.",cos:[["Applied Materials","USA","Ion implant systems leader"],["Axcelis Technologies","USA","Specialist implanter maker"],["Sumitomo Heavy Ind.","Japan","Ion implant equipment"]],geo:[["USA",65,"#378ADD"],["Japan",30,"#BA7517"],["Other",5,"#888780"]],note:"Relatively stable supply chain. Applied Materials dominates but ion implantation equipment is less geopolitically sensitive than lithography or photoresist."},
+{name:"Metrology & inspection",sub:"In-line quality control",risk:"moderate",rl:"US-dominated, KLA concentration",desc:"Wafers are inspected for defects at every stage using scanning electron microscopes, X-ray tools, and optical systems. At 3nm, a single stray particle can ruin an entire wafer worth tens of thousands of dollars.",cos:[["KLA Corporation","USA","Inspection and metrology leader (~50% share)"],["Onto Innovation","USA","Process control systems"],["Hitachi High-Tech","Japan","SEM inspection systems"],["Applied Materials","USA","CMP and metrology"]],geo:[["USA",65,"#378ADD"],["Japan",30,"#BA7517"],["Other",5,"#888780"]],note:"KLA controls ~50% of the process control equipment market. As US export controls tighten, inspection tools for advanced nodes are increasingly restricted — limiting China's ability to verify yield at leading-edge geometries."},
+{name:"Wafer fabrication",sub:"The fab itself",risk:"critical",rl:"Taiwan geographic concentration",desc:"Advanced fabs integrate all prior steps across 200–1,000+ process steps over 3–6 months per wafer lot. Building a leading-edge fab costs $20–30 billion and takes 5+ years. TSMC dominates advanced nodes by an extraordinary margin.",cos:[["TSMC","Taiwan","~90% of sub-5nm chips globally"],["Samsung Foundry","S. Korea","Advanced logic and memory"],["Intel Foundry","USA","Rebuilding advanced capacity"],["GlobalFoundries","USA","Mature specialty nodes"],["SMIC","China","Mature nodes, export-restricted"]],geo:[["Taiwan",65,"#D85A30"],["S. Korea",18,"#1D9E75"],["USA",10,"#378ADD"],["Other",7,"#888780"]],note:"Taiwan produces ~90% of the world's most advanced chips. A Taiwan Strait crisis is widely described by economists as the worst-case supply shock imaginable — surpassing COVID or the 2011 Japanese earthquake by an order of magnitude. The US CHIPS Act ($52B) and EU Chips Act aim to diversify — but new fabs take a decade to reach full capacity."},
+{name:"Advanced packaging",sub:"Chip integration",risk:"critical",rl:"CoWoS bottleneck for AI chips",desc:"Dies are cut from wafers, bonded to substrates, and encapsulated. Advanced packaging (CoWoS, SoIC, HBM stacking) interconnects multiple chiplets and is now a key performance differentiator for AI chips.",cos:[["TSMC","Taiwan","CoWoS advanced packaging — critical AI chip bottleneck"],["ASE Group","Taiwan","Largest OSAT globally"],["Amkor","USA/S. Korea","OSAT services"],["JCET","China","OSAT services"]],geo:[["Taiwan",45,"#D85A30"],["S. Korea",20,"#1D9E75"],["China",15,"#888780"],["USA/Other",20,"#378ADD"]],note:"CoWoS packaging was the #1 bottleneck constraining Nvidia H100 and B100 chip shipments in 2023–24. TSMC's CoWoS capacity was so limited that Nvidia had finished dies sitting in inventory waiting for packaging. TSMC is massively expanding CoWoS capacity through 2026."},
+{name:"Test & ship",sub:"Final QC and logistics",risk:"low",rl:"Stable duopoly",desc:"Packaged chips undergo electrical testing at speed and temperature extremes using Automated Test Equipment (ATE). Chips are binned by performance grade (e.g. server vs consumer GPU) and shipped to customers.",cos:[["Advantest","Japan","ATE systems leader"],["Teradyne","USA","ATE systems"]],geo:[["Japan",45,"#BA7517"],["USA",45,"#378ADD"],["Other",10,"#888780"]],note:"Advantest and Teradyne form a tight duopoly on ATE equipment but supply is generally adequate. The AI chip surge significantly increased demand for high-speed test equipment from both vendors."},
+];
+
+let sel=0;
+
+function renderSteps(){
+  document.getElementById('step-list').innerHTML=steps.map((s,i)=>{
+    const r=R[s.risk];
+    const active=i===sel?' active':'';
+    return`<div class="si${active}" onclick="selectStep(${i})">
+      <div class="snum" style="background:${r.bg};color:${r.tx}">${String(i+1).padStart(2,'0')}</div>
+      <div style="flex:1;min-width:0">
+        <div class="sname">${s.name}</div>
+        <div class="ssub">${s.sub}</div>
+      </div>
+      <div class="sdot" style="background:${r.dot}"></div>
+    </div>`;
+  }).join('');
+}
+
+function renderPanel(){
+  const s=steps[sel];
+  const r=R[s.risk];
+  const total=s.geo.reduce((a,g)=>a+g[1],0);
+  const stacked=s.geo.map(([,pct,col])=>`<div style="width:${(pct/total*100).toFixed(1)}%;background:${col}"></div>`).join('');
+  const legs=s.geo.map(([n,,c])=>`<div class="legitem"><div class="legdot" style="background:${c}"></div>${n}</div>`).join('');
+  const geoRows=s.geo.map(([n,pct,col])=>`<div class="grow"><div class="glabel"><span>${n}</span><span>${pct}%</span></div><div class="gbar"><div class="gfill" style="width:${pct}%;background:${col}"></div></div></div>`).join('');
+  const cos=s.cos.map(([n,reg,role])=>`<div class="cr"><div style="flex:1;min-width:0"><div class="cn">${n}</div><div class="crole">${role}</div></div><div class="ctag">${reg}</div></div>`).join('');
+  const noteColor=s.risk==='critical'?'#D85A30':s.risk==='moderate'?'#EF9F27':'#1D9E75';
+  document.getElementById('detail-panel').innerHTML=`
+    <div class="dph">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <div><div style="font-size:16px;font-weight:500;color:var(--color-text-primary)">${s.name}</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:1px">Step ${sel+1} of ${steps.length} — ${s.sub}</div></div>
+        <div class="rbadge" style="background:${r.bg};color:${r.tx}"><span style="width:6px;height:6px;border-radius:50%;background:${r.dot};display:inline-block;flex-shrink:0"></span>${r.label} — ${s.rl}</div>
+      </div>
+      <p class="desc">${s.desc}</p>
+    </div>
+    <div class="dpb">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div><div class="sec">Key companies</div>${cos}</div>
+        <div>
+          <div class="sec">Geographic concentration</div>
+          <div class="stacked">${stacked}</div>
+          <div class="legrow">${legs}</div>
+          ${geoRows}
+        </div>
+      </div>
+      <div class="bnote" style="border-color:${noteColor};background:${r.bg}"><span style="font-weight:500;color:var(--color-text-primary)">Supply chain note:</span> <span style="color:var(--color-text-secondary)">${s.note}</span></div>
+    </div>`;
+}
+
+function selectStep(i){
+  sel=i;
+  document.querySelectorAll('.si').forEach((el,idx)=>el.classList.toggle('active',idx===i));
+  renderPanel();
+}
+
+renderSteps();
+renderPanel();
+</script>
+</body>
+</html>
