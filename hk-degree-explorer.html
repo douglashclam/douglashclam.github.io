@@ -443,7 +443,8 @@ function setSort(s){aSort=s;render()}
 function setFac(f){aFac=f;render()}
 function toggle(id){open=open===id?null:id;render()}
 
-function rBar(l,v,c){return`<div class="rb"><span class="rbl">${l}</span><div class="rbt"><div class="rbf" style="width:${v}%;background:${c}"></div></div></div>`}
+function pw(v){return Math.pow(v/100,3)*100}
+function rBar(l,v,c){return`<div class="rb"><span class="rbl">${l}</span><div class="rbt"><div class="rbf" style="width:${pw(v).toFixed(1)}%;background:${c}"></div></div></div>`}
 
 function rowHTML(d){
   const s=ov(d),sc=starColor(d,s),st=starS(d,s);
@@ -489,8 +490,8 @@ function bodyHTML(d,s){
     <div class="ais">
       <div class="aibw">
         <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:7px">AI impact</div>
-        <div class="br"><div class="brl">Disruption</div><div class="brt"><div class="brf" style="width:${d.ai_d}%;background:${d.ai_d>55?'#e05252':d.ai_d>35?'#c8a84b':'#4caf7d'}"></div></div><div class="brv" style="color:${bc(100-d.ai_d)}">${d.ai_d}%</div></div>
-        <div class="br"><div class="brl">Augmentation</div><div class="brt"><div class="brf" style="width:${d.ai_a}%;background:#4caf7d"></div></div><div class="brv" style="color:#4caf7d">${d.ai_a}%</div></div>
+        <div class="br"><div class="brl">Disruption</div><div class="brt"><div class="brf" style="width:${pw(d.ai_d).toFixed(1)}%;background:${d.ai_d>55?'#e05252':d.ai_d>35?'#c8a84b':'#4caf7d'}"></div></div><div class="brv" style="color:${bc(100-d.ai_d)}">${d.ai_d}%</div></div>
+        <div class="br"><div class="brl">Augmentation</div><div class="brt"><div class="brf" style="width:${pw(d.ai_a).toFixed(1)}%;background:#4caf7d"></div></div><div class="brv" style="color:#4caf7d">${d.ai_a}%</div></div>
       </div>
       <div class="ain">${d.ai_note}</div>
     </div>
