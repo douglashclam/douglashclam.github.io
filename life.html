@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>21-year-old curriculum</title>
+  <title>The curriculum — Douglas</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
 <style>
 :root {
   --color-background-primary: #ffffff;
@@ -22,78 +21,20 @@
   --border-radius-lg: 12px;
   --border-radius-md: 8px;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: #eeeee8;
-  min-height: 100vh;
-  color: var(--color-text-primary);
-}
-
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--color-text-primary); }
 .kg-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
-
-.kg-tabs { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem }
-.kg-tab { font-size:13px;font-weight:500;padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px;box-shadow:0 1px 3px rgba(0,0,0,0.06) }
-.kg-tab:hover { border-color:var(--color-border-primary);color:var(--color-text-primary) }
-.kg-tab.active { background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary) }
-.kg-tab i { font-size:14px }
-
+nav { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem }
+nav a { display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--color-text-tertiary);text-decoration:none;transition:color 0.15s }
+nav a:hover { color:var(--color-text-primary) }
+nav h1 { font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary) }
 .kg-panel { background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07) }
-.kg-panel-header { padding:1.25rem 1.5rem 1rem;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem }
-.kg-panel-title { font-size:18px;font-weight:600;color:var(--color-text-primary);margin:0 0 4px;display:flex;align-items:center;gap:10px }
-.kg-panel-subtitle { font-size:14px;color:var(--color-text-secondary);margin:0;line-height:1.6 }
-.kg-header-right { flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px }
-.kg-meta-label { font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin:0 0 3px;text-align:right }
-.kg-format-badge { font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;display:inline-block }
-.kg-ai-block { display:flex;flex-direction:column;align-items:flex-end }
-.kg-ai-dots { display:flex;gap:3px;margin-bottom:3px }
-.kg-ai-dot { width:8px;height:8px;border-radius:50%;background:var(--color-border-tertiary) }
-.kg-ai-dot.on-high { background:#1D9E75 }
-.kg-ai-dot.on-mid { background:#BA7517 }
-.kg-ai-dot.on-low { background:#E24B4A }
-
-.kg-panel-body { display:grid;grid-template-columns:1fr 1fr }
-.kg-section { padding:1.25rem 1.5rem }
-.kg-section:nth-child(odd) { border-right:0.5px solid var(--color-border-tertiary) }
-.kg-section:nth-child(n+3) { border-top:0.5px solid var(--color-border-tertiary) }
-.kg-section-label { font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin:0 0 10px }
-
-.kg-start-box { background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;font-size:13px;color:var(--color-text-primary);line-height:1.65;border:0.5px solid var(--color-border-secondary) }
-
-.kg-ai-box { border-radius:var(--border-radius-md);padding:12px 14px;font-size:13px;line-height:1.65;border:0.5px solid }
-.kg-ai-box.high { background:#E1F5EE;color:#085041;border-color:#5DCAA5 }
-.kg-ai-box.mid { background:#FAEEDA;color:#633806;border-color:#EF9F27 }
-.kg-ai-box.low { background:#FCEBEB;color:#791F1F;border-color:#F09595 }
-
-.kg-res-item { display:flex;align-items:flex-start;gap:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 12px }
-.kg-res-badge { font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0;margin-top:2px }
-.b-book { background:#EEEDFE;color:#3C3489 }
-.b-yt { background:#FCEBEB;color:#791F1F }
-.b-pod { background:#E1F5EE;color:#085041 }
-.b-web { background:#FAEEDA;color:#633806 }
-.b-app { background:#E6F1FB;color:#0C447C }
-.b-doc { background:#FAECE7;color:#712B13 }
-.b-act { background:#EAF3DE;color:#3B6D11 }
-.b-ppl { background:#FBEAF0;color:#72243E }
-.kg-res-text { font-size:13px;color:var(--color-text-primary);line-height:1.5;font-weight:500 }
-.kg-res-sub { font-size:12px;color:var(--color-text-secondary);display:block;margin-top:2px }
-
-.kg-learn-list { list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px }
-.kg-learn-item { font-size:13px;color:var(--color-text-primary);line-height:1.5;display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary) }
-.kg-learn-item::before { content:"—";color:var(--color-text-tertiary);flex-shrink:0 }
-
-.kg-format-row { grid-column:1/-1;padding:1rem 1.5rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px;flex-wrap:wrap }
-.kg-format-row-label { font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-right:4px }
-.kg-format-item { display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary) }
-.kg-format-rank { font-size:11px;font-weight:500;width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--color-background-secondary);color:var(--color-text-secondary);flex-shrink:0 }
+.kg-res-badge { font-size:10px;font-weight:500;padding:2px 7px;border-radius:10px;white-space:nowrap }
+.b-book{background:#EEEDFE;color:#3C3489}.b-yt{background:#FCEBEB;color:#791F1F}.b-pod{background:#E1F5EE;color:#085041}.b-web{background:#FAEEDA;color:#633806}.b-app{background:#E6F1FB;color:#0C447C}.b-doc{background:#FAECE7;color:#712B13}.b-act{background:#EAF3DE;color:#3B6D11}.b-ppl{background:#FBEAF0;color:#72243E}
 .kg-new-badge { font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;background:#EEEDFE;color:#3C3489;margin-left:6px;vertical-align:middle }
-.kg-empty { padding:3rem;text-align:center;color:var(--color-text-secondary);font-size:14px }
-
 .ov-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;padding:1.25rem 1.5rem;background:var(--color-background-secondary) }
-.ov-card { background:var(--color-background-primary);padding:1.25rem 1.5rem;cursor:pointer;transition:all 0.15s;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-secondary);box-shadow:0 1px 4px rgba(0,0,0,0.06) }
-.ov-card:hover { background:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.1);border-color:var(--color-border-primary);transform:translateY(-1px) }
+.ov-card { background:var(--color-background-primary);padding:1.25rem 1.5rem;cursor:pointer;transition:all 0.15s;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-secondary);box-shadow:0 1px 4px rgba(0,0,0,0.06);text-decoration:none;display:block;color:inherit }
+.ov-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.1);border-color:var(--color-border-primary);transform:translateY(-1px) }
 .ov-card-top { display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;gap:8px }
 .ov-card-title { font-size:15px;font-weight:600;color:var(--color-text-primary);display:flex;align-items:center;gap:8px }
 .ov-card-title i { font-size:16px;color:var(--color-text-secondary) }
@@ -101,10 +42,7 @@ body {
 .ov-card-footer { display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap }
 .ov-dots { display:flex;gap:2px;flex-shrink:0 }
 .ov-dot { width:6px;height:6px;border-radius:50%;background:var(--color-border-tertiary) }
-.ov-dot.on-high { background:#1D9E75 }
-.ov-dot.on-mid { background:#BA7517 }
-.ov-dot.on-low { background:#E24B4A }
-
+.ov-dot.on-high{background:#1D9E75}.ov-dot.on-mid{background:#BA7517}.ov-dot.on-low{background:#E24B4A}
 .ov-header { padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--color-border-tertiary) }
 .ov-header-top { display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px }
 .ov-header-title { font-size:18px;font-weight:600;color:var(--color-text-primary);margin:0 }
@@ -112,75 +50,29 @@ body {
 .ov-legend { display:flex;align-items:center;gap:12px }
 .ov-legend-item { display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary) }
 .ov-legend-dot { width:8px;height:8px;border-radius:50% }
-
-.sort-btn { font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:5px }
+.sort-btn { font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif }
 .sort-btn.active { background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary) }
-
 .priority-badge { display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:600;flex-shrink:0 }
-.p-high { background:#E1F5EE;color:#085041 }
-.p-mid { background:#FAEEDA;color:#633806 }
-.p-low { background:#F1EFE8;color:#5F5E5A }
-
-.priority-row { grid-column:1/-1;padding:0.75rem 1.5rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px;flex-wrap:wrap }
-.priority-label { font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-right:4px }
-.priority-reason { font-size:13px;color:var(--color-text-secondary);line-height:1.5 }
+.p-high{background:#E1F5EE;color:#085041}.p-mid{background:#FAEEDA;color:#633806}.p-low{background:#F1EFE8;color:#5F5E5A}
 </style>
 
 <div class="kg-wrap">
-  <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--color-text-tertiary);text-decoration:none;margin-bottom:1.25rem;" onmouseover="this.style.color='var(--color-text-primary)'" onmouseout="this.style.color='var(--color-text-tertiary)'"><i class="ti ti-arrow-left"></i> Home</a>
-  <div class="kg-tabs" id="tabs"></div>
-  <div id="panel"><div class="kg-panel"><div class="kg-empty">Select a category above to explore</div></div></div>
-</div>
-
-<script>
-const DATA=[
-  {id:"health",icon:"ti-heart-rate-monitor",label:"Health",priority:1,priorityCls:"p-high",priorityReason:"Everything else degrades without it. Habits formed now are the ones you keep. Highest leverage, hardest to reverse if ignored.",overviewDesc:"Sleep, exercise, diet. Small consistent inputs now, massive long-term outputs. The habits you build this decade are the ones you keep.",overviewStart:"Fix sleep first, then exercise",subtitle:"Your body at 40 is largely the result of decisions made now. Habits compound exactly like money.",start:"Pick one thing: sleep, exercise, or diet. Nail it for 30 days before adding another. Sleep is highest leverage — everything else degrades without it.",bestFormat:{label:"Podcasts + gym",cls:"b-pod"},ai:{level:"low",dots:2,label:"Weak",note:"Good for explaining the science behind sleep or training. Useless for accountability. You need real habits, not conversations about habits. Use Huberman instead."},formatRanking:[{type:"pod",label:"Huberman podcast"},{type:"act",label:"Actually doing it"},{type:"book",label:"Why We Sleep"},{type:"yt",label:"YouTube"}],learn:["Sleep architecture — why 7-9hrs matters mechanically","Resistance training basics — compound lifts","Zone 2 cardio — what it is and why it matters","Protein requirements for your body weight","Why habits beat motivation every time"],resources:[{type:"book",name:"Why We Sleep",sub:"Matthew Walker — genuinely alarming, changes your behaviour"},{type:"book",name:"Atomic Habits",sub:"James Clear — the definitive book on building habits"},{type:"pod",name:"Huberman Lab",sub:"Andrew Huberman — neuroscience of health, sleep, exercise"},{type:"pod",name:"Found My Fitness",sub:"Rhonda Patrick — deep science, long form"},{type:"web",name:"Examine.com",sub:"Evidence-based supplement and nutrition research"}]},
-  {id:"thinking",icon:"ti-brain",label:"How to think",priority:2,priorityCls:"p-high",priorityReason:"The operating system under everything else. Better thinking compounds into every other category simultaneously. No point accumulating knowledge with a broken filter.",overviewDesc:"Cognitive biases, first principles reasoning, Bayesian updating, steelmanning. The operating system under everything else.",overviewStart:"Read Thinking, Fast and Slow",subtitle:"Most people never examine their own reasoning. Changing your mind when evidence demands it is rarer and more valuable than being intelligent.",start:"Read Thinking, Fast and Slow. Then learn the 20 most common cognitive biases — once named they become visible in your own thinking.",bestFormat:{label:"Books",cls:"b-book"},ai:{level:"high",dots:5,label:"Best use case",note:"Steelman arguments with me. Ask me to find holes in your reasoning. Ask me to argue the opposite of what you believe. Interactive reasoning practice is genuinely one of the best uses of AI."},formatRanking:[{type:"book",label:"Books — no substitute"},{type:"pod",label:"Rationally Speaking"},{type:"web",label:"LessWrong"},{type:"yt",label:"YouTube"}],learn:["System 1 vs System 2 thinking","Top 20 cognitive biases — especially confirmation bias","First principles reasoning vs reasoning by analogy","Bayesian updating — changing beliefs with evidence","Steelmanning — arguing the other side properly"],resources:[{type:"book",name:"Thinking, Fast and Slow",sub:"Kahneman — the foundational text on human cognition"},{type:"book",name:"The Scout Mindset",sub:"Julia Galef — updating beliefs vs defending them"},{type:"web",name:"LessWrong",sub:"Rationality community — dense but rewarding"},{type:"pod",name:"Rationally Speaking",sub:"Julia Galef — philosophy and critical thinking"},{type:"book",name:"Superforecasting",sub:"Tetlock — how to make better predictions"}]},
-  {id:"money",icon:"ti-coin",label:"Money",priority:3,priorityCls:"p-high",priorityReason:"Compound interest is brutally unforgiving to people who start late. Every year of delay at 21 is worth more than a year at 31. Open the ISA this week.",overviewDesc:"Compound interest, ISAs, index funds, debt hierarchy. The boring stuff that makes the biggest difference.",overviewStart:"Open an ISA this week",subtitle:"The most powerful force available to you is time. Starting at 21 gives you an edge no amount of income can fully compensate for later.",start:"Open a Stocks and Shares ISA today. Put £50/month into Vanguard FTSE All World. Don't touch it. Then read The Psychology of Money — one weekend, cover to cover.",bestFormat:{label:"Doing it + websites",cls:"b-act"},ai:{level:"mid",dots:3,label:"Moderate",note:"Ask me to explain compound interest, P/E ratios, or how ISAs work. Don't ask me what to invest in — not a financial advisor, and real decisions need real consequences to learn from."},formatRanking:[{type:"act",label:"Actually doing it"},{type:"web",label:"MoneySavingExpert"},{type:"yt",label:"YouTube"},{type:"book",label:"Books"}],learn:["Compound interest and why time matters more than amount","ISA vs SIPP vs general investment account","Index funds vs stock picking","Debt hierarchy — which to clear first","Emergency fund — 3-6 months expenses"],resources:[{type:"book",name:"The Psychology of Money",sub:"Morgan Housel — best first book, short and readable"},{type:"book",name:"I Will Teach You To Be Rich",sub:"Ramit Sethi — practical, aimed at your age"},{type:"web",name:"MoneySavingExpert",sub:"Martin Lewis — UK-specific, ISAs, everything practical"},{type:"yt",name:"Andrei Jikh",sub:"YouTube — personal finance for beginners, engaging"},{type:"app",name:"Freetrade / Vanguard",sub:"Open your ISA here — takes 20 minutes"},{type:"web",name:"HK Property Module",sub:"Market mechanics, stamp duty, mortgage rules & personal strategy",href:"property-module.html"}]},
-  {id:"psychology",icon:"ti-mood-smile",label:"Your psychology",priority:4,priorityCls:"p-high",priorityReason:"Unexamined internal patterns put a ceiling on everything else. Particularly relevant going into clinical medicine where stress is real and self-awareness is protective.",overviewDesc:"Why you react the way you do. Attachment theory, cognitive distortions, the gap between what you want and what you think you should want.",overviewStart:"Read Man's Search for Meaning",subtitle:"Most of what limits people isn't external — it's internal patterns never examined.",start:"Man's Search for Meaning by Viktor Frankl is the best single starting book. Short, profound, changes perspective on almost everything.",bestFormat:{label:"Books + therapy",cls:"b-book"},ai:{level:"mid",dots:2,label:"Use carefully",note:"Good for explaining frameworks like attachment theory or CBT concepts. But I reflect back what you tell me — that's not the same as genuine insight. Use me to understand concepts, not to understand yourself."},formatRanking:[{type:"book",label:"Books — depth needed"},{type:"ppl",label:"Therapy if accessible"},{type:"pod",label:"Therapist Uncensored"},{type:"yt",label:"YouTube"}],learn:["Why you react the way you do in conflict","The difference between what you want vs what you think you should want","How childhood shapes adult behaviour — attachment theory","Your relationship with failure and rejection","Why anxiety and avoidance are connected"],resources:[{type:"book",name:"Man's Search for Meaning",sub:"Viktor Frankl — profound, short, changes perspective"},{type:"book",name:"The Body Keeps the Score",sub:"Bessel van der Kolk — trauma and the body"},{type:"book",name:"Feeling Good",sub:"David Burns — CBT basics, evidence-based"},{type:"pod",name:"The Therapist Uncensored",sub:"Attachment and neuroscience, accessible"},{type:"yt",name:"Patrick Teahan / Kati Morton",sub:"YouTube — psychology explained accessibly"}]},
-  {id:"medicine",icon:"ti-stethoscope",label:"Medical career",isNew:false,priority:5,priorityCls:"p-high",priorityReason:"Clinical years start now. The foundations you build — clinical reasoning, specialty thinking, emotional resilience — shape the doctor you become. Time-sensitive window.",overviewDesc:"Clinical reasoning, specialty landscape, academic vs clinical track, NHS hierarchy, emotional resilience. The human side of being a doctor.",overviewStart:"Read The House of God first",subtitle:"Clinical years are where medicine becomes real. The gap between good and average junior doctors isn't knowledge — it's judgment, communication, and knowing yourself under pressure.",start:"Read The House of God before your first clinical year — brutal, funny, and more honest about medicine than any textbook. Then find one senior doctor you genuinely respect and ask them how they think.",bestFormat:{label:"People + doing it",cls:"b-ppl"},ai:{level:"high",dots:4,label:"Strong",note:"Use me to work through clinical cases, understand pathophysiology, or think through specialty decisions. Good Socratic tutor — ask me to quiz you, explain mechanisms, or argue why a diagnosis fits. Don't use me for real patient decisions without senior supervision."},formatRanking:[{type:"ppl",label:"Senior doctors + patients"},{type:"act",label:"Clinical exposure"},{type:"book",label:"Books (selectively)"},{type:"pod",label:"Bedside Rounds etc"}],learn:["How to think about patients as systems, not collections of symptoms","Specialty landscape — what each actually involves day-to-day","Academic vs clinical track — what each requires and when to decide","How the NHS hierarchy works and how to navigate it","Emotional resilience — dealing with death, error, and moral distress","Your MSc value — when microbiology knowledge matters clinically"],resources:[{type:"book",name:"The House of God",sub:"Samuel Shem — essential pre-clinical years reading"},{type:"book",name:"How Doctors Think",sub:"Jerome Groopman — clinical reasoning and cognitive error"},{type:"book",name:"Being Mortal",sub:"Atul Gawande — death, medicine, and what patients actually want"},{type:"pod",name:"Bedside Rounds",sub:"Internal medicine cases, clinical reasoning focused"},{type:"web",name:"80000hours.org/career-reviews",sub:"Honest breakdowns of medicine as a career path"},{type:"ppl",name:"One consultant you admire",sub:"One coffee conversation is worth more than any podcast"}]},
-  {id:"communication",icon:"ti-message-2",label:"Communication",isNew:true,priority:6,priorityCls:"p-high",priorityReason:"The most transferable professional skill that exists. In medicine specifically — referral letters, presenting cases, breaking bad news, explaining diagnosis to patients. Separates good doctors from great ones.",overviewDesc:"Writing clearly, speaking persuasively, presenting confidently. The skill that amplifies every other skill you have.",overviewStart:"Write something every week — anything",subtitle:"The ability to communicate clearly is probably the highest-leverage skill that isn't domain-specific. It makes everything else you know more valuable.",start:"Start writing regularly — even a short journal or notes on what you're learning. On Style by Joseph Williams is the best book on clear writing. For speaking, join a Toastmasters session once.",bestFormat:{label:"Doing it",cls:"b-act"},ai:{level:"high",dots:5,label:"Best use case",note:"Ask me to critique your writing. Give me a draft and ask me to make it sharper. Ask me to explain why a sentence is unclear. Writing feedback is genuinely one of the highest-value things to use AI for — patient, detailed, available instantly."},formatRanking:[{type:"act",label:"Writing regularly"},{type:"book",label:"On Writing Well"},{type:"ppl",label:"Feedback from others"},{type:"yt",label:"YouTube"}],learn:["Principles of clear writing — short sentences, active voice, concrete nouns","How to structure an argument that actually persuades","Presenting clinical cases confidently and concisely","Writing referral letters and professional emails","Public speaking basics — managing nerves, structure, delivery"],resources:[{type:"book",name:"On Writing Well",sub:"William Zinsser — the definitive guide to clear nonfiction writing"},{type:"book",name:"On Style",sub:"Joseph Williams — sentence-level clarity, used in law and medicine"},{type:"book",name:"Made to Stick",sub:"Heath brothers — why some ideas survive and others don't"},{type:"act",name:"Toastmasters",sub:"Free public speaking club, every major city including London"},{type:"yt",name:"Patrick Winston — How to Speak",sub:"MIT lecture, one of the best talks on communication ever recorded"}]},
-  {id:"practical",icon:"ti-tool",label:"Practical life",isNew:true,priority:7,priorityCls:"p-mid",priorityReason:"Low effort, high protection value. Most people learn this the hard way — one missed insurance claim, one wrong tax return, one bad contract. An hour of reading prevents years of problems.",overviewDesc:"Cooking, insurance, tax, contracts, credit score, NHS admin. The unsexy stuff that quietly determines quality of life.",overviewStart:"Register with a GP if you haven't",subtitle:"Nobody teaches you this stuff and it matters more than it should. A few hours of learning here prevents years of avoidable problems.",start:"Three things this week: check you're registered with a GP and dentist, check your National Insurance number is saved somewhere, and look up your credit score on ClearScore (free). Then cook one proper meal from scratch.",bestFormat:{label:"Doing it + websites",cls:"b-act"},ai:{level:"mid",dots:3,label:"Moderate",note:"Ask me to explain any practical concept — what an excess is, how PAYE works, what a restrictive covenant means in a contract. Good at translating jargon into plain English. Won't replace actually doing the admin though."},formatRanking:[{type:"act",label:"Just doing it"},{type:"web",label:"MoneySavingExpert"},{type:"book",label:"One good cookbook"},{type:"ppl",label:"Ask parents/seniors"}],learn:["Cooking fundamentals — principles not recipes, feeding yourself properly on a budget","Insurance basics — renters, contents, travel — what excess and premium mean","UK tax basics — PAYE, tax code, what locum doctors need to know","How to read a contract — notice periods, IP clauses, restrictive covenants","Credit score — what affects it, why it matters, how to build it passively","NHS admin — GP registration, dental registration, NI number, NHS number"],resources:[{type:"book",name:"Salt Fat Acid Heat",sub:"Samin Nosrat — teaches cooking principles not just recipes"},{type:"web",name:"MoneySavingExpert",sub:"Insurance, tax, credit — best UK practical resource"},{type:"web",name:"ClearScore",sub:"Free credit score monitoring — check yours now"},{type:"web",name:"HMRC personal tax account",sub:"Understand your tax code, check NI contributions"},{type:"app",name:"Monzo / Starling",sub:"Best UK current accounts for tracking spending and budgeting"}]},
-  {id:"relationships",icon:"ti-users",label:"Relationships",priority:8,priorityCls:"p-mid",priorityReason:"The single biggest predictor of long-term happiness. Friendships atrophy quietly — the ones you maintain now are the ones you'll have at 40.",overviewDesc:"Quality of close relationships is the single biggest predictor of life satisfaction. More than money, status, or achievement.",overviewStart:"Message one neglected friend today",subtitle:"The Harvard Study on Adult Development found one thing predicts life satisfaction above all else: quality of close relationships.",start:"Audit your current friendships honestly. Which ones are you letting atrophy? Send one message today. Then read How to Win Friends.",bestFormat:{label:"Lived experience",cls:"b-ppl"},ai:{level:"low",dots:1,label:"Be careful",note:"I can explain attachment theory or help you draft a difficult message. But using me as a substitute for human connection is the wrong direction. If you find yourself preferring talking to me over people, that's a signal to put the phone down."},formatRanking:[{type:"ppl",label:"Lived experience"},{type:"book",label:"Books (Attached)"},{type:"pod",label:"Esther Perel podcast"},{type:"yt",label:"School of Life"}],learn:["The difference between transactional and genuine relationships","Active listening — most people are terrible at it","How to repair relationships after conflict","Why friendships require deliberate maintenance","Attachment theory basics"],resources:[{type:"book",name:"The Good Life",sub:"Waldinger & Schulz — the Harvard study in book form"},{type:"book",name:"How to Win Friends and Influence People",sub:"Carnegie — timeless, ignore the title"},{type:"book",name:"Attached",sub:"Levine & Heller — attachment theory, highly practical"},{type:"pod",name:"Esther Perel podcast",sub:"Relationships, intimacy, communication"},{type:"yt",name:"The School of Life",sub:"YouTube — philosophy of relationships, emotional intelligence"}]},
-  {id:"wrongness",icon:"ti-refresh",label:"Being wrong",priority:9,priorityCls:"p-mid",priorityReason:"Enables all other learning. Without it, knowledge calcifies around existing beliefs. Especially critical in medicine where overconfidence kills.",overviewDesc:"Separating identity from opinion. Steelmanning. Post-mortems. Epistemic humility vs epistemic cowardice.",overviewStart:"Read Being Wrong by Schulz",subtitle:"The people who compound fastest update quickly without ego damage. Treating being wrong as information rather than failure is genuinely rare.",start:"Read Being Wrong by Kathryn Schulz. Then practise steelmanning — take a position you disagree with and argue it as well as you possibly can before critiquing it.",bestFormat:{label:"Books",cls:"b-book"},ai:{level:"high",dots:5,label:"Best use case",note:"Tell me a position you hold strongly. Ask me to dismantle it. Ask me to show you where your reasoning is weakest. A patient, ego-free sparring partner available at 1am on a plane."},formatRanking:[{type:"book",label:"Books — essential"},{type:"pod",label:"You Are Not So Smart"},{type:"act",label:"Practise steelmanning"},{type:"yt",label:"Veritasium"}],learn:["Why the ego defends wrong beliefs","How to separate your identity from your opinions","The difference between changing your mind and being spineless","Post-mortems — how to learn from failures properly","Epistemic humility vs epistemic cowardice"],resources:[{type:"book",name:"Being Wrong",sub:"Kathryn Schulz — the nature of error, beautifully written"},{type:"book",name:"The Scout Mindset",sub:"Julia Galef — wanting truth vs wanting to be right"},{type:"pod",name:"You Are Not So Smart",sub:"Self-delusion and cognitive biases, long-running"},{type:"yt",name:"Veritasium",sub:"YouTube — thinking about being wrong scientifically"},{type:"book",name:"Mistakes Were Made (But Not by Me)",sub:"Tavris & Aronson — cognitive dissonance"}]},
-  {id:"career",icon:"ti-briefcase",label:"Career capital",priority:10,priorityCls:"p-mid",priorityReason:"Important but slightly longer time horizon. The window to take lower-paid, higher-learning roles closes fast. Think about this before your first FY job.",overviewDesc:"Rare and valuable skills beat passion. Deep work beats shallow work. One senior mentor conversation beats three career books.",overviewStart:"Read So Good They Can't Ignore You",subtitle:"Skills compound. Reputation compounds. The biggest mistake people make early is optimising for salary over learning.",start:"Read So Good They Can't Ignore You. Then have one coffee with someone 10 years ahead of you in medicine. That beats three books.",bestFormat:{label:"People first",cls:"b-ppl"},ai:{level:"mid",dots:3,label:"Moderate",note:"Ask me to help you think through a career decision, prep for a difficult conversation, or understand a specialty. But one real conversation with a registrar beats hours with me."},formatRanking:[{type:"ppl",label:"Talking to people"},{type:"act",label:"Actually working"},{type:"book",label:"Books (Cal Newport)"},{type:"pod",label:"80,000 Hours"}],learn:["Why rare and valuable skills trump passion","The difference between shallow and deep work","How to build a personal reputation deliberately","Networking — what actually works vs what feels gross","When to optimise for learning vs money"],resources:[{type:"book",name:"So Good They Can't Ignore You",sub:"Cal Newport — career capital framework"},{type:"book",name:"Deep Work",sub:"Cal Newport — focused work as a competitive advantage"},{type:"book",name:"Range",sub:"David Epstein — generalists vs specialists, when each wins"},{type:"pod",name:"80,000 Hours Podcast",sub:"Long-form career and impact thinking"},{type:"web",name:"80000hours.org",sub:"Career planning with research behind it"}]},
-  {id:"history",icon:"ti-clock-hour-4",label:"History",priority:11,priorityCls:"p-low",priorityReason:"High long-term value but no urgency. Absorbs naturally via commute podcasts and occasional books. Start anywhere that connects to something you already care about.",overviewDesc:"Empires, revolutions, economic cycles, technology disruption. The present makes no sense without it.",overviewStart:"Pick one period, start there",subtitle:"Everything happening now is a variation of patterns that have occurred before. People who know history are harder to manipulate.",start:"Pick one period that connects to something you care about. Interested in AI? Read about the Industrial Revolution. Interested in geopolitics? Start with WWII origins.",bestFormat:{label:"Books + podcasts",cls:"b-book"},ai:{level:"high",dots:4,label:"Strong",note:"Ask me to explain historical events, draw parallels to today, or go deeper on something you just read. Good at connecting dots across periods. Books give you texture I can't."},formatRanking:[{type:"book",label:"Books"},{type:"pod",label:"Revolutions podcast"},{type:"yt",label:"YouTube"},{type:"doc",label:"Documentaries"}],learn:["How empires rise and fall — the recurring patterns","What the 20th century's catastrophes have in common","Economic history — how capitalism evolved","Why the Cold War still shapes everything","How technology has always disrupted social order"],resources:[{type:"book",name:"Sapiens",sub:"Yuval Noah Harari — sweeping human history, accessible"},{type:"book",name:"The Guns of August",sub:"Barbara Tuchman — WWI origins, reads like a thriller"},{type:"yt",name:"Overly Sarcastic Productions",sub:"YouTube — history made genuinely entertaining"},{type:"pod",name:"Revolutions (Mike Duncan)",sub:"Deep dives into major revolutions, superb"},{type:"book",name:"The Lessons of History",sub:"Will & Ariel Durant — 100 pages, profound"},{type:"web",name:"Roman Cities — Ranked",sub:"24 cities ranked by historical weight & Roman recognition",href:"roman-cities.html"},{type:"web",name:"World History Timeline",sub:"Wars, empires, revolutions & atrocities from antiquity to today",href:"world-history-timeline.html"},{type:"web",name:"European Empires Timeline",sub:"Visual timeline of 13 empires from Roman Republic to Soviet Union",href:"european-empires-timeline.html"}]},
-  {id:"geopolitics",icon:"ti-world",label:"Geopolitics",priority:12,priorityCls:"p-low",priorityReason:"Builds naturally through ongoing news consumption. No single urgent action — just stay curious and read one good framework book this year.",overviewDesc:"US-China competition, geography as destiny, trade as a weapon, demographic decline. Why nations do what they do.",overviewStart:"Watch Peter Zeihan on YouTube",subtitle:"You're entering a world being reshaped by US-China competition, AI, and demographic decline.",start:"Watch Peter Zeihan on YouTube — polarising but makes you think structurally. Then read Prisoners of Geography for the framework.",bestFormat:{label:"Podcasts + journalism",cls:"b-pod"},ai:{level:"high",dots:5,label:"Best use case",note:"Ask me to explain any conflict, compare foreign policy styles, break down trade wars, or stress-test a geopolitical argument. Tonight's conversation is exactly the right use."},formatRanking:[{type:"pod",label:"Podcasts + journalism"},{type:"book",label:"Framework books"},{type:"web",label:"The Economist"},{type:"yt",label:"Peter Zeihan"}],learn:["Why geography constrains countries more than ideology","US-China competition — what's really at stake","How trade, currency and debt are geopolitical weapons","Demographic trends — why they're destiny","The role of energy in foreign policy"],resources:[{type:"book",name:"Prisoners of Geography",sub:"Tim Marshall — geography as destiny, easy read"},{type:"book",name:"The Clash of Civilizations",sub:"Huntington — controversial but foundational framework"},{type:"yt",name:"Peter Zeihan",sub:"YouTube — demographics and geopolitics, provocative"},{type:"pod",name:"Foreign Affairs / The Economist",sub:"Best journalism for geopolitical depth"},{type:"book",name:"The World: A Brief Introduction",sub:"Richard Haass — comprehensive, neutral"}]},
-  {id:"power",icon:"ti-building-bank",label:"How power works",priority:13,priorityCls:"p-low",priorityReason:"Important background but no urgent action. Absorbs naturally through good documentaries and journalism. Start with Adam Curtis when you have a free evening.",overviewDesc:"Incentives, media ownership, regulatory capture. How the world actually runs vs how you were taught it does.",overviewStart:"Watch HyperNormalisation (BBC)",subtitle:"Institutions rarely behave as advertised. Understanding incentives is more useful than consuming more news.",start:"Watch HyperNormalisation by Adam Curtis on BBC iPlayer. Free, 2.5 hours, genuinely jarring. Then read Manufacturing Consent.",bestFormat:{label:"Documentaries",cls:"b-doc"},ai:{level:"high",dots:4,label:"Strong",note:"Ask me to explain how any institution's incentives work, stress-test a narrative, or argue the other side of a political position."},formatRanking:[{type:"doc",label:"Adam Curtis docs"},{type:"pod",label:"Good journalism"},{type:"book",label:"Books"},{type:"yt",label:"YouTube"}],learn:["How incentives shape institutional behaviour","Media ownership and its effect on coverage","How laws actually get made vs how you were taught","Regulatory capture — when industries control regulators","The difference between stated and revealed preferences"],resources:[{type:"book",name:"Manufacturing Consent",sub:"Chomsky & Herman — how media filters information"},{type:"book",name:"The Prince",sub:"Machiavelli — still the most honest book about power"},{type:"doc",name:"Adam Curtis — HyperNormalisation",sub:"BBC iPlayer — free, start here"},{type:"pod",name:"Odd Lots / Ezra Klein Show",sub:"How systems and policy actually work"},{type:"book",name:"This Is Not Propaganda",sub:"Peter Pomerantsev — information warfare, modern"}]}
-];
-
-const BADGE={book:["b-book","Book"],yt:["b-yt","YouTube"],pod:["b-pod","Podcast"],web:["b-web","Website"],app:["b-app","App"],doc:["b-doc","Documentary"],act:["b-act","Do it"],ppl:["b-ppl","People"]};
-const FORMAT_LABELS={book:"Books",yt:"YouTube",pod:"Podcasts",web:"Websites",app:"Apps",doc:"Documentaries",act:"Action",ppl:"People"};
-const AI_COLORS={high:"on-high",mid:"on-mid",low:"on-low"};
-const AI_TEXT={high:"Strong use case",mid:"Moderate use",low:"Weak — use sparingly"};
-
-let active="overview";
-let sortMode="priority";
-
-function ovDots(n,level){return Array.from({length:5},(_,i)=>`<div class="ov-dot${i<n?' '+AI_COLORS[level]:''}"></div>`).join("");}
-function dots(n,level){return Array.from({length:5},(_,i)=>`<div class="kg-ai-dot${i<n?' '+AI_COLORS[level]:''}"></div>`).join("");}
-function getSorted(){return sortMode==="priority"?[...DATA].sort((a,b)=>a.priority-b.priority):[...DATA].sort((a,b)=>a.label.localeCompare(b.label));}
-function tierLabel(cls){if(cls==="p-high")return{text:"Do now",color:"#085041",bg:"#E1F5EE"};if(cls==="p-mid")return{text:"This year",color:"#633806",bg:"#FAEEDA"};return{text:"Build gradually",color:"#5F5E5A",bg:"#F1EFE8"};}
-
-function renderTabs(){
-  const ov=`<button class="kg-tab${active==='overview'?' active':''}" onclick="select('overview')"><i class="ti ti-layout-grid" aria-hidden="true"></i>Overview</button>`;
-  const cats=DATA.map(d=>`<button class="kg-tab${active===d.id?' active':''}" onclick="select('${d.id}')"><i class="ti ${d.icon}" aria-hidden="true"></i>${d.label}${d.isNew?'<span class="kg-new-badge">New</span>':''}</button>`).join("");
-  document.getElementById("tabs").innerHTML=ov+cats;
-}
-
-function renderOverview(){
-  const sorted=getSorted();
-  return`<div class="kg-panel">
+  <nav>
+    <a href="index.html"><i class="ti ti-arrow-left"></i> Home</a>
+    <h1>The curriculum</h1>
+    <span></span>
+  </nav>
+  <div class="kg-panel">
     <div class="ov-header">
       <div class="ov-header-top">
         <p class="ov-header-title">The 21-year-old curriculum</p>
         <div class="ov-controls">
-          <button class="sort-btn${sortMode==='priority'?' active':''}" onclick="setSort('priority')"><i class="ti ti-sort-ascending-numbers" style="font-size:13px" aria-hidden="true"></i>Priority</button>
-          <button class="sort-btn${sortMode==='alpha'?' active':''}" onclick="setSort('alpha')"><i class="ti ti-sort-ascending-letters" style="font-size:13px" aria-hidden="true"></i>A–Z</button>
+          <button class="sort-btn active" id="btn-priority" onclick="setSort('priority')"><i class="ti ti-sort-ascending-numbers" style="font-size:13px"></i>Priority</button>
+          <button class="sort-btn" id="btn-alpha" onclick="setSort('alpha')"><i class="ti ti-sort-ascending-letters" style="font-size:13px"></i>A–Z</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap">
-        <p class="ov-header-sub" style="margin:0">13 areas worth developing. Click any card to explore in depth.</p>
+        <p style="font-size:13px;color:var(--color-text-secondary);margin:0">13 areas worth developing. Click any card to explore in depth.</p>
         <div class="ov-legend">
           <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#1D9E75"></div>Strong AI</div>
           <div class="ov-legend-item"><div class="ov-legend-dot" style="background:#BA7517"></div>Moderate</div>
@@ -188,62 +80,63 @@ function renderOverview(){
         </div>
       </div>
     </div>
-    <div class="ov-grid">
-      ${sorted.map(d=>{const t=tierLabel(d.priorityCls);return`
-        <div class="ov-card" onclick="select('${d.id}')">
-          <div class="ov-card-top">
-            <div class="ov-card-title"><span class="priority-badge ${d.priorityCls}">${d.priority}</span><i class="ti ${d.icon}" aria-hidden="true"></i>${d.label}${d.isNew?'<span class="kg-new-badge">New</span>':''}</div>
-            <div class="ov-dots">${ovDots(d.ai.dots,d.ai.level)}</div>
-          </div>
-          <p class="ov-card-desc">${d.overviewDesc}</p>
-          <div class="ov-card-footer">
-            <span class="kg-res-badge ${d.bestFormat.cls}">${d.bestFormat.label}</span>
-            <span style="font-size:11px;font-weight:500;padding:2px 10px;border-radius:10px;background:${t.bg};color:${t.color}">${t.text}</span>
-          </div>
-        </div>`;}).join("")}
-    </div>
-  </div>`;
+    <div class="ov-grid" id="grid"></div>
+  </div>
+</div>
+
+<script>
+const DATA=[
+  {id:"health",icon:"ti-heart-rate-monitor",label:"Health",priority:1,priorityCls:"p-high",overviewDesc:"Sleep, exercise, diet. Small consistent inputs now, massive long-term outputs. The habits you build this decade are the ones you keep.",bestFormat:{label:"Podcasts + gym",cls:"b-pod"},ai:{level:"high",dots:4}},
+  {id:"thinking",icon:"ti-brain",label:"How to think",priority:2,priorityCls:"p-high",overviewDesc:"Cognitive biases, first principles reasoning, Bayesian updating, steelmanning. The operating system under everything else.",bestFormat:{label:"Books",cls:"b-book"},ai:{level:"high",dots:5}},
+  {id:"money",icon:"ti-coin",label:"Money",priority:3,priorityCls:"p-high",overviewDesc:"Compound interest, ISAs, index funds, debt hierarchy. The boring stuff that makes the biggest difference.",bestFormat:{label:"Doing it + websites",cls:"b-act"},ai:{level:"mid",dots:3}},
+  {id:"psychology",icon:"ti-mood-smile",label:"Your psychology",priority:4,priorityCls:"p-high",overviewDesc:"Why you react the way you do. Attachment theory, cognitive distortions, the gap between what you want and what you think you should want.",bestFormat:{label:"Books + therapy",cls:"b-book"},ai:{level:"mid",dots:2}},
+  {id:"medicine",icon:"ti-stethoscope",label:"Medical career",priority:5,priorityCls:"p-high",overviewDesc:"Clinical reasoning, specialty landscape, academic vs clinical track, NHS hierarchy, emotional resilience. The human side of being a doctor.",bestFormat:{label:"People + doing it",cls:"b-ppl"},ai:{level:"high",dots:4}},
+  {id:"communication",icon:"ti-message-2",label:"Communication",isNew:true,priority:6,priorityCls:"p-high",overviewDesc:"Writing clearly, speaking persuasively, presenting confidently. The skill that amplifies every other skill you have.",bestFormat:{label:"Doing it",cls:"b-act"},ai:{level:"high",dots:5}},
+  {id:"practical",icon:"ti-tool",label:"Practical life",isNew:true,priority:7,priorityCls:"p-mid",overviewDesc:"Cooking, insurance, tax, contracts, credit score, NHS admin. The unsexy stuff that quietly determines quality of life.",bestFormat:{label:"Doing it + websites",cls:"b-act"},ai:{level:"mid",dots:3}},
+  {id:"relationships",icon:"ti-users",label:"Relationships",priority:8,priorityCls:"p-mid",overviewDesc:"Quality of close relationships is the single biggest predictor of life satisfaction. More than money, status, or achievement.",bestFormat:{label:"Lived experience",cls:"b-ppl"},ai:{level:"low",dots:1}},
+  {id:"wrongness",icon:"ti-refresh",label:"Being wrong",priority:9,priorityCls:"p-mid",overviewDesc:"Separating identity from opinion. Steelmanning. Post-mortems. Epistemic humility vs epistemic cowardice.",bestFormat:{label:"Books",cls:"b-book"},ai:{level:"high",dots:5}},
+  {id:"career",icon:"ti-briefcase",label:"Career capital",priority:10,priorityCls:"p-mid",overviewDesc:"Rare and valuable skills beat passion. Deep work beats shallow work. One senior mentor conversation beats three career books.",bestFormat:{label:"People first",cls:"b-ppl"},ai:{level:"mid",dots:3}},
+  {id:"history",icon:"ti-clock-hour-4",label:"History",priority:11,priorityCls:"p-low",overviewDesc:"Empires, revolutions, economic cycles, technology disruption. The present makes no sense without it.",bestFormat:{label:"Books + podcasts",cls:"b-book"},ai:{level:"high",dots:4}},
+  {id:"geopolitics",icon:"ti-world",label:"Geopolitics",priority:12,priorityCls:"p-low",overviewDesc:"US-China competition, geography as destiny, trade as a weapon, demographic decline. Why nations do what they do.",bestFormat:{label:"Podcasts + journalism",cls:"b-pod"},ai:{level:"high",dots:5}},
+  {id:"power",icon:"ti-building-bank",label:"How power works",priority:13,priorityCls:"p-low",overviewDesc:"Incentives, media ownership, regulatory capture. How the world actually runs vs how you were taught it does.",bestFormat:{label:"Documentaries",cls:"b-doc"},ai:{level:"high",dots:4}}
+];
+
+const AI_COLORS={high:"on-high",mid:"on-mid",low:"on-low"};
+let sortMode="priority";
+
+function tierLabel(cls){
+  if(cls==="p-high")return{text:"Do now",color:"#085041",bg:"#E1F5EE"};
+  if(cls==="p-mid")return{text:"This year",color:"#633806",bg:"#FAEEDA"};
+  return{text:"Build gradually",color:"#5F5E5A",bg:"#F1EFE8"};
 }
 
-function renderDetail(d){
-  const t=tierLabel(d.priorityCls);
-  const rankHtml=d.formatRanking.map((f,i)=>`
-    <div class="kg-format-item"><span class="kg-format-rank">${i+1}</span><span class="kg-res-badge ${BADGE[f.type][0]}">${FORMAT_LABELS[f.type]}</span><span>${f.label}</span></div>${i<d.formatRanking.length-1?'<span style="color:var(--color-border-primary);margin:0 2px">›</span>':''}`).join("");
-  return`<div class="kg-panel">
-    <div class="kg-panel-header">
-      <div style="flex:1">
-        <div class="kg-panel-title"><span class="priority-badge ${d.priorityCls}" style="width:24px;height:24px;font-size:12px">${d.priority}</span><i class="ti ${d.icon}" aria-hidden="true"></i>${d.label}${d.isNew?'<span class="kg-new-badge">New</span>':''}</div>
-        <p class="kg-panel-subtitle">${d.subtitle}</p>
+function render(){
+  const sorted=sortMode==="priority"?[...DATA].sort((a,b)=>a.priority-b.priority):[...DATA].sort((a,b)=>a.label.localeCompare(b.label));
+  document.getElementById("grid").innerHTML=sorted.map(d=>{
+    const t=tierLabel(d.priorityCls);
+    const dots=Array.from({length:5},(_,i)=>`<div class="ov-dot${i<d.ai.dots?' '+AI_COLORS[d.ai.level]:''}"></div>`).join("");
+    return`<a class="ov-card" href="area.html?id=${d.id}">
+      <div class="ov-card-top">
+        <div class="ov-card-title"><span class="priority-badge ${d.priorityCls}">${d.priority}</span><i class="ti ${d.icon}"></i>${d.label}${d.isNew?'<span class="kg-new-badge">New</span>':''}</div>
+        <div class="ov-dots">${dots}</div>
       </div>
-      <div class="kg-header-right">
-        <div><p class="kg-meta-label">Best format</p><span class="kg-format-badge ${d.bestFormat.cls}">${d.bestFormat.label}</span></div>
-        <div class="kg-ai-block"><p class="kg-meta-label">AI usefulness</p><div class="kg-ai-dots">${dots(d.ai.dots,d.ai.level)}</div><span style="font-size:11px;color:var(--color-text-secondary)">${AI_TEXT[d.ai.level]}</span></div>
+      <p class="ov-card-desc">${d.overviewDesc}</p>
+      <div class="ov-card-footer">
+        <span class="kg-res-badge ${d.bestFormat.cls}">${d.bestFormat.label}</span>
+        <span style="font-size:11px;font-weight:500;padding:2px 10px;border-radius:10px;background:${t.bg};color:${t.color}">${t.text}</span>
       </div>
-    </div>
-    <div class="kg-panel-body">
-      <div class="kg-section"><p class="kg-section-label">Start here</p><div class="kg-start-box">${d.start}</div></div>
-      <div class="kg-section"><p class="kg-section-label">What to learn</p><ul class="kg-learn-list">${d.learn.map(l=>`<li class="kg-learn-item">${l}</li>`).join("")}</ul></div>
-      <div class="kg-section" style="grid-column:1/-1"><p class="kg-section-label">How to use AI for this</p><div class="kg-ai-box ${d.ai.level}">${d.ai.note}</div></div>
-      <div class="kg-section" style="grid-column:1/-1"><p class="kg-section-label">Resources</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px">${d.resources.map(r=>`<div class="kg-res-item"${r.href?` onclick="window.location='${r.href}'" style="cursor:pointer"`:''} ><span class="kg-res-badge ${BADGE[r.type][0]}">${BADGE[r.type][1]}</span><div><span class="kg-res-text">${r.name}</span><span class="kg-res-sub">${r.sub}</span></div>${r.href?`<i class="ti ti-arrow-right" style="font-size:13px;color:var(--color-text-tertiary);margin-left:auto;flex-shrink:0"></i>`:''}</div>`).join("")}</div>
-      </div>
-      <div class="priority-row"><span class="priority-label">Priority</span><span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:10px;background:${t.bg};color:${t.color}">${t.text}</span><span class="priority-reason">${d.priorityReason}</span></div>
-      <div class="kg-format-row"><span class="kg-format-row-label">Format ranking</span>${rankHtml}</div>
-    </div>
-  </div>`;
+    </a>`;
+  }).join("");
 }
 
-function select(id){active=id;renderTabs();renderPanel();}
-function setSort(mode){sortMode=mode;renderPanel();}
-function renderPanel(){
-  const p=document.getElementById("panel");
-  if(active==='overview'){p.innerHTML=renderOverview();return;}
-  const d=DATA.find(x=>x.id===active);
-  p.innerHTML=d?renderDetail(d):`<div class="kg-panel"><div class="kg-empty">Select a category above</div></div>`;
+function setSort(mode){
+  sortMode=mode;
+  document.getElementById("btn-priority").classList.toggle("active",mode==="priority");
+  document.getElementById("btn-alpha").classList.toggle("active",mode==="alpha");
+  render();
 }
-renderTabs();renderPanel();
+
+render();
 </script>
-
 </body>
 </html>
-
