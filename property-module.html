@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HK Property — Curriculum</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    :root {
+      --color-background: #0f0f0f;
+      --color-background-secondary: #1a1a1a;
+      --color-background-tertiary: #222;
+      --color-border: #2a2a2a;
+      --color-border-secondary: #333;
+      --color-text-primary: #f0f0f0;
+      --color-text-secondary: #888;
+      --color-text-tertiary: #555;
+      --color-accent: #c8a84b;
+      --color-accent-dim: rgba(200,168,75,0.12);
+      --color-green: #4caf7d;
+      --color-green-dim: rgba(76,175,125,0.1);
+      --color-red: #e05252;
+      --color-red-dim: rgba(224,82,82,0.1);
+      --color-blue: #5b9cf6;
+      --color-blue-dim: rgba(91,156,246,0.1);
+      --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--color-background);
+      color: var(--color-text-primary);
+      font-family: var(--font-sans);
+      padding: 2rem 1rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .page-header-icon {
+      width: 40px; height: 40px;
+      background: var(--color-accent-dim);
+      border: 1px solid rgba(200,168,75,0.25);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--color-accent);
+    }
+    .page-header h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+    .page-header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 1.5rem; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.6rem;
+      padding: 0 2px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--color-background-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* ── TOPIC ROW ── */
+    .topic {
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+    }
+    .topic:last-child { border-bottom: none; }
+
+    .topic-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      transition: background 0.15s;
+    }
+    .topic-header:hover { background: var(--color-background-tertiary); }
+
+    .topic-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .icon-gold  { background: var(--color-accent-dim);  color: var(--color-accent); border: 1px solid rgba(200,168,75,0.2); }
+    .icon-green { background: var(--color-green-dim);   color: var(--color-green);  border: 1px solid rgba(76,175,125,0.2); }
+    .icon-blue  { background: var(--color-blue-dim);    color: var(--color-blue);   border: 1px solid rgba(91,156,246,0.2); }
+    .icon-red   { background: var(--color-red-dim);     color: var(--color-red);    border: 1px solid rgba(224,82,82,0.2); }
+
+    .topic-text { flex: 1; min-width: 0; }
+    .topic-title { font-size: 14px; font-weight: 500; }
+    .topic-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+
+    .topic-chevron {
+      color: var(--color-text-tertiary);
+      font-size: 14px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .topic.open .topic-chevron { transform: rotate(90deg); }
+
+    /* ── TOPIC BODY ── */
+    .topic-body {
+      display: none;
+      padding: 0 16px 14px 60px;
+      border-top: 1px solid var(--color-border);
+      background: rgba(0,0,0,0.2);
+    }
+    .topic.open .topic-body { display: block; }
+
+    /* ── ITEMS INSIDE BODY ── */
+    .body-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 13px;
+    }
+    .body-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .body-item:first-child { padding-top: 12px; }
+
+    .item-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--color-text-tertiary);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .item-content { flex: 1; line-height: 1.5; }
+    .item-label { font-weight: 500; color: var(--color-text-primary); }
+    .item-desc { color: var(--color-text-secondary); margin-top: 1px; }
+
+    /* ── PILL TAGS ── */
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tag-bull { background: var(--color-green-dim); color: var(--color-green); border: 1px solid rgba(76,175,125,0.25); }
+    .tag-bear { background: var(--color-red-dim); color: var(--color-red); border: 1px solid rgba(224,82,82,0.25); }
+    .tag-now  { background: var(--color-accent-dim); color: var(--color-accent); border: 1px solid rgba(200,168,75,0.25); }
+
+    /* ── STATUS STRIP ── */
+    .status-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .status-card {
+      flex: 1;
+      min-width: 120px;
+      background: var(--color-background-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .status-label { font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+    .status-value { font-size: 20px; font-weight: 600; margin-top: 2px; font-family: var(--font-mono); }
+    .status-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 1px; }
+    .val-green { color: var(--color-green); }
+    .val-gold  { color: var(--color-accent); }
+
+    /* ── RESOURCE ROW ── */
+    .resource-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 13px;
+    }
+    .resource-row:last-child { border-bottom: none; }
+    .resource-icon { font-size: 15px; color: var(--color-text-secondary); width: 20px; text-align: center; flex-shrink: 0; }
+    .resource-name { font-weight: 500; flex: 1; }
+    .resource-desc { color: var(--color-text-secondary); font-size: 12px; }
+    .resource-freq {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="life.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:#555;text-decoration:none;margin-bottom:1.5rem;transition:color 0.15s;" onmouseover="this.style.color='#f0f0f0'" onmouseout="this.style.color='#555'"><i class="ti ti-arrow-left"></i> Curriculum</a>
+
+  <div class="page-header">
+    <div class="page-header-icon"><i class="ti ti-building-estate"></i></div>
+    <div>
+      <h1>HK Property</h1>
+      <p>Market literacy, investment mechanics, personal strategy</p>
+    </div>
+  </div>
+
+  <!-- MARKET SNAPSHOT -->
+  <div class="section">
+    <div class="section-label">Market snapshot — May 2026</div>
+    <div class="status-strip">
+      <div class="status-card">
+        <div class="status-label">Sentiment</div>
+        <div class="status-value val-green">Bullish</div>
+        <div class="status-sub">9 months of price growth</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Price forecast</div>
+        <div class="status-value val-green">+5–10%</div>
+        <div class="status-sub">Full year 2026 (JLL/CBRE)</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">1M HIBOR</div>
+        <div class="status-value val-gold">~2.1%</div>
+        <div class="status-sub">Mortgage rates supportive</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Supply trend</div>
+        <div class="status-value val-green">↓</div>
+        <div class="status-sub">Tightening 2026–28</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE CONCEPTS -->
+  <div class="section">
+    <div class="section-label">Core concepts</div>
+    <div class="card">
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-gold"><i class="ti ti-trending-up"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">Bullish vs Bearish <span class="tag tag-now">Now: Bull</span></div>
+            <div class="topic-sub">Reading market direction</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Bullish <span class="tag tag-bull">↑</span></div>
+              <div class="item-desc">Market expects prices to rise. Buy sooner, negotiating power weaker, leverage works in your favour. Waiting costs you.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Bearish <span class="tag tag-bear">↓</span></div>
+              <div class="item-desc">Market expects prices to fall. Waiting is rewarded. Buyer has negotiating power. HK fell 28% peak to trough 2021–2024.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Signals to watch</div>
+              <div class="item-desc">CCL index direction, transaction volume, new launch sell-through rates, HIBOR trend. Price up + volume up = genuine bull. Price up + volume thin = fragile.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-blue"><i class="ti ti-calendar-stats"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">Time-series vocabulary</div>
+            <div class="topic-sub">WoW · MoM · QoQ · YoY · YTD</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">WoW — Week over Week</div>
+              <div class="item-desc">Used for CCL index, fast-moving data. Noisy, easy to over-read.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">MoM — Month over Month</div>
+              <div class="item-desc">RVD price index releases. Can look dramatic but may just be seasonal noise.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">YoY — Year over Year ★ most useful</div>
+              <div class="item-desc">Smooths seasonality. Chinese New Year always distorts Jan/Feb MoM figures. YoY is the reliable signal.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">QoQ / YTD</div>
+              <div class="item-desc">Quarter over Quarter. Year to Date = cumulative from Jan 1.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-green"><i class="ti ti-cash"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">Rich Dad Poor Dad framework</div>
+            <div class="topic-sub">Assets vs liabilities, cashflow mindset</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Core distinction</div>
+              <div class="item-desc">Asset = puts money in your pocket. Liability = takes money out. Your home is a liability. A rental property generating positive cashflow is an asset.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Cashflow Quadrant</div>
+              <div class="item-desc">E (Employee) → S (Self-employed) → B (Business owner) → I (Investor). Goal: migrate toward I. Most people never leave E.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">HK application</div>
+              <div class="item-desc">Classic middle-class HK path = buy one flat to live in, pay it off, retire. Kiyosaki's path = use leverage, buy income-generating property, use cashflow to finance the next asset. HK is structurally ideal for this model.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Caveats</div>
+              <div class="item-desc">Vague on execution, US-centric tax advice, Kiyosaki himself has had financial controversies. Take the mindset, not the specific tactics.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HK MECHANICS -->
+  <div class="section">
+    <div class="section-label">HK mechanics</div>
+    <div class="card">
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-gold"><i class="ti ti-receipt-tax"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">Stamp duty</div>
+            <div class="topic-sub">First-time buyer advantage is significant</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">First-time buyer rate: 4.25%</div>
+              <div class="item-desc">On a HK$5M flat = ~HK$212K. Use this once — it disappears the moment you own any property.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Standard rate: 15%</div>
+              <div class="item-desc">On a HK$5M flat = ~HK$750K. That's HK$538K saved by buying as a first-timer. Massive.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">2025 Budget change</div>
+              <div class="item-desc">Flat duty of HK$100 now applies to properties up to HK$4M (raised from HK$3M). Easier entry on lower-value units.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-blue"><i class="ti ti-bank"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">HKMA mortgage rules</div>
+            <div class="topic-sub">LTV, stress test, deposit requirements</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">LTV (Loan-to-Value)</div>
+              <div class="item-desc">First-time buyers can borrow up to 90% on properties under HK$10M under the mortgage insurance programme. 10% deposit = ~HK$500K on a HK$5M flat.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Stress test</div>
+              <div class="item-desc">Bank assesses if you can afford repayments at +2% above current rate. As a student with no declared income, this is the main obstacle. Bank looks at YOUR income, not your mum's.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">HIBOR-linked rates</div>
+              <div class="item-desc">Most HK mortgages are HIBOR + spread. 1M HIBOR currently ~2.1%. Total mortgage rate ~3.25–3.5%. Monthly repayment on HK$4.5M loan at 30yr ≈ HK$20–22K/month.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Guarantor structure</div>
+              <div class="item-desc">Mum can act as guarantor (not co-borrower) — gives bank comfort on repayment using her income, while keeping her off the title deed. Preserves your clean first-time buyer status.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-green"><i class="ti ti-home-dollar"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">Personal strategy (Douglas)</div>
+            <div class="topic-sub">Family structure, timeline, key numbers</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">The structure</div>
+              <div class="item-desc">Buy in my name (first-time buyer 4.25% SD). Mum provides deposit capital as documented family loan + covers mortgage interest while I'm in training. I take over payments once earning as a doctor.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Why the clock is ticking</div>
+              <div class="item-desc">Mum retires in ~10 years. Banks get uncomfortable co-signing near retirement age. Her peak income is the asset — borrow against it while it exists.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Target timeline</div>
+              <div class="item-desc">Buy in 2–3 years (clinical year 1–2), not 5+. Enough declared income to help with stress test, mum still peak earning, bull market not fully played out.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Upfront cost estimate (HK$5M flat)</div>
+              <div class="item-desc">10% deposit ~HK$500K + stamp duty ~HK$212K + legal/misc ~HK$60K = ~HK$800K total cash needed. Monthly mortgage ~HK$21K.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Next steps</div>
+              <div class="item-desc">1. Serious numbers conversation with mum. 2. Independent HK mortgage broker (not just one bank). 3. Solicitor to draft family loan agreement. 4. Browse Centaline/Spacious now to build intuition.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic" onclick="toggle(this)">
+        <div class="topic-header">
+          <div class="topic-icon icon-red"><i class="ti ti-map-pin"></i></div>
+          <div class="topic-text">
+            <div class="topic-title">District analysis</div>
+            <div class="topic-sub">Kai Tak, Kowloon, Northern Metropolis</div>
+          </div>
+          <i class="ti ti-chevron-right topic-chevron"></i>
+        </div>
+        <div class="topic-body">
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Kai Tak — mixed verdict</div>
+              <div class="item-desc">New stock, harbour views, Sports Park open. But 12,866 units in pipeline 2023–26, only ~5,649 absorbed by Nov 2025. 52%+ mainland buyers = concentration risk. Better as 5yr+ hold than near-term flip.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Kowloon City / Ho Man Tin / To Kwa Wan ★</div>
+              <div class="item-desc">Same East Kowloon upgrading trend as Kai Tak but cleaner supply fundamentals. Less flashy, better risk/reward for near-term purchase.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Northern Metropolis</div>
+              <div class="item-desc">900K+ units planned, adjacent to Shenzhen. 10–20 year GBA bet. Low entry, thin liquidity now. Speculative but potentially huge.</div>
+            </div>
+          </div>
+          <div class="body-item">
+            <div class="item-dot"></div>
+            <div class="item-content">
+              <div class="item-label">Mid-Levels / The Peak</div>
+              <div class="item-desc">Capital preservation. Strong rental demand from expats + Top Talent Pass arrivals. Weak yield (~2–3%), high entry. For later in life.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="section">
+    <div class="section-label">Reading list</div>
+    <div class="card">
+      <div class="resource-row">
+        <i class="ti ti-chart-line resource-icon"></i>
+        <div class="resource-name">Centa-City Leading Index (CCL)</div>
+        <div class="resource-desc">centanet.com</div>
+        <div class="resource-freq">Weekly</div>
+      </div>
+      <div class="resource-row">
+        <i class="ti ti-building-bank resource-icon"></i>
+        <div class="resource-name">RVD Price Statistics</div>
+        <div class="resource-desc">rvd.gov.hk — official govt index</div>
+        <div class="resource-freq">Monthly</div>
+      </div>
+      <div class="resource-row">
+        <i class="ti ti-file-analytics resource-icon"></i>
+        <div class="resource-name">JLL / CBRE / Knight Frank HK</div>
+        <div class="resource-desc">Free quarterly research reports</div>
+        <div class="resource-freq">Quarterly</div>
+      </div>
+      <div class="resource-row">
+        <i class="ti ti-news resource-icon"></i>
+        <div class="resource-name">SCMP Property section</div>
+        <div class="resource-desc">Best English-language HK property journalism</div>
+        <div class="resource-freq">Daily</div>
+      </div>
+      <div class="resource-row">
+        <i class="ti ti-home-search resource-icon"></i>
+        <div class="resource-name">Centaline / Spacious.hk</div>
+        <div class="resource-desc">Browse listings — builds price/sqft intuition</div>
+        <div class="resource-freq">Casual</div>
+      </div>
+      <div class="resource-row">
+        <i class="ti ti-book resource-icon"></i>
+        <div class="resource-name">Rich Dad Poor Dad — Kiyosaki</div>
+        <div class="resource-desc">Read once. Take mindset, not specific tactics. ~4 hrs.</div>
+        <div class="resource-freq">Once</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggle(el) {
+      el.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
