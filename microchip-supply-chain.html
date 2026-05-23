@@ -165,6 +165,7 @@ function renderSteps(){
 }
 
 function renderPanel(){
+  const scrollY=window.scrollY;
   const s=steps[sel]; const r=R[s.risk];
   const gdata=s.geo[mode];
   const total=gdata.reduce((a,g)=>a+g[1],0);
@@ -202,6 +203,7 @@ function renderPanel(){
       </div>
       <div class="bnote" style="border-color:${noteColor};background:${r.bg};color:var(--color-text-secondary)"><span style="font-weight:500;color:var(--color-text-primary)">Supply chain note: </span>${noteText}</div>
     </div>`;
+  window.scrollTo(0,scrollY);
 }
 
 function selectStep(i){
