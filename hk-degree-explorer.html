@@ -141,7 +141,7 @@ nav h1 { font-size:13px;font-weight:500;letter-spacing:0.08em;text-transform:upp
 const UC={HKU:'#378ADD',HKUST:'#1D9E75',CUHK:'#D85A30',PolyU:'#7F77DD',CityU:'#BA7517',HKBU:'#D4537E'};
 const FI={'Medicine & Health':'ti-stethoscope','Engineering & Tech':'ti-cpu','Business & Finance':'ti-building-bank','Science':'ti-flask','Social Sciences':'ti-world','Law':'ti-scale','Arts & Humanities':'ti-book','Architecture & Built Env':'ti-building'};
 const SORTS=[{k:'score',l:'Score'},{k:'employ',l:'Employability'},{k:'aisafe',l:'AI Safety'},{k:'wlb',l:'Work-Life'},{k:'faculty',l:'Faculty'}];
-function bc(v){return v>=75?'#4caf7d':v>=50?'#c8a84b':'#e05252'}
+function bc(v){const p=pw(v);return p>=50?'#4caf7d':p>=18?'#c8a84b':'#e05252'}
 function wlbL(v){return v>=80?'Excellent':v>=65?'Good':v>=50?'Fair':v>=35?'Poor':'Very Poor'}
 function stabL(v){return v>=80?'Very High':v>=65?'High':v>=50?'Medium':'Low'}
 function ov(d){return Math.round(d.salary*.28+d.employ*.25+(100-d.ai_d)*.16+d.stab*.14+d.flex*.10+d.wlb*.07)}
