@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North America by the Triangle Scale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #15191c;
+    --paper: #e8ebe6;
+    --paper-2: #dde1da;
+    --rule: #b3bcb2;
+    --t3: #2f6d52;   /* three-triangle pine green */
+    --t2: #9a7b3f;   /* two-triangle ochre */
+    --muted: #5c655d;
+    --caveat: #a85a32;
+    --card: #f1f3ee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(47,109,82,0.06), transparent 62%);
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.hero {
+    padding: 80px 0 48px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6.6vw, 4.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .mark { color: var(--t3); font-style: italic; }
+  .standfirst {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    max-width: 62ch;
+    color: var(--muted);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding: 26px 0 34px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .legend-item { display: flex; align-items: baseline; gap: 10px; }
+  .tri { font-size: 0.9rem; letter-spacing: 0.05em; }
+  .tri.t3 { color: var(--t3); }
+  .tri.t2 { color: var(--t2); }
+  .legend-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .legend-note { flex-basis: 100%; font-size: 0.82rem; color: var(--muted); font-style: italic; padding-top: 4px; }
+
+  .country {
+    margin-bottom: 42px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .country-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .country-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.7rem; letter-spacing: -0.01em; }
+  .country-flag-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .country-caveat { flex-basis: 100%; font-size: 0.8rem; color: var(--caveat); font-style: italic; padding-top: 6px; }
+
+  .sights { padding: 8px 26px 22px; }
+  .sight {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(179,188,178,0.45);
+    align-items: baseline;
+  }
+  .sight:last-child { border-bottom: none; }
+  .sight-tri { font-size: 0.95rem; letter-spacing: 0.04em; padding-top: 2px; }
+  .sight-tri.t3 { color: var(--t3); }
+  .sight-tri.t2 { color: var(--t2); }
+  .sight-name { font-weight: 600; font-size: 1.02rem; }
+  .sight-note { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag.borderline { background: rgba(168,90,50,0.13); color: var(--caveat); }
+  .tag.cluster { background: rgba(154,123,63,0.16); color: var(--t2); }
+  .tag.you { background: rgba(47,109,82,0.14); color: var(--t3); }
+
+  .none { font-size: 0.9rem; color: var(--muted); font-style: italic; padding: 6px 0; }
+
+  .region-divider {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin: 56px 0 26px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 2px solid var(--ink);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 10px; max-width: 68ch; }
+  footer .thread { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .sight { grid-template-columns: 52px 1fr; gap: 10px; }
+    .country-head { flex-wrap: wrap; }
+    .country-flag-region { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Personal travel framework · North America · US · Canada · Mexico</div>
+    <h1>North America<br>by the <span class="mark">triangle</span> scale</h1>
+    <p class="standfirst">A continent that is landscape-rich and deep-built-heritage-thin — its summits are overwhelmingly natural, plus a handful of pre-Columbian sites and living cities. Three triangles withheld unless truly earned.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tri t3">▲▲▲</span><span class="legend-label">Don't miss — worth the journey</span></div>
+    <div class="legend-item"><span class="tri t2">▲▲</span><span class="legend-label">Very strong — worth a detour</span></div>
+    <p class="legend-note">Calibrated in the Steves idiom on an everything-counts basis (spectacle, landscape, food, atmosphere). My ratings, not his — he doesn't cover North America. Ordinary ▲▲ entries trimmed to keep this to the summits.</p>
+  </div>
+
+  <!-- ============ UNITED STATES ============ -->
+  <div class="region-divider">United States</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">United States</span>
+      <span class="country-flag-region">Natural &amp; living-city weight</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Grand Canyon</div><div class="sight-note">Singular — nothing else on earth at that scale or form. <span class="tag borderline">North Rim closed since 2025 wildfire — verify</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Yellowstone</div><div class="sight-note">The world's first national park — geothermal + wildlife ecosystem spectacle, ~10,000 hydrothermal features found nowhere else.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Yosemite</div><div class="sight-note">The granite valley — Half Dome, El Capitan, the falls. Visit off-season; summer crowds are severe.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Utah's "Mighty 5"</div><div class="sight-note">Zion, Bryce, Arches, Canyonlands, Capitol Reef. ▲▲▲ as a cluster — the densest otherworldly-landscape concentration in the country. <span class="tag cluster">cluster rating</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">New York City</div><div class="sight-note">Living-city totality — the Met is ▲▲▲ alone, plus MoMA, food, density, energy. Not for monuments.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Washington DC</div><div class="sight-note">The Smithsonian complex + monuments. Near-▲▲▲ for the museums and squarely the geopolitics wavelength. <span class="tag you">your wavelength</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">New Orleans</div><div class="sight-note">The most culturally distinct US city — singular food and music.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Hawai'i — Volcanoes / Kauai</div><div class="sight-note">▲▲▲ for the volcanic landscape specifically; the Nā Pali coast and active lava are singular.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Alaska — Denali &amp; the Inside Passage</div><div class="sight-note">▲▲▲ as a wilderness expedition; the tallest peak in North America, glacier-and-fjord scale.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The rest of the bench</div><div class="sight-note">Grand Teton, Glacier NP, San Francisco / Bay Area, the Pacific Northwest (Olympic, Rainier, Oregon coast), Chicago (architecture — near-▲▲▲), Sedona, Death Valley, the Florida Everglades &amp; Keys, Acadia &amp; New England fall foliage.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ CANADA ============ -->
+  <div class="region-divider">Canada</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Canada</span>
+      <span class="country-flag-region">Almost purely natural</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Canadian Rockies</div><div class="sight-note">Banff, Lake Louise, Moraine Lake, Jasper, the Icefields Parkway. The world-summit mountain-and-glacial-lake landscape — Canada's one unequivocal ▲▲▲.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Québec City</div><div class="sight-note">The most genuinely European-historic city in North America — near-▲▲▲ for atmosphere, the closest thing to deep-built heritage on the continent.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Vancouver / Whistler</div><div class="sight-note">City-meets-sea-and-mountains; superb but not singular.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Northern Lights — Yukon / NWT</div><div class="sight-note">▲▲▲ as a phenomenon if you commit to chasing them (Yellowknife, Whitehorse).</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Niagara Falls</div><div class="sight-note">Real spectacle, undercut by the surrounding tack.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The rest of the bench</div><div class="sight-note">Cabot Trail / Cape Breton, the Bay of Fundy, Gros Morne (Newfoundland), Vancouver Island / Tofino, Montréal (food &amp; culture), Churchill (polar bears — ▲▲▲ for that wildlife experience specifically).</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ MEXICO ============ -->
+  <div class="region-divider">Mexico</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Mexico</span>
+      <span class="country-flag-region">Carries the heritage weight</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Mexico City</div><div class="sight-note">Living-city totality — one of the world's great food cities, the Museo Nacional de Antropología (▲▲▲ collection alone), the historic centre, the muralists, Frida &amp; Diego.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Teotihuacán</div><div class="sight-note">The monumental pre-Columbian pyramid city outside Mexico City — singular, and walkable.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Palenque</div><div class="sight-note">The Maya city wrapped in jungle — the most rewarding Maya site for its setting, and the most honestly-earned of them.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Chichén Itzá</div><div class="sight-note">Iconic but mobbed (2M+/yr, the most-visited site in Mexico) and un-climbable since 2008. Downgraded from ▲▲▲ — fame outruns the experience. Uxmal nearby is the quieter, arguably better Yucatán call.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Oaxaca</div><div class="sight-note">The food-and-craft heart of Mexico — near-▲▲▲ for cuisine and living culture. Monte Albán (the Zapotec hilltop city above it) is near-▲▲▲ paired with the city.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Guanajuato</div><div class="sight-note">The most beautiful colonial silver city; San Miguel de Allende alongside.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The rest of the bench</div><div class="sight-note">Copper Canyon (larger than the Grand Canyon, far less visited — ▲▲▲ as a rail-and-landscape journey for some), Mérida &amp; the Yucatán cenotes, Puebla (food &amp; Talavera), Baja (whale watching, Sea of Cortez).</div></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>The honest framing:</strong> North America is landscape-rich and deep-heritage-thin next to Asia — there's no Angkor or Kyoto here because that built layer largely isn't there. The division of labour: <strong>Mexico</strong> carries the heritage weight (Mesoamerican sites + colonial cities + the best museum on the continent), the <strong>US</strong> carries the natural and living-city weight, and <strong>Canada</strong> is almost purely natural — one ▲▲▲ (the Rockies), with Québec City the lone serious heritage contender.</p>
+    <p class="thread">The most "you" thread: the US museum-and-geopolitics axis (DC + NYC's Met) and the Mexican pre-Columbian arc (Teotihuacán → Palenque → the Anthropology Museum) — the deep-history spine the continent does have.</p>
+    <p style="margin-top:14px;">Borderline calls left visible: NYC &amp; Mexico City are ▲▲▲ on living-city totality (like Tokyo), not monuments; Utah is rated as a cluster; Chichén Itzá dropped to ▲▲ on the crowds-and-no-climbing reality. Live logistics — closures (e.g. Grand Canyon North Rim), wildfire, seasonal access — change often; verify before booking.</p>
+  </footer>
+
+</div>
+</body>
+</html>
