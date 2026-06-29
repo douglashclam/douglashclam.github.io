@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lifetime Plan — by Window, Not by Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #14171f;
+    --paper: #eceef2;
+    --paper-2: #e1e4ea;
+    --rule: #b6bcc8;
+    --now: #b3431f;     /* urgent — terracotta */
+    --mom: #2f6d52;     /* mom — green */
+    --future: #5a6b8a;  /* bankable — slate blue */
+    --gold: #9a7b3f;
+    --muted: #5e6470;
+    --caveat: #a8512f;
+    --card: #f5f6f9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(154,123,63,0.06), transparent 60%);
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.hero {
+    padding: 80px 0 44px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6.6vw, 4.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .mark { font-style: italic; color: var(--now); }
+  .standfirst {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    max-width: 64ch;
+    color: var(--muted);
+  }
+
+  .principle {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin: 32px 0 12px;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+  .principle strong { color: var(--ink); }
+
+  .bucket { margin-top: 56px; }
+  .bucket-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .bucket-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 2px;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .bucket-tag.now { background: var(--now); }
+  .bucket-tag.mom { background: var(--mom); }
+  .bucket-tag.future { background: var(--future); }
+  .bucket-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.5rem; }
+  .bucket-why { font-size: 0.9rem; color: var(--muted); font-style: italic; margin: 10px 0 24px; max-width: 70ch; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(182,188,200,0.5);
+    align-items: baseline;
+  }
+  .item:last-child { border-bottom: none; }
+  .rank {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--gold);
+  }
+  .item-name { font-weight: 600; font-size: 1.04rem; }
+  .item-note { font-size: 0.89rem; color: var(--muted); margin-top: 3px; }
+  .pill {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .pill.window { background: rgba(90,107,138,0.15); color: var(--future); }
+  .pill.spine { background: rgba(179,67,31,0.12); color: var(--now); }
+  .pill.done { background: rgba(47,109,82,0.15); color: var(--mom); }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 2px solid var(--ink);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 12px; max-width: 70ch; }
+  footer .big {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  @media (max-width: 560px) {
+    .item { grid-template-columns: 26px 1fr; gap: 10px; }
+    .bucket-head { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">The master plan · a menu, not a syllabus</div>
+    <h1>By <span class="mark">window</span>,<br>not by map</h1>
+    <p class="standfirst">You won't visit them all — nobody does, and that's not failure. This sorts the world's summits by the one variable that actually forces the order: not geography, but <em>when a thing has to be done</em> — before a body changes, alongside someone whose window is narrowing faster, or whenever, because it'll keep.</p>
+  </header>
+
+  <div class="principle">
+    <strong>The sorting logic.</strong> Three questions decide every entry. <em>Does age close the door?</em> (climbing, altitude, trekking, all-day walking in heat — these genuinely won't keep). <em>Is it gentle and unchanging?</em> (cities, cruises, museums — taxis and time fix everything, so they wait). <em>Whose window is it?</em> (your mum's narrows faster than yours, so moderate-effort shared trips move up — but never the extreme end). Everything below is ranked <strong>within</strong> each bucket by urgency and fit to how you actually travel.
+  </div>
+
+  <!-- ============ DO NOW ============ -->
+  <div class="bucket">
+    <div class="bucket-head">
+      <span class="bucket-tag now">Do now</span>
+      <span class="bucket-title">While the body is at its peak</span>
+    </div>
+    <p class="bucket-why">The age-sensitive tier — climbing, altitude, multi-day treks, remote heat, all-day walking on uneven ground. None of these have a gentle version you can buy back later; they reward the mobility and energy you have at 21 and genuinely close with age. Do these in your strongest decade, around clinical breaks and any longer windows you can engineer.</p>
+
+    <div class="item"><div class="rank">1</div><div><div class="item-name">Nepal — the Himalaya (Everest Base Camp / Annapurna)</div><div class="item-note">The single most age-sensitive thing on any list. A two-week trek at altitude; there is no taxi version. The clearest "knees and lungs of your 20s–30s" trip. <span class="pill window">2-week expedition</span></div></div></div>
+
+    <div class="item"><div class="rank">2</div><div><div class="item-name">Patagonia — Torres del Paine + Fitz Roy</div><div class="item-note">Multi-day trekking, far, and seasonal (their summer, Dec–Feb). World-summit wilderness that demands real walking. <span class="pill window">2-week expedition</span></div></div></div>
+
+    <div class="item"><div class="rank">3</div><div><div class="item-name">The Andean spine — Machu Picchu, Cusco, Titicaca, Uyuni</div><div class="item-note">Altitude is the gatekeeper (3,000m+), and the Inca Trail can't be done gently. Strings the continent's deep-history and most surreal landscapes into one high-altitude run. <span class="pill window">2-week expedition</span></div></div></div>
+
+    <div class="item"><div class="rank">4</div><div><div class="item-name">The Silk Road grotto run — Dunhuang + a Datong–Pingyao loop</div><div class="item-note">Remote NW desert, scorching, long days on your feet — and the supreme stretch of your own through-line. Physically taxing enough to want young legs. <span class="pill spine">your art spine</span> <span class="pill window">proper week+</span></div></div></div>
+
+    <div class="item"><div class="rank">5</div><div><div class="item-name">Deep India — Hampi, Ellora & Ajanta, Rajasthan, Varanasi</div><div class="item-note">Heat, extensive walking on uneven stone, guard-up logistics, and the rock-cut climax (Ellora). A demanding, seasoned-traveller's country — easier with youthful stamina. Best in winter (Oct–Mar). <span class="pill spine">your art spine</span> <span class="pill window">proper week+</span></div></div></div>
+
+    <div class="item"><div class="rank">6</div><div><div class="item-name">Lhasa / Tibet — and the Tibetan-edge (Jiuzhaigou)</div><div class="item-note">Altitude again — the body-tax that never eases. Your HK passport is a genuine edge here (no permit, travel freely). Needs a full week + acclimatisation. <span class="pill window">proper week</span></div></div></div>
+
+    <div class="item"><div class="rank">7</div><div><div class="item-name">Bagan (Myanmar) — when safe</div><div class="item-note">The temple plain rivals Angkor; extensive, hot, and access-dependent. On merit it's a now-trip; in practice, watch the security situation. <span class="pill window">proper week</span></div></div></div>
+
+    <div class="item"><div class="rank">8</div><div><div class="item-name">Zhangjiajie + Huangshan</div><div class="item-note">Cable cars defuse the ascent, but the clifftop walking and stairs are extensive — easier on young legs, and far better than fighting them at 60. <span class="pill window">proper week</span></div></div></div>
+
+    <div class="item"><div class="rank">9</div><div><div class="item-name">Galápagos / Raja Ampat — the marine summits</div><div class="item-note">Boat-based so not strictly age-gated, but snorkel/dive energy and the cost-of-effort favour doing them while fit and unencumbered. <span class="pill window">proper week+</span></div></div></div>
+  </div>
+
+  <!-- ============ WITH MOM ============ -->
+  <div class="bucket">
+    <div class="bucket-head">
+      <span class="bucket-tag mom">With mum</span>
+      <span class="bucket-title">Her window is the one closing faster</span>
+    </div>
+    <p class="bucket-why">The key realisation: her mobility narrows sooner than yours, so the <em>moderate</em>-effort shared trips move up the queue — do them while she's well able, not someday. But never the extreme end (no altitude, no trekking, no rough-country expeditions). Gentle, cultural, adaptable, and in the right season so weather is never the enemy. These echo the Florence / Venice / Paris trips she already loved.</p>
+
+    <div class="item"><div class="rank">1</div><div><div class="item-name">Kyoto + Nara</div><div class="item-note">The standout, and the direct successor to the European cultural trips. Supremely age-friendly (flat, taxis, benches, elective effort). Do it in <strong>autumn</strong> — comfortable, dry, autumn leaves; the perfect version. <span class="pill window">5D4N</span></div></div></div>
+
+    <div class="item"><div class="rank">2</div><div><div class="item-name">Penang (George Town) + Melaka</div><div class="item-note">The gentlest genuinely-cultural option — flat, walkable UNESCO old towns, English everywhere, short flight, and the best food in SE Asia. Brief afternoon showers, worked around easily. <span class="pill window">4–5D</span></div></div></div>
+
+    <div class="item"><div class="rank">3</div><div><div class="item-name">Beijing — Mutianyu Wall + Forbidden City</div><div class="item-note">The "use her moderate mobility now" trip: walking <em>on</em> the Wall is the thing that won't keep, and the cable car removes the brutal climb. Do it sooner, in <strong>autumn</strong> (dry, clear, no summer storms). <span class="pill window">4D3N</span></div></div></div>
+
+    <div class="item"><div class="rank">4</div><div><div class="item-name">Xi'an — the Terracotta Army</div><div class="item-note">Moderate, low-strain sights, a real ▲▲▲, direct flight. Pairs with Luoyang's grottoes if you stretch it. Autumn for comfort. <span class="pill spine">your art spine</span> <span class="pill window">4–5D</span></div></div></div>
+
+    <div class="item"><div class="rank">5</div><div><div class="item-name">Guilin / Yangshuo — the Li River cruise</div><div class="item-note">The boat does the work — one of the most restful ways to experience a ▲▲▲. Lovely with her; also genuinely bankable, so no rush, but a gentle joy whenever. <span class="pill window">4–5D</span></div></div></div>
+
+    <div class="item"><div class="rank">6</div><div><div class="item-name">Sri Lanka — the Cultural Triangle</div><div class="item-note">Dambulla, Polonnaruwa, Anuradhapura — gentle heritage, with Sigiriya's climb <em>optional</em> (she does the water gardens, you climb). Warm; dry in the July rain-shadow. Adaptable to her pace. <span class="pill window">5D+</span></div></div></div>
+
+    <div class="item"><div class="rank">7</div><div><div class="item-name">European cities, together again</div><div class="item-note">Rome, Vienna, Barcelona — the unticked heritage capitals, all gentle-with-taxis and squarely the register she loved. The natural continuation of the trips you've already shared. <span class="pill window">varies</span></div></div></div>
+
+    <div class="item"><div class="rank">8</div><div><div class="item-name">Taipei — Palace Museum, food, hot springs</div><div class="item-note">Not a ▲▲▲, but a supremely gentle, food-rich short break; the National Palace Museum is a world-class collection. Easy and warm. <span class="pill window">4D3N</span></div></div></div>
+  </div>
+
+  <!-- ============ BANKABLE ============ -->
+  <div class="bucket">
+    <div class="bucket-head">
+      <span class="bucket-tag future">Bankable</span>
+      <span class="bucket-title">It'll keep — do it whenever a window opens</span>
+    </div>
+    <p class="bucket-why">Gentle and unchanging: cities you walk at your own pace with taxis on tap, cruises where the boat does the work, museum-led trips where the reward is indoors and seated. Age barely touches these, so there's no urgency — they're the flexible filler for whatever window you have, and the trips to keep for the busier, less mobile, family-and-career decades when the expeditions get harder.</p>
+
+    <div class="item"><div class="rank">1</div><div><div class="item-name">The great heritage cities</div><div class="item-note">Rome, Istanbul, Barcelona, Tokyo, Mexico City, NYC, Prague. World-summit culture, all walkable-but-taxi-able. The closest thing to "do anytime, forever." (Turkey especially hits your Byzantine + classical + rock-cut threads at once.) <span class="pill spine">Istanbul/Cappadocia: spine</span></div></div></div>
+
+    <div class="item"><div class="rank">2</div><div><div class="item-name">Cruise-and-view scenery</div><div class="item-note">Ha Long Bay (overnight), the Li River, the Yangtze Three Gorges. The vessel carries you; near-zero exertion. Genuinely better done slowly and later. <span class="pill window">short</span></div></div></div>
+
+    <div class="item"><div class="rank">3</div><div><div class="item-name">Petra + Wadi Rum (Jordan)</div><div class="item-note">Some walking but fully adaptable to pace; stable and tourist-ready. The western climax of your rock-cut arc — pairs with Cappadocia & AlUla. <span class="pill spine">your art spine</span></div></div></div>
+
+    <div class="item"><div class="rank">4</div><div><div class="item-name">The Great Barrier Reef + the Big Three Australia</div><div class="item-note">Reef snorkelling is boat-based; Sydney and Uluru are gentle. The whole Australia "Big Three" is a dry-season (their winter) 2-week trip best saved and done properly, once. <span class="pill window">2-week</span></div></div></div>
+
+    <div class="item"><div class="rank">5</div><div><div class="item-name">Easter Island, the Anthropology Museum cities, the food capitals</div><div class="item-note">Singular but low-strain — the seated, indoor, look-and-savour rewards. They wait happily. </div></div></div>
+
+    <div class="item"><div class="rank">6</div><div><div class="item-name">Europe's last unticked summits</div><div class="item-note">You've cleared most of the continent. What remains: <strong>Rome, the Acropolis, the Alhambra, Barcelona, the Swiss Alps, the Norwegian fjords, Iceland</strong>. The Alps/fjords/Iceland lean mildly active (do those a touch sooner); the rest are pure bankable. <span class="pill done">most of Europe: done</span></div></div></div>
+  </div>
+
+  <footer>
+    <p class="big">The honest arithmetic: of ~60–80 world ▲▲▲s, a committed lifetime of scarce travel windows might clear 40–60%. You will not get them all — and the list was never a checklist. It's a filter, so that when five days open in October or two weeks open between jobs, you reach for the thing that best fits that window and your wavelength, instead of defaulting to whatever's cheap.</p>
+    <p>You've already proved the method works: a single well-placed life-window — the London year — cleared most of a continent. You'll get more such windows (a fellowship, a sabbatical, a career break, retirement), and each can clear a cluster. The job now is sequencing: spend your strongest decade on the things that close (the treks, the altitude, the deep heritage walks), move the moderate shared trips up while your mum is well, and let the gentle, unchanging summits wait — because they always will.</p>
+    <p style="margin-top:14px;"><strong>The one through-line worth protecting across all three buckets:</strong> the eastward transmission of Buddhist and rock-cut monumental art — Longmen → Yungang → Mogao → Ellora & Ajanta → Bagan & Borobudur, reaching west into Cappadocia, Petra, and AlUla. If any single thematic spine organises the next few decades of your travel, it's that one — it's the deepest match to how you actually see.</p>
+  </footer>
+
+</div>
+</body>
+</html>
