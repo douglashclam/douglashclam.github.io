@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oceania by the Triangle Scale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #0d1a1c;
+    --paper: #dfeae8;
+    --paper-2: #d2e0dd;
+    --rule: #a7c0bc;
+    --t3: #1f7a6e;   /* three-triangle reef teal */
+    --t2: #5a7d86;   /* two-triangle slate blue */
+    --muted: #506560;
+    --caveat: #b0622f;
+    --card: #edf4f2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(31,122,110,0.07), transparent 62%);
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.hero {
+    padding: 80px 0 48px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6.6vw, 4.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .mark { color: var(--t3); font-style: italic; }
+  .standfirst {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    max-width: 62ch;
+    color: var(--muted);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding: 26px 0 34px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .legend-item { display: flex; align-items: baseline; gap: 10px; }
+  .tri { font-size: 0.9rem; letter-spacing: 0.05em; }
+  .tri.t3 { color: var(--t3); }
+  .tri.t2 { color: var(--t2); }
+  .legend-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .legend-note { flex-basis: 100%; font-size: 0.82rem; color: var(--muted); font-style: italic; padding-top: 4px; }
+
+  .country {
+    margin-bottom: 42px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .country-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .country-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.7rem; letter-spacing: -0.01em; }
+  .country-flag-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .country-caveat { flex-basis: 100%; font-size: 0.8rem; color: var(--caveat); font-style: italic; padding-top: 6px; }
+
+  .sights { padding: 8px 26px 22px; }
+  .sight {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(167,192,188,0.45);
+    align-items: baseline;
+  }
+  .sight:last-child { border-bottom: none; }
+  .sight-tri { font-size: 0.95rem; letter-spacing: 0.04em; padding-top: 2px; }
+  .sight-tri.t3 { color: var(--t3); }
+  .sight-tri.t2 { color: var(--t2); }
+  .sight-name { font-weight: 600; font-size: 1.02rem; }
+  .sight-note { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag.borderline { background: rgba(176,98,47,0.13); color: var(--caveat); }
+  .tag.divers { background: rgba(90,125,134,0.18); color: var(--t2); }
+
+  .none { font-size: 0.9rem; color: var(--muted); font-style: italic; padding: 6px 0; }
+
+  .region-divider {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin: 56px 0 26px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 2px solid var(--ink);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 10px; max-width: 68ch; }
+  footer .thread { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .sight { grid-template-columns: 52px 1fr; gap: 10px; }
+    .country-head { flex-wrap: wrap; }
+    .country-flag-region { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Personal travel framework · Oceania</div>
+    <h1>Oceania by the<br><span class="mark">triangle</span> scale</h1>
+    <p class="standfirst">A region of pure nature at the top tier — the world's greatest reef, the Southern Alps, the red centre. No deep-built-heritage layer at all; the summit reward is landscape, wildlife, and the ocean. Three triangles withheld unless truly earned.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tri t3">▲▲▲</span><span class="legend-label">Don't miss — worth crossing the world for</span></div>
+    <div class="legend-item"><span class="tri t2">▲▲</span><span class="legend-label">Very strong — worth a detour</span></div>
+    <p class="legend-note">Calibrated in the Steves idiom on an everything-counts basis (landscape, wildlife, marine life, atmosphere). My ratings, not his. Ordinary ▲▲ entries trimmed to the summits. Seasons are flipped — the southern summer (Dec–Feb) is peak for most of it.</p>
+  </div>
+
+  <!-- ============ AUSTRALIA ============ -->
+  <div class="region-divider">Australia</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Australia</span>
+      <span class="country-flag-region">Reef, rock &amp; coast</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Great Barrier Reef</div><div class="sight-note">The largest living structure on earth and the world's greatest coral reef system — a genuine planetary wonder. ▲▲▲ unconditionally; ▲▲▲▲ for divers if such a thing existed. <span class="tag divers">snorkel / dive</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Uluru (Ayers Rock) + the Red Centre</div><div class="sight-note">The monolith at the heart of the continent — singular, sacred to the Anangu, and far more moving in person than photos suggest. Kata Tjuta nearby deepens it.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Sydney</div><div class="sight-note">The Harbour, the Opera House, the beaches — one of the great harbour cities. Near-▲▲▲ for the setting. Melbourne (food, laneways, culture) also strong ▲▲.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Tasmania</div><div class="sight-note">Wilderness, Cradle Mountain, MONA (a genuinely world-class private museum), the food and the coast; a strong ▲▲ island. The Kimberley &amp; Daintree also ▲▲.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ NEW ZEALAND ============ -->
+  <div class="region-divider">New Zealand</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">New Zealand</span>
+      <span class="country-flag-region">The scenery superpower</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Fiordland — Milford &amp; Doubtful Sound</div><div class="sight-note">Sheer cliffs, waterfalls plunging into glacial fjords — among the most dramatic landscapes on earth. The crown jewel of NZ's South Island.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Southern Alps — Aoraki/Mt Cook &amp; the glacier country</div><div class="sight-note">The Alps, the turquoise lakes (Pukaki, Tekapo), the Franz Josef &amp; Fox glaciers — a concentrated alpine wonderland. Queenstown/Wanaka as the base.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Rotorua + the volcanic plateau</div><div class="sight-note">Geothermal spectacle (geysers, hot springs) and the heart of living Māori culture; Tongariro Crossing (the great day-hike) nearby. Strong ▲▲.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The drives &amp; the rest of the South Island</div><div class="sight-note">Abel Tasman, the Catlins, the Otago coast, Kaikōura (whales). The whole island is essentially a ▲▲-to-▲▲▲ continuous landscape — the country <em>is</em> the sight.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ THE PACIFIC ISLANDS ============ -->
+  <div class="region-divider">The Pacific Islands</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">French Polynesia</span>
+      <span class="country-flag-region">The South Pacific dream</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Bora Bora &amp; the Society Islands</div><div class="sight-note">The archetypal overwater-bungalow lagoon — stunning, but a ▲▲ <em>resort</em> experience rather than a ▲▲▲ <em>place</em>; the reward is the water and the seclusion, not singularity. Moorea &amp; the Tuamotus (world-class diving) alongside.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Fiji / the wider Pacific</span>
+      <span class="country-flag-region">Melanesia &amp; Polynesia</span>
+    </div>
+    <div class="sights">
+      <div class="none">No ▲▲▲. Very strong ▲▲: Fiji's reefs and island-hopping; Vanuatu (active volcano on Tanna, ▲▲▲ for that specific spectacle); Samoa &amp; Tonga (Polynesian culture, swimming with whales). These are superb <em>beach-and-reef</em> destinations, but none has a singular worth-crossing-the-world draw on this harsh scale — they're paradises to relax in, not summits to pilgrimage to.</div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Papua New Guinea</span>
+      <span class="country-flag-region">The wild frontier</span>
+      <div class="country-caveat">Significant safety concerns — verify current advisories carefully; specialist/guided travel only.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Highland cultures + the Kokoda Track + the reefs</div><div class="sight-note">Some of the most culturally distinct and least-touristed societies on earth, WWII history, and world-class diving — a genuinely singular destination held back to ▲▲ only by serious safety and logistical difficulty.</div></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>The honest framing:</strong> Oceania is the purest <em>nature</em> region on any of these lists — there is essentially no deep-built-heritage layer, so every ▲▲▲ is landscape or marine: the <strong>Great Barrier Reef</strong> and <strong>Uluru</strong> in Australia, and <strong>Fiordland</strong> and the <strong>Southern Alps</strong> in New Zealand. The Pacific islands, beautiful as they are, don't produce a ▲▲▲ on a harsh scale — they're paradises to unwind in rather than singular sights to cross the world for, and I've left them honestly at ▲▲ / none rather than inflate them.</p>
+    <p class="thread">The most "you" thread is thinner here than elsewhere — Oceania rewards the landscape-and-outdoors traveller more than the heritage/art one. If a trip happens, New Zealand's South Island is the single richest concentration (Fiordland + the Alps + the drives in one self-drive loop), and the Great Barrier Reef is the one unmissable Australian ▲▲▲.</p>
+    <p style="margin-top:14px;">Borderline calls left visible: Sydney is a near-▲▲▲ city held at ▲▲; Bora Bora is a ▲▲ resort experience, not a ▲▲▲ place; the Pacific island nations get no ▲▲▲ rather than a forced one. Everything is long-haul from HK and the seasons are flipped (southern summer Dec–Feb is peak). Verify safety (PNG) and seasonal access before booking.</p>
+  </footer>
+
+</div>
+</body>
+</html>

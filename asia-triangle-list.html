@@ -6,467 +6,182 @@
 <title>Asia by the Triangle Scale</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
-  :root {
-    --ink: #1a1410;
-    --paper: #f3ede1;
-    --paper-2: #ece4d4;
-    --rule: #cbbfa8;
-    --t3: #b3431f;   /* three-triangle vermilion */
-    --t2: #8a7a52;   /* two-triangle bronze */
-    --muted: #6b6051;
-    --caveat: #9a5b2c;
-    --card: #f8f4ea;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    background-image: radial-gradient(circle at 50% 0%, rgba(179,67,31,0.05), transparent 60%);
-  }
-
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 100px; }
-
-  /* ---------- HERO ---------- */
-  header.hero {
-    padding: 80px 0 48px;
-    border-bottom: 2px solid var(--ink);
-    margin-bottom: 8px;
-  }
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--caveat);
-    margin-bottom: 22px;
-  }
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-size: clamp(2.6rem, 7vw, 4.6rem);
-    line-height: 0.96;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
-  }
-  h1 .mark { color: var(--t3); font-style: italic; }
-  .standfirst {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-    font-weight: 400;
-    font-style: italic;
-    max-width: 60ch;
-    color: var(--muted);
-  }
-
-  /* ---------- LEGEND ---------- */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    padding: 26px 0 34px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 48px;
-  }
-  .legend-item { display: flex; align-items: baseline; gap: 10px; }
-  .tri { font-size: 0.9rem; letter-spacing: 0.05em; }
-  .tri.t3 { color: var(--t3); }
-  .tri.t2 { color: var(--t2); }
-  .legend-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--muted);
-  }
-  .legend-note {
-    flex-basis: 100%;
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-style: italic;
-    padding-top: 4px;
-  }
-
-  /* ---------- COUNTRY BLOCK ---------- */
-  .country {
-    margin-bottom: 42px;
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .country-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 22px 26px 18px;
-    border-bottom: 1px solid var(--rule);
-    background: var(--paper-2);
-  }
-  .country-name {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.7rem;
-    letter-spacing: -0.01em;
-  }
-  .country-flag-region {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: right;
-    white-space: nowrap;
-  }
-  .country-caveat {
-    flex-basis: 100%;
-    font-size: 0.8rem;
-    color: var(--caveat);
-    font-style: italic;
-    padding-top: 6px;
-  }
-
-  .sights { padding: 8px 26px 22px; }
-  .sight {
-    display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 14px;
-    padding: 13px 0;
-    border-bottom: 1px solid rgba(203,191,168,0.4);
-    align-items: baseline;
-  }
-  .sight:last-child { border-bottom: none; }
-  .sight-tri {
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    padding-top: 2px;
-  }
-  .sight-tri.t3 { color: var(--t3); }
-  .sight-tri.t2 { color: var(--t2); }
-  .sight-body { }
-  .sight-name { font-weight: 600; font-size: 1.02rem; }
-  .sight-note { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
-  .tag {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 2px 7px;
-    border-radius: 2px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-  .tag.borderline { background: rgba(154,91,44,0.13); color: var(--caveat); }
-  .tag.divers { background: rgba(138,122,82,0.16); color: var(--t2); }
-  .tag.you { background: rgba(179,67,31,0.12); color: var(--t3); }
-
-  .none {
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-style: italic;
-    padding: 6px 0;
-  }
-
-  /* ---------- SECTION DIVIDER ---------- */
-  .region-divider {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.74rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--caveat);
-    margin: 56px 0 26px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--ink);
-  }
-
-  footer {
-    margin-top: 70px;
-    padding-top: 26px;
-    border-top: 2px solid var(--ink);
-    font-size: 0.82rem;
-    color: var(--muted);
-  }
-  footer p { margin-bottom: 10px; max-width: 68ch; }
-  footer .thread {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--ink);
-  }
-
-  @media (max-width: 560px) {
-    .sight { grid-template-columns: 52px 1fr; gap: 10px; }
-    .country-head { flex-wrap: wrap; }
-    .country-flag-region { text-align: left; }
-  }
+  :root { --ink:#1a1410; --paper:#f3ede1; --paper-2:#ece4d4; --rule:#cbbfa8; --t3:#b3431f; --t2:#8a7a52; --muted:#6b6051; --caveat:#9a5b2c; --card:#f8f4ea; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; background-image:radial-gradient(circle at 50% 0%, rgba(179,67,31,0.05), transparent 60%); }
+  .wrap { max-width:860px; margin:0 auto; padding:0 24px 100px; }
+  header.hero { padding:80px 0 48px; border-bottom:2px solid var(--ink); margin-bottom:8px; }
+  .eyebrow { font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--caveat); margin-bottom:22px; }
+  h1 { font-family:'Fraunces',serif; font-weight:900; font-size:clamp(2.6rem,7vw,4.6rem); line-height:0.96; letter-spacing:-0.02em; margin-bottom:24px; }
+  h1 .mark { color:var(--t3); font-style:italic; }
+  .standfirst { font-family:'Fraunces',serif; font-size:clamp(1.05rem,2.4vw,1.3rem); font-weight:400; font-style:italic; max-width:60ch; color:var(--muted); }
+  .legend { display:flex; flex-wrap:wrap; gap:28px; padding:26px 0 34px; border-bottom:1px solid var(--rule); margin-bottom:48px; }
+  .legend-item { display:flex; align-items:baseline; gap:10px; }
+  .tri { font-size:0.9rem; letter-spacing:0.05em; }
+  .tri.t3 { color:var(--t3); } .tri.t2 { color:var(--t2); }
+  .legend-label { font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--muted); }
+  .legend-note { flex-basis:100%; font-size:0.82rem; color:var(--muted); font-style:italic; padding-top:4px; }
+  .country { margin-bottom:42px; background:var(--card); border:1px solid var(--rule); border-radius:2px; overflow:hidden; }
+  .country-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:22px 26px 18px; border-bottom:1px solid var(--rule); background:var(--paper-2); }
+  .country-name { font-family:'Fraunces',serif; font-weight:600; font-size:1.7rem; letter-spacing:-0.01em; }
+  .country-flag-region { font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); text-align:right; white-space:nowrap; }
+  .country-caveat { flex-basis:100%; font-size:0.8rem; color:var(--caveat); font-style:italic; padding-top:6px; }
+  .sights { padding:8px 26px 22px; }
+  .sight { display:grid; grid-template-columns:64px 1fr; gap:14px; padding:13px 0; border-bottom:1px solid rgba(203,191,168,0.4); align-items:baseline; }
+  .sight:last-child { border-bottom:none; }
+  .sight-tri { font-size:0.95rem; letter-spacing:0.04em; padding-top:2px; }
+  .sight-tri.t3 { color:var(--t3); } .sight-tri.t2 { color:var(--t2); }
+  .sight-name { font-weight:600; font-size:1.02rem; }
+  .sight-note { font-size:0.88rem; color:var(--muted); margin-top:2px; }
+  .tag { display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; padding:2px 7px; border-radius:2px; margin-left:6px; vertical-align:middle; }
+  .tag.borderline { background:rgba(154,91,44,0.13); color:var(--caveat); }
+  .tag.divers { background:rgba(138,122,82,0.16); color:var(--t2); }
+  .tag.you { background:rgba(179,67,31,0.12); color:var(--t3); }
+  .none { font-size:0.9rem; color:var(--muted); font-style:italic; padding:6px 0; }
+  .region-divider { font-family:'IBM Plex Mono',monospace; font-size:0.74rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--caveat); margin:56px 0 26px; padding-bottom:8px; border-bottom:1px solid var(--ink); }
+  .crossref { background:rgba(179,67,31,0.06); border:1px solid var(--rule); border-radius:2px; padding:18px 22px; margin-bottom:42px; font-size:0.9rem; color:var(--muted); }
+  .crossref strong { color:var(--ink); font-weight:600; }
+  footer { margin-top:70px; padding-top:26px; border-top:2px solid var(--ink); font-size:0.82rem; color:var(--muted); }
+  footer p { margin-bottom:10px; max-width:68ch; }
+  footer .thread { font-family:'Fraunces',serif; font-style:italic; font-size:1rem; color:var(--ink); }
+  @media (max-width:560px) { .sight { grid-template-columns:52px 1fr; gap:10px; } .country-head { flex-wrap:wrap; } .country-flag-region { text-align:left; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
   </nav>
-
   <header class="hero">
     <div class="eyebrow">Personal travel framework · feasible Asia from a Hong Kong base</div>
     <h1>Asia by the<br><span class="mark">triangle</span> scale</h1>
     <p class="standfirst">A by-country map of the destinations worth crossing the world for — three triangles withheld unless truly earned, with the honest caveats left in rather than smoothed over.</p>
   </header>
-
   <div class="legend">
-    <div class="legend-item"><span class="tri t3">▲▲▲</span><span class="legend-label">Don't miss — worth the journey</span></div>
-    <div class="legend-item"><span class="tri t2">▲▲</span><span class="legend-label">Very strong — worth a detour</span></div>
-    <p class="legend-note">Calibrated in the Steves idiom (he doesn't cover Asia — these are my ratings, not his). Ordinary ▲▲ entries are omitted to keep this to the summits only.</p>
+    <div class="legend-item"><span class="tri t3">&#9650;&#9650;&#9650;</span><span class="legend-label">Don't miss — worth the journey</span></div>
+    <div class="legend-item"><span class="tri t2">&#9650;&#9650;</span><span class="legend-label">Very strong — worth a detour</span></div>
+    <p class="legend-note">Calibrated in the Steves idiom (he doesn't cover Asia — these are my ratings, not his). Ordinary &#9650;&#9650; entries are omitted to keep this to the summits only.</p>
   </div>
+  <div class="crossref"><strong>Note on scope:</strong> this file covers East, Southeast, South and Central Asia. The Middle East &amp; West Asia entries — Turkey, Jordan, Israel, Iran, the Gulf and the Levant — have moved to their own dedicated <strong>Middle East &amp; West Asia</strong> file, where they carry the safety and access caveats that region needs.</div>
 
-  <!-- ============ GREATER CHINA ============ -->
   <div class="region-divider">Greater China</div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">China (mainland)</span>
-      <span class="country-flag-region">East Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">China (mainland)</span><span class="country-flag-region">East Asia</span></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Great Wall</div><div class="sight-note">Beijing sections — Mutianyu, Jinshanling, Simatai. Unconditional.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Forbidden City</div><div class="sight-note">Beijing. Largest, best-preserved imperial palace on earth. Unconditional.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Terracotta Army</div><div class="sight-note">Xi'an. Genuinely <em>sui generis</em> — the most secure rating on the list.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Mogao Caves</div><div class="sight-note">Dunhuang. The supreme Buddhist art site. Remote — an expedition, not a short trip.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Longmen Grottoes</div><div class="sight-note">Luoyang. Rail-linked to Xi'an. <span class="tag you">your wavelength</span></div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Yungang Grottoes</div><div class="sight-note">Datong. Earliest of the big three. Second grotto leans on your specific interest.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Potala Palace / Lhasa</div><div class="sight-note">Tibet. Your HK passport is the edge — no permit needed. Altitude + a full week.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Li River / Guilin–Yangshuo</div><div class="sight-note">The archetypal karst landscape. Restful by river cruise. Unconditional.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Zhangjiajie</div><div class="sight-note">The pillar forest. Singular landform — rating restored; the experience is managed/crowded.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Huangshan</div><div class="sight-note">The misty peaks that shaped Chinese painting. <span class="tag borderline">clear day only</span></div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Jiuzhaigou</div><div class="sight-note">Turquoise alpine lakes. <span class="tag borderline">remote · post-quake · seasonal</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Great Wall</div><div class="sight-note">Beijing sections — Mutianyu, Jinshanling, Simatai. Unconditional.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Forbidden City</div><div class="sight-note">Beijing. Largest, best-preserved imperial palace on earth. Unconditional.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Terracotta Army</div><div class="sight-note">Xi'an. Genuinely <em>sui generis</em> — the most secure rating on the list.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Mogao Caves</div><div class="sight-note">Dunhuang. The supreme Buddhist art site. Remote — an expedition. Scorching in summer.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Longmen Grottoes</div><div class="sight-note">Luoyang. Rail-linked to Xi'an. <span class="tag you">your wavelength</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Yungang Grottoes</div><div class="sight-note">Datong. Earliest of the big three. Second grotto leans on your specific interest.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Potala Palace / Lhasa</div><div class="sight-note">Tibet. Your HK passport is the edge — no permit needed. Altitude + a full week. Cool in summer.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Li River / Guilin–Yangshuo</div><div class="sight-note">The archetypal karst landscape. Restful by river cruise. Unconditional. Muggy in summer.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Zhangjiajie</div><div class="sight-note">The pillar forest. Singular landform; managed/crowded but the cable cars do the climbing.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Huangshan</div><div class="sight-note">The misty peaks that shaped Chinese painting. <span class="tag borderline">clear day only</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Jiuzhaigou</div><div class="sight-note">Turquoise alpine lakes. Cool in summer (altitude), but <span class="tag borderline">remote · post-quake · seasonal</span></div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Hong Kong</span>
-      <span class="country-flag-region">Home base</span>
-    </div>
+    <div class="country-head"><span class="country-name">Hong Kong</span><span class="country-flag-region">Home base</span></div>
+    <div class="sights"><div class="none">No &#9650;&#9650;&#9650; on this scale. Very strong &#9650;&#9650;: Victoria Harbour / Peak / Star Ferry as a single geographic experience, plus the food culture and hikes-beside-skyscrapers texture.</div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">Japan</span><span class="country-flag-region">East Asia</span></div>
     <div class="sights">
-      <div class="none">No ▲▲▲ on this scale. Very strong ▲▲: Victoria Harbour / Peak / Star Ferry as a single geographic experience, plus the food culture and hikes-beside-skyscrapers texture.</div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Kyoto</div><div class="sight-note">The richest cultural city in East Asia outside the Chinese imperial core. Supremely age-friendly. Muggy in summer — spring/autumn ideal.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Nara</div><div class="sight-note">T&#333;dai-ji, the Great Buddha, the oldest wooden architecture on earth. Folds into Kyoto as a gentle day trip.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Tokyo</div><div class="sight-note">&#9650;&#9650;&#9650; as a living-city totality — food, neighbourhoods, texture — not for monuments.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">K&#333;yasan (Mount K&#333;ya)</div><div class="sight-note">Shingon temple-stay; Okunoin cemetery at night. A singular spiritual experience.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Hokkaido</div><div class="sight-note">The one genuinely cool summer destination in range — lavender, hiking, seafood (July peak). &#9650;&#9650;&#9650; for winter powder &amp; the Snow Festival. The smart hot-season pick.</div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Japan</span>
-      <span class="country-flag-region">East Asia</span>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Kyoto</div><div class="sight-note">The richest cultural city in East Asia outside the Chinese imperial core.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Nara</div><div class="sight-note">Tōdai-ji, the Great Buddha, the oldest wooden architecture on earth.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Tokyo</div><div class="sight-note">▲▲▲ as a living-city totality — food, neighbourhoods, texture — not for monuments.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Kōyasan (Mount Kōya)</div><div class="sight-note">Shingon temple-stay; Okunoin cemetery at night. A singular spiritual experience.</div></div></div>
-    </div>
+    <div class="country-head"><span class="country-name">Taiwan</span><span class="country-flag-region">East Asia</span></div>
+    <div class="sights"><div class="none">No &#9650;&#9650;&#9650;; very strong &#9650;&#9650;: the National Palace Museum (the finest collection of Chinese imperial art anywhere — borrowed heritage), and Taroko Gorge (verify access — earthquake closures).</div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">South Korea</span><span class="country-flag-region">East Asia</span></div>
+    <div class="sights"><div class="none">No clear &#9650;&#9650;&#9650;; very strong &#9650;&#9650;: Gyeongju (the Silla open-air museum — the near-miss), and the DMZ as a geopolitical experience.</div></div>
   </div>
 
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Taiwan</span>
-      <span class="country-flag-region">East Asia</span>
-    </div>
-    <div class="sights">
-      <div class="none">No ▲▲▲. Very strong ▲▲: the National Palace Museum (the finest collection of Chinese imperial art anywhere — borrowed heritage), and Taroko Gorge (verify access — earthquake closures).</div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">South Korea</span>
-      <span class="country-flag-region">East Asia</span>
-    </div>
-    <div class="sights">
-      <div class="none">No clear ▲▲▲. Very strong ▲▲: Gyeongju (the Silla open-air museum — the near-miss), and the DMZ as a geopolitical experience.</div>
-    </div>
-  </div>
-
-  <!-- ============ SOUTHEAST ASIA ============ -->
   <div class="region-divider">Southeast Asia</div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Cambodia</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">Cambodia</span><span class="country-flag-region">SE Asia</span></div>
+    <div class="sights"><div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Angkor</div><div class="sight-note">Angkor Wat, Bayon, Ta Prohm. One of Asia's absolute summits. Core doable in 3–4 days; hot year-round.</div></div></div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">Vietnam</span><span class="country-flag-region">SE Asia</span></div>
+    <div class="sights"><div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Ha Long Bay</div><div class="sight-note">Go for the quieter Lan Ha / Bai Tu Long sectors, and the overnight cruise over the day trip. Pairs with Hanoi.</div></div></div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">Indonesia</span><span class="country-flag-region">SE Asia</span></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Angkor</div><div class="sight-note">Angkor Wat, Bayon, Ta Prohm. One of Asia's absolute summits. Core doable in 3–4 days.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Borobudur (+ Prambanan)</div><div class="sight-note">World's largest Buddhist monument, near Yogyakarta. <span class="tag you">monumental-Buddhist arc</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Bali</div><div class="sight-note">Ubud, temples, rice terraces. Strong but overtouristed.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Raja Ampat</div><div class="sight-note">World-summit diving. <span class="tag divers">&#9650;&#9650;&#9650; for divers</span></div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Vietnam</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">Thailand</span><span class="country-flag-region">SE Asia</span></div>
+    <div class="sights"><div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Bangkok</div><div class="sight-note">Superb city-and-food experience — downgraded from &#9650;&#9650;&#9650; on re-examination; no single sight clears the bar alone.</div></div></div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">Philippines</span><span class="country-flag-region">SE Asia</span></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Ha Long Bay</div><div class="sight-note">Go for the quieter Lan Ha / Bai Tu Long sectors. Pairs with Hanoi.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Palawan (El Nido / Coron)</div><div class="sight-note">The finest of the tropical-island seascapes. <span class="tag borderline">narrowest seascape call</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Banaue / Batad rice terraces</div><div class="sight-note">Magnificent and ancient — but a recurring Asian landscape type. Downgraded from &#9650;&#9650;&#9650;.</div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Indonesia</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Borobudur (+ Prambanan)</div><div class="sight-note">World's largest Buddhist monument, near Yogyakarta.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Bali</div><div class="sight-note">Ubud, temples, rice terraces. Strong but overtouristed.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Raja Ampat</div><div class="sight-note">World-summit diving. <span class="tag divers">▲▲▲ for divers</span></div></div></div>
-    </div>
+    <div class="country-head"><span class="country-name">Myanmar</span><span class="country-flag-region">SE Asia</span><div class="country-caveat">Verify security before committing — civil conflict; feasibility genuinely in doubt.</div></div>
+    <div class="sights"><div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Bagan</div><div class="sight-note">The temple plain — rivals Angkor visually. Rated on merit; access is the live problem. <span class="tag you">monumental-Buddhist arc</span></div></div></div></div>
+  </div>
+  <div class="country">
+    <div class="country-head"><span class="country-name">Laos</span><span class="country-flag-region">SE Asia</span></div>
+    <div class="sights"><div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Luang Prabang</div><div class="sight-note">The loveliest town in SE Asia — near-&#9650;&#9650;&#9650; for atmosphere.</div></div></div></div>
   </div>
 
+  <div class="region-divider">South &amp; Central Asia</div>
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Thailand</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">India</span><span class="country-flag-region">South Asia</span><div class="country-caveat">Safe on the established circuits — but a guard-up posture, not a relaxed one. Avoid J&amp;K, the Pakistan border, and Manipur. Varanasi &amp; Delhi demand seasoned travel.</div></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Bangkok</div><div class="sight-note">Superb city-and-food experience — downgraded from ▲▲▲ on re-examination; no single sight clears the bar alone.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Taj Mahal</div><div class="sight-note">Agra. The rare monument that exceeds its own hype.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Varanasi</div><div class="sight-note">The Ganges ghats — unlike anywhere on earth. <span class="tag borderline">intense · not easy</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Rajasthan</div><div class="sight-note">Jaipur–Jodhpur–Udaipur–Jaisalmer. Living fort-cities (incl. Amer Fort), a category of their own.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Hampi</div><div class="sight-note">Vijayanagara ruins in a singular boulder landscape.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Ellora</div><div class="sight-note">The Kailasa temple — arguably the most astonishing rock-cut monument anywhere. <span class="tag you">rock-cut arc</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Ajanta</div><div class="sight-note">The murals are &#9650;&#9650;&#9650; for their own sake. Plus Kerala backwaters &amp; Ladakh as very strong &#9650;&#9650;.</div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Philippines</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">Nepal</span><span class="country-flag-region">South Asia</span></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Palawan (El Nido / Coron)</div><div class="sight-note">The finest of the tropical-island seascapes. <span class="tag borderline">narrowest seascape call</span></div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Banaue / Batad rice terraces</div><div class="sight-note">Magnificent and ancient — but a recurring Asian landscape type. Downgraded from ▲▲▲.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Himalaya trekking</div><div class="sight-note">Everest / Annapurna. A world-summit landscape — a dedicated 2-week commitment.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Kathmandu Valley</div><div class="sight-note">Durbar Squares, Bhaktapur, Boudhanath.</div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Myanmar</span>
-      <span class="country-flag-region">SE Asia</span>
-      <div class="country-caveat">Verify security before committing — civil conflict; feasibility genuinely in doubt.</div>
-    </div>
+    <div class="country-head"><span class="country-name">Sri Lanka</span><span class="country-flag-region">South Asia</span><div class="country-caveat">The gentlest, most beginner-friendly trip in South Asia — far softer than India. SW monsoon (May–Sep) affects the main circuit.</div></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Bagan</div><div class="sight-note">The temple plain — rivals Angkor visually. Rated on merit; access is the live problem.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Sigiriya</div><div class="sight-note">The rock-fortress sky-palace. &#9650;&#9650;&#9650; as a <em>site</em> — carried partly by its surroundings; you wouldn't fly for it alone.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Cultural Triangle</div><div class="sight-note">Anuradhapura, Polonnaruwa, Dambulla cave temples. The bundle lifts the whole trip.</div></div></div>
     </div>
   </div>
-
   <div class="country">
-    <div class="country-head">
-      <span class="country-name">Laos</span>
-      <span class="country-flag-region">SE Asia</span>
-    </div>
+    <div class="country-head"><span class="country-name">Uzbekistan</span><span class="country-flag-region">Central Asia · Silk Road</span></div>
     <div class="sights">
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Luang Prabang</div><div class="sight-note">The loveliest town in SE Asia — near-▲▲▲ for atmosphere.</div></div></div>
-    </div>
-  </div>
-
-  <!-- ============ SOUTH & CENTRAL ASIA ============ -->
-  <div class="region-divider">South & Central Asia</div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">India</span>
-      <span class="country-flag-region">South Asia</span>
-      <div class="country-caveat">Safe to visit on the established circuits — but a guard-up posture, not a relaxed one. Avoid J&K, the Pakistan border, and Manipur. Varanasi &amp; Delhi demand seasoned travel.</div>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Taj Mahal</div><div class="sight-note">Agra. The rare monument that exceeds its own hype.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Varanasi</div><div class="sight-note">The Ganges ghats — unlike anywhere on earth. <span class="tag borderline">intense · not easy</span></div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Rajasthan</div><div class="sight-note">Jaipur–Jodhpur–Udaipur–Jaisalmer. Living fort-cities, a category of their own.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Hampi</div><div class="sight-note">Vijayanagara ruins in a singular boulder landscape.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Ellora</div><div class="sight-note">The Kailasa temple — arguably the most astonishing rock-cut monument anywhere. Upgraded on general merit. <span class="tag you">your wavelength</span></div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Ajanta</div><div class="sight-note">The murals are ▲▲▲ for their own sake. Plus Kerala backwaters &amp; Ladakh as very strong ▲▲.</div></div></div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Nepal</span>
-      <span class="country-flag-region">South Asia</span>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Himalaya trekking</div><div class="sight-note">Everest / Annapurna. A world-summit landscape — a dedicated 2-week commitment.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Kathmandu Valley</div><div class="sight-note">Durbar Squares, Bhaktapur, Boudhanath.</div></div></div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Sri Lanka</span>
-      <span class="country-flag-region">South Asia</span>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Sigiriya</div><div class="sight-note">The rock-fortress sky-palace. ▲▲▲ as a <em>site</em> — carried partly by its surroundings; you wouldn't fly for it alone.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Cultural Triangle</div><div class="sight-note">Anuradhapura, Polonnaruwa, Dambulla cave temples. The bundle lifts the whole trip.</div></div></div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Uzbekistan</span>
-      <span class="country-flag-region">Central Asia · Silk Road</span>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Samarkand</div><div class="sight-note">The Registan — one of the great architectural set-pieces on earth.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Bukhara</div><div class="sight-note">World-summit Islamic architecture; the living Silk Road city.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Khiva</div><div class="sight-note">The walled museum-city — completes the Silk Road trio.</div></div></div>
-    </div>
-  </div>
-
-  <!-- ============ WEST ASIA ============ -->
-  <div class="region-divider">West Asia · feasibility-dependent</div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Jordan</span>
-      <span class="country-flag-region">West Asia</span>
-      <div class="country-caveat">Stable — the caveat is distance, not safety.</div>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Petra</div><div class="sight-note">Unique — the rock-cut city. Holds easily on merit.</div></div></div>
-      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Wadi Rum</div><div class="sight-note">Desert landscape; pairs naturally with Petra.</div></div></div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Iran</span>
-      <span class="country-flag-region">West Asia</span>
-      <div class="country-caveat">Rated on merit — politics &amp; visa situation is the live caveat. Confirm conditions first.</div>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Isfahan</div><div class="sight-note">Naqsh-e Jahan square — among the world's greatest.</div></div></div>
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Persepolis</div><div class="sight-note">The Achaemenid ceremonial capital.</div></div></div>
-    </div>
-  </div>
-
-  <div class="country">
-    <div class="country-head">
-      <span class="country-name">Israel</span>
-      <span class="country-flag-region">West Asia</span>
-      <div class="country-caveat">Security-dependent — confirm conditions before committing.</div>
-    </div>
-    <div class="sights">
-      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Jerusalem old city</div><div class="sight-note">Incomparably layered. Rated on merit, with the security asterisk.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Samarkand</div><div class="sight-note">The Registan — one of the great architectural set-pieces on earth.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">&#9650;&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Bukhara</div><div class="sight-note">World-summit Islamic architecture; the living Silk Road city.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">&#9650;&#9650;</div><div class="sight-body"><div class="sight-name">Khiva</div><div class="sight-note">The walled museum-city — completes the Silk Road trio.</div></div></div>
     </div>
   </div>
 
   <footer>
-    <p><strong>The honest cut on China:</strong> the unconditional ▲▲▲s — defendable to anyone, no asterisk — are the Forbidden City, Terracotta Army, Mogao, Great Wall, Li River, and Lhasa. The rest carry a real caveat: interest-dependent (grottoes), weather (Huangshan), conditions (Jiuzhaigou), or a managed/crowded experience (Zhangjiajie, restored on landform merit).</p>
-    <p class="thread">The spine that actually fits you: the eastward transmission of Buddhist monumental art — Longmen → Yungang → Mogao in China, then Ellora &amp; Ajanta in India, with Bagan and Borobudur as the bookends.</p>
-    <p style="margin-top:14px;">Ratings calibrated in the Steves triangle idiom on an everything-counts basis (spectacle, food, atmosphere, landscape — not heritage alone). Live logistics — visas, closures, security, opening times — change often; verify against current sources before booking.</p>
+    <p><strong>The honest cut on China:</strong> the unconditional &#9650;&#9650;&#9650;s — defendable to anyone, no asterisk — are the Forbidden City, Terracotta Army, Mogao, Great Wall, Li River, and Lhasa. The rest carry a real caveat: interest-dependent (grottoes), weather (Huangshan), conditions (Jiuzhaigou), or a managed/crowded experience (Zhangjiajie, held on landform merit).</p>
+    <p class="thread">The spine that actually fits you: the eastward transmission of Buddhist monumental art — Longmen &#8594; Yungang &#8594; Mogao in China, then Ellora &amp; Ajanta in India, with Bagan and Borobudur as the bookends. (It continues west into the Middle East file — Cappadocia, Petra, AlUla.)</p>
+    <p style="margin-top:14px;">Ratings calibrated in the Steves triangle idiom on an everything-counts basis. Live logistics — visas, closures, security, opening times — change often; verify against current sources before booking.</p>
   </footer>
-
 </div>
 </body>
 </html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Middle East &amp; West Asia by the Triangle Scale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1d1408;
+    --paper: #f0e6d2;
+    --paper-2: #e7dcc3;
+    --rule: #cbb992;
+    --t3: #b07016;   /* three-triangle desert amber / saffron */
+    --t2: #7c6a3c;   /* two-triangle bronze-olive */
+    --muted: #6e6044;
+    --caveat: #a64e28;
+    --card: #f8f1e2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(176,112,22,0.07), transparent 62%);
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.hero {
+    padding: 80px 0 48px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6.2vw, 4.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .mark { color: var(--t3); font-style: italic; }
+  .standfirst {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    max-width: 64ch;
+    color: var(--muted);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding: 26px 0 34px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .legend-item { display: flex; align-items: baseline; gap: 10px; }
+  .tri { font-size: 0.9rem; letter-spacing: 0.05em; }
+  .tri.t3 { color: var(--t3); }
+  .tri.t2 { color: var(--t2); }
+  .legend-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .legend-note { flex-basis: 100%; font-size: 0.82rem; color: var(--muted); font-style: italic; padding-top: 4px; }
+
+  .country {
+    margin-bottom: 42px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .country-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .country-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.7rem; letter-spacing: -0.01em; }
+  .country-flag-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .country-caveat { flex-basis: 100%; font-size: 0.8rem; color: var(--caveat); font-style: italic; padding-top: 6px; }
+
+  .sights { padding: 8px 26px 22px; }
+  .sight {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(203,185,146,0.45);
+    align-items: baseline;
+  }
+  .sight:last-child { border-bottom: none; }
+  .sight-tri { font-size: 0.95rem; letter-spacing: 0.04em; padding-top: 2px; }
+  .sight-tri.t3 { color: var(--t3); }
+  .sight-tri.t2 { color: var(--t2); }
+  .sight-name { font-weight: 600; font-size: 1.02rem; }
+  .sight-note { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag.borderline { background: rgba(166,78,40,0.13); color: var(--caveat); }
+  .tag.you { background: rgba(176,112,22,0.14); color: var(--t3); }
+
+  .none { font-size: 0.9rem; color: var(--muted); font-style: italic; padding: 6px 0; }
+
+  .region-divider {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin: 56px 0 26px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 2px solid var(--ink);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 10px; max-width: 70ch; }
+  footer .thread { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .sight { grid-template-columns: 52px 1fr; gap: 10px; }
+    .country-head { flex-wrap: wrap; }
+    .country-flag-region { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Personal travel framework · Middle East &amp; West Asia</div>
+    <h1>The Middle East<br>by the <span class="mark">triangle</span> scale</h1>
+    <p class="standfirst">The cradle of civilisation and the Silk Road's western half — extraordinary heritage density rivalling Europe, but shadowed more than any other region by safety and access. Many summits here are rated on merit with a hard feasibility asterisk.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tri t3">▲▲▲</span><span class="legend-label">Don't miss — worth crossing the world for</span></div>
+    <div class="legend-item"><span class="tri t2">▲▲</span><span class="legend-label">Very strong — worth a detour</span></div>
+    <p class="legend-note">Calibrated in the Steves idiom on an everything-counts basis. My ratings, not his. A rating reflects the <em>sight's</em> merit; the <span style="color:var(--caveat)">orange caveat</span> on a country header reflects current safety/access, which changes fast — always verify before booking.</p>
+  </div>
+
+  <!-- ============ ANATOLIA & THE LEVANT ============ -->
+  <div class="region-divider">Anatolia &amp; the Levant</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Turkey</span>
+      <span class="country-flag-region">Transcontinental · the bridge</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Istanbul</div><div class="sight-note">The only city straddling two continents, with three world-empires layered in one place — Hagia Sophia (the supreme Byzantine monument), the Blue Mosque, Topkapı, the Cistern, the Bosphorus. Rivals Rome and Paris as a heritage city. <span class="tag you">your Byzantine wavelength</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Cappadocia</div><div class="sight-note">The fairy-chimney landscape of Göreme — volcanic rock carved into churches, underground cities and cave dwellings, with the dawn balloon launches. Singular, and connects to your rock-cut/grotto thread. <span class="tag you">rock-cut arc</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Ephesus</div><div class="sight-note">The best-preserved classical city in the Mediterranean — the Library of Celsus, the great theatre, the marble streets. A Greco-Roman summit above even Pompeii for scale.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Pamukkale + Hierapolis</div><div class="sight-note">The white travertine terraces with ruins on top; near-▲▲▲ for the singular landform.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Göbekli Tepe / Mount Nemrut / the Lycian coast</div><div class="sight-note">Göbekli Tepe is the oldest monumental site on earth (~11,000 yrs) — near-▲▲▲ on significance, sparse to view; Nemrut's colossal heads and the turquoise gület coast round out a deep bench.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Jordan</span>
+      <span class="country-flag-region">The Levant · stable</span>
+      <div class="country-caveat">Generally stable and tourist-ready — the caveat is regional spillover; verify current conditions.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Petra</div><div class="sight-note">The rose-red rock-cut Nabataean city — the Treasury, the Monastery, the Siq approach. One of the most singular sights on earth. Holds easily. <span class="tag you">rock-cut arc</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Wadi Rum + Jerash + the Dead Sea</div><div class="sight-note">The desert of Lawrence (a ▲▲ pairing with Petra), one of the best-preserved Roman provincial cities (Jerash), and the lowest point on earth. A strong supporting bench.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Israel &amp; Palestine</span>
+      <span class="country-flag-region">The Holy Land</span>
+      <div class="country-caveat">Security-dependent and volatile — confirm conditions carefully before any planning.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Jerusalem old city</div><div class="sight-note">The most layered sacred city on earth — the Western Wall, the Holy Sepulchre, the Dome of the Rock, all within one walled square kilometre. Incomparable; rated on merit, with the security asterisk.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Masada / Bethlehem / the Galilee / Tel Aviv</div><div class="sight-note">The desert fortress, the pilgrimage sites, and Tel Aviv's Bauhaus-and-beach modernity; a deep ▲▲ bench when conditions allow.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ PERSIA & MESOPOTAMIA ============ -->
+  <div class="region-divider">Persia &amp; Mesopotamia</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Iran</span>
+      <span class="country-flag-region">Persia</span>
+      <div class="country-caveat">Politics, sanctions and visa situation are the live caveat — rated purely on heritage merit; feasibility shifts with the geopolitics.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Isfahan</div><div class="sight-note">Naqsh-e Jahan Square — among the greatest architectural set-pieces on earth, ringed by the Shah and Sheikh Lotfollah mosques and the bazaar. A world-summit of Islamic architecture.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Persepolis</div><div class="sight-note">The ceremonial capital of the Achaemenid empire — the great terrace, the apadana reliefs. A singular monument of the ancient Persian world.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Shiraz / Yazd / the desert cities</div><div class="sight-note">Shiraz's gardens and poetry, Yazd's mud-brick old town and wind-towers, Persepolis's setting; a deep ▲▲ bench of Persian heritage.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ ARABIA & THE GULF ============ -->
+  <div class="region-divider">Arabia &amp; the Gulf</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">UAE / the Gulf states</span>
+      <span class="country-flag-region">The modern Gulf · stable</span>
+    </div>
+    <div class="sights">
+      <div class="none">No ▲▲▲. Very strong ▲▲: Dubai (the Burj Khalifa, the engineered spectacle, the stopover-friendly luxury), Abu Dhabi (the Sheikh Zayed Grand Mosque — near-▲▲▲ for the building alone, plus the Louvre Abu Dhabi). These are world-class <em>modern</em> experiences and superb stopovers, but the reward is spectacle and ease rather than a singular worth-crossing-the-world heritage draw.</div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Oman</span>
+      <span class="country-flag-region">Arabia · stable</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Muscat, the Wahiba Sands &amp; the fjords of Musandam</div><div class="sight-note">The most authentic and welcoming of the Arabian states — desert, wadis, forts, and dramatic coast, without the over-engineering of the Gulf cities. A strong ▲▲ all-rounder; no clean ▲▲▲, but the region's most rewarding traditional-Arabia trip.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Saudi Arabia</span>
+      <span class="country-flag-region">Arabia · newly opening</span>
+      <div class="country-caveat">Newly open to tourism — infrastructure and norms still evolving; research customs and access.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">AlUla (Hegra / Mada'in Salih)</div><div class="sight-note">The Nabataean sister-city to Petra — monumental rock-cut tombs in a stunning desert, far less visited. Near-▲▲▲ and rising fast as it opens; a genuine sleeper for the rock-cut thread. <span class="tag you">rock-cut arc</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ THE FRONTIER ============ -->
+  <div class="region-divider">The conflict frontier</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Syria · Iraq · Lebanon · Yemen</span>
+      <span class="country-flag-region">Rated on merit only</span>
+      <div class="country-caveat">Active or recent conflict and serious travel warnings across much of this group — these are rated for completeness on heritage merit, NOT a recommendation to travel. Verify advisories; several are effectively off-limits.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Palmyra (Syria) · Baalbek (Lebanon)</div><div class="sight-note">Palmyra's desert caravan-city ruins and Baalbek's colossal Roman temples are world-summit antiquity — rated on merit; access and preservation are the tragic, live problem.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Damascus &amp; Aleppo old cities · Ur / Babylon · Beirut</div><div class="sight-note">Among the oldest continuously inhabited cities on earth and the heart of Mesopotamian antiquity — extraordinary heritage, currently shadowed by conflict and reconstruction.</div></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>The honest framing:</strong> This region rivals Europe for heritage density — it is, after all, where cities, writing and several world religions began — but it is shadowed by safety and access more than anywhere else on these lists. The summits split into the <strong>stable-and-ready</strong> (Turkey, Jordan, the Gulf, Oman), the <strong>merit-with-a-political-asterisk</strong> (Iran's Isfahan &amp; Persepolis), and the <strong>tragically-restricted</strong> (Jerusalem's volatility; Syria, Iraq, Lebanon, Yemen). A rating here is about the sight; the caveat is about whether you can safely stand in front of it.</p>
+    <p class="thread">The most "you" thread is unusually strong here: the <strong>rock-cut architecture arc</strong> reaches its western climax — Petra (Jordan), Cappadocia (Turkey), and the opening AlUla/Hegra (Saudi) extend the Longmen → Yungang → Mogao → Ellora → Lalibela line you've been tracing across Asia and Africa. Add Istanbul for the <strong>Byzantine</strong> thread and Persepolis/Isfahan for ancient Persia, and the most rewarding feasible trip right now is clearly <strong>Turkey</strong> (three ▲▲▲s, stable, hits three of your interests at once), with <strong>Jordan</strong> the natural pairing.</p>
+    <p style="margin-top:14px;">Safety and access in this region change faster than anywhere — every caveat here should be re-checked against current advisories before any planning.</p>
+  </footer>
+
+</div>
+</body>
+</html>
