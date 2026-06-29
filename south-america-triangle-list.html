@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>South America by the Triangle Scale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1c1410;
+    --paper: #ece4dd;
+    --paper-2: #e2d8cf;
+    --rule: #c2b2a3;
+    --t3: #b5642a;   /* three-triangle terracotta/Andean clay */
+    --t2: #7a6a8a;   /* two-triangle muted amethyst */
+    --muted: #6a5d52;
+    --caveat: #a04a32;
+    --card: #f5efe8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 50% 0%, rgba(181,100,42,0.06), transparent 62%);
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.hero {
+    padding: 80px 0 48px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6.6vw, 4.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 .mark { color: var(--t3); font-style: italic; }
+  .standfirst {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    max-width: 62ch;
+    color: var(--muted);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    padding: 26px 0 34px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .legend-item { display: flex; align-items: baseline; gap: 10px; }
+  .tri { font-size: 0.9rem; letter-spacing: 0.05em; }
+  .tri.t3 { color: var(--t3); }
+  .tri.t2 { color: var(--t2); }
+  .legend-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .legend-note { flex-basis: 100%; font-size: 0.82rem; color: var(--muted); font-style: italic; padding-top: 4px; }
+
+  .country {
+    margin-bottom: 42px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .country-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .country-name { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.7rem; letter-spacing: -0.01em; }
+  .country-flag-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .country-caveat { flex-basis: 100%; font-size: 0.8rem; color: var(--caveat); font-style: italic; padding-top: 6px; }
+
+  .sights { padding: 8px 26px 22px; }
+  .sight {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(194,178,163,0.45);
+    align-items: baseline;
+  }
+  .sight:last-child { border-bottom: none; }
+  .sight-tri { font-size: 0.95rem; letter-spacing: 0.04em; padding-top: 2px; }
+  .sight-tri.t3 { color: var(--t3); }
+  .sight-tri.t2 { color: var(--t2); }
+  .sight-name { font-weight: 600; font-size: 1.02rem; }
+  .sight-note { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag.borderline { background: rgba(160,74,50,0.13); color: var(--caveat); }
+  .tag.expedition { background: rgba(122,106,138,0.16); color: var(--t2); }
+  .tag.altitude { background: rgba(181,100,42,0.14); color: var(--t3); }
+
+  .none { font-size: 0.9rem; color: var(--muted); font-style: italic; padding: 6px 0; }
+
+  .region-divider {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caveat);
+    margin: 56px 0 26px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 2px solid var(--ink);
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer p { margin-bottom: 10px; max-width: 68ch; }
+  footer .thread { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .sight { grid-template-columns: 52px 1fr; gap: 10px; }
+    .country-head { flex-wrap: wrap; }
+    .country-flag-region { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav style="display:flex;align-items:center;gap:6px;padding-top:32px;margin-bottom:8px">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">← Home</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Personal travel framework · South America</div>
+    <h1>South America<br>by the <span class="mark">triangle</span> scale</h1>
+    <p class="standfirst">A continent of world-summit nature and one genuinely singular pre-Columbian citadel — long-haul from Hong Kong, so almost everything here is an expedition, not a long weekend. Three triangles withheld unless truly earned.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="tri t3">▲▲▲</span><span class="legend-label">Don't miss — worth crossing the world for</span></div>
+    <div class="legend-item"><span class="tri t2">▲▲</span><span class="legend-label">Very strong — worth a detour</span></div>
+    <p class="legend-note">Calibrated in the Steves idiom on an everything-counts basis (spectacle, landscape, wildlife, atmosphere, food). My ratings, not his. Ordinary ▲▲ entries trimmed to keep this to the summits. Note: seasons are flipped — the southern summer (Dec–Feb) is peak for Patagonia; the dry season (May–Sep) is best for Machu Picchu and the Andes.</p>
+  </div>
+
+  <!-- ============ ANDEAN ============ -->
+  <div class="region-divider">The Andean spine</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Peru</span>
+      <span class="country-flag-region">The heritage heavyweight</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Machu Picchu</div><div class="sight-note">The continent's one genuinely singular monument — the Inca citadel in its Andean cloud-forest setting. The most secure ▲▲▲ in South America. <span class="tag altitude">altitude · book months ahead</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Cusco + the Sacred Valley</div><div class="sight-note">Inca-on-Spanish-colonial layering, living Quechua culture, Ollantaytambo, Pisac. A ▲▲▲ region in its own right, not just the Machu Picchu gateway.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Lake Titicaca (Uros / Taquile)</div><div class="sight-note">The floating reed islands; high-altitude and culturally singular. Pairs with Puno.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Arequipa + Colca Canyon</div><div class="sight-note">The white-stone colonial city and one of the world's deepest canyons (condors). Lima's food scene (Central, Maido — world's-best lists) is a ▲▲ draw of its own.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Nazca Lines</div><div class="sight-note">Enigmatic, but only really legible from a small plane — a niche ▲▲. Amazon (Tambopata/Iquitos) also ▲▲.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Bolivia</span>
+      <span class="country-flag-region">Altiplano surrealism</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Salar de Uyuni</div><div class="sight-note">The world's largest salt flat — mirror-perfect after rain, blinding white when dry. One of earth's most surreal landscapes. <span class="tag altitude">altitude · wet vs dry season changes everything</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">La Paz + the Altiplano</div><div class="sight-note">The dramatic bowl-city, the cable-car network, the highest capital on earth. Potosí (the silver-mountain colonial city) is a ▲▲ for heritage.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Ecuador</span>
+      <span class="country-flag-region">Wildlife &amp; the equator</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Galápagos Islands</div><div class="sight-note">The most singular wildlife experience on earth — fearless animals, Darwin's living laboratory. A ▲▲▲ that justifies the whole journey. Best done by liveaboard cruise. <span class="tag expedition">flights + cruise · book ahead</span></div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Quito old town</div><div class="sight-note">One of the best-preserved colonial centres in the Americas (UNESCO); near-▲▲▲ for the historic core. The Andes / Cotopaxi / Quilotoa nearby add ▲▲ landscape.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ THE SOUTHERN CONE ============ -->
+  <div class="region-divider">The Southern Cone</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Argentina</span>
+      <span class="country-flag-region">Patagonia, falls &amp; the city</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Patagonia — Los Glaciares (El Chaltén / Fitz Roy, Perito Moreno)</div><div class="sight-note">World-summit mountain-and-glacier wilderness. Fitz Roy and the calving Perito Moreno glacier are unforgettable. Shared with Chile. <span class="tag expedition">southern summer Dec–Feb</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Iguazú Falls</div><div class="sight-note">The most overwhelming waterfall system on earth — wider than Victoria, taller than Niagara. Shared with Brazil; the Argentine side puts you in the spray. Unconditional.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Buenos Aires</div><div class="sight-note">The continent's most European city — tango, steak, café culture, late nights. A strong ▲▲ city experience, near-▲▲▲ for atmosphere and food.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Mendoza wine country</div><div class="sight-note">Malbec in the Andean foothills; Bariloche &amp; the Lake District and Ushuaia ("the end of the world") also ▲▲.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Chile</span>
+      <span class="country-flag-region">The long thin extremes</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Torres del Paine (Patagonia)</div><div class="sight-note">The signature trek of the Americas — the granite towers, the W and O circuits. The Chilean half of the Patagonia ▲▲▲. <span class="tag expedition">trek · southern summer</span></div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Easter Island (Rapa Nui)</div><div class="sight-note">The moai — one of the most singular and remote archaeological sites on earth. A pilgrimage even from mainland Chile. Holds easily on uniqueness.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Atacama Desert</div><div class="sight-note">The driest place on earth — surreal landscapes, stargazing, altiplano lagoons. Near-▲▲▲ for the otherworldliness; pairs naturally with Uyuni across the border.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Valparaíso</div><div class="sight-note">The hill-tumbling, mural-covered port city; characterful ▲▲. Santiago + the central wine valleys round it out.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ BRAZIL & THE NORTH ============ -->
+  <div class="region-divider">Brazil &amp; the north</div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Brazil</span>
+      <span class="country-flag-region">Spectacle, rainforest &amp; coast</span>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Rio de Janeiro</div><div class="sight-note">The most spectacularly sited major city on earth — Christ the Redeemer, Sugarloaf, the beaches between mountains and sea. ▲▲▲ as a total city-and-setting experience.</div></div></div>
+      <div class="sight"><div class="sight-tri t3">▲▲▲</div><div class="sight-body"><div class="sight-name">Iguaçu Falls (Brazilian side)</div><div class="sight-note">The panoramic side of the same world-summit falls — see both countries' viewpoints if you can.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The Amazon (Manaus / the rainforest)</div><div class="sight-note">The world's greatest rainforest — wildlife, river life, eco-lodges. ▲▲▲ as an ecosystem-of-the-planet, ▲▲ as a do-able trip (it rewards depth and patience). Shared with Peru &amp; Ecuador.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Salvador &amp; Bahia</div><div class="sight-note">Afro-Brazilian culture, Pelourinho's colonial core, drums and food; the cultural heart. Lençóis Maranhenses (dune-and-lagoon desert) is a ▲▲ natural wonder.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Colombia</span>
+      <span class="country-flag-region">Caribbean colour &amp; coffee</span>
+      <div class="country-caveat">Safe in the main tourist areas (Cartagena, Bogotá, Medellín, coffee region); avoid border zones and remote rural areas. Check current advisories.</div>
+    </div>
+    <div class="sights">
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">Cartagena</div><div class="sight-note">The walled Caribbean colonial city — colour, history, Getsemaní. Colombia's strongest single card, near-▲▲▲ for atmosphere. No clean ▲▲▲ in the country.</div></div></div>
+      <div class="sight"><div class="sight-tri t2">▲▲</div><div class="sight-body"><div class="sight-name">The Coffee Region (Eje Cafetero)</div><div class="sight-note">Cocora Valley's wax palms, green hills, fincas. Medellín (the transformation story + paisa culture) and Bogotá (the Gold Museum, La Candelaria) also ▲▲.</div></div></div>
+    </div>
+  </div>
+
+  <div class="country">
+    <div class="country-head">
+      <span class="country-name">Uruguay</span>
+      <span class="country-flag-region">The quiet one</span>
+    </div>
+    <div class="sights">
+      <div class="none">No ▲▲▲. Very strong ▲▲: Colonia del Sacramento (the UNESCO Portuguese-colonial river town) and Montevideo + the José Ignacio / Punta del Este coast. A gentle, low-key add-on to Buenos Aires rather than a destination in its own right.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p><strong>The honest framing:</strong> South America is overwhelmingly a <em>nature</em> continent at the top tier — its ▲▲▲s are Patagonia, Iguazú, Galápagos, Uyuni, Rio's setting — plus the one singular human-built summit, <strong>Machu Picchu</strong>, and the remote enigma of <strong>Easter Island</strong>. Unlike Asia there's no dense Old-World heritage layer; the reward is landscape, wildlife, and a handful of extraordinary cities and ruins.</p>
+    <p class="thread">The most "you" thread: the Inca-and-altiplano arc — Cusco → Machu Picchu → Titicaca → Uyuni → Atacama — strings the continent's deep-history and most surreal landscapes into one high-altitude spine, the closest South America comes to a cultural-heritage through-line.</p>
+    <p style="margin-top:14px;">Borderline calls left visible: Rio is ▲▲▲ on city-and-setting totality, not a monument; the Amazon is a planet-scale ecosystem (▲▲▲) but a patience-rewarding trip (▲▲); Cartagena and Buenos Aires are near-▲▲▲ cities held at ▲▲. Everything here is long-haul from HK and most are altitude- or season-sensitive — and the seasons are flipped (southern summer Dec–Feb for Patagonia, dry-season May–Sep for the Andes). Verify safety, access, and seasonal conditions before booking.</p>
+  </footer>
+
+</div>
+</body>
+</html>
