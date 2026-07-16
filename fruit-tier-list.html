@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruit Tier List — Douglas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --radius: 8px;
+  --border: #d0d0ca;
+  --border-accent: #4a90d9;
+
+  --surface-1: #f5f5f2;
+  --surface-2: #ffffff;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b6b6b;
+  --text-muted: #a0a09a;
+  --text-accent: #1a5a8a;
+
+  --bg-success: #e8f5ee;  --text-success: #1e6b3e;
+  --bg-accent:  #e8f0fa;  --text-accent:  #1a5a8a;
+  --bg-pro:     #f0eafa;  --text-pro:     #5a3a9a;
+  --bg-warning: #fef5e4;  --text-warning: #92600a;
+  --bg-danger:  #fdecea;  --text-danger:  #a02020;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--text-primary); }
+.page-wrap { max-width: 740px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+nav a:hover { color: var(--text-primary); }
+nav h1 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.panel { background: var(--surface-2); border: 0.5px solid #d0d0ca; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 1.5rem; }
+h2.panel-title { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+p.panel-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.6; }
+
+select {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  border: 0.5px solid var(--border);
+  background: var(--surface-1);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <nav>
+    <a href="area.html?id=health"><i class="ti ti-arrow-left"></i> Health</a>
+    <h1>Nutrition</h1>
+  </nav>
+  <div class="panel">
+    <h2 class="panel-title">Fruit Tier List</h2>
+    <p class="panel-sub">Ranked by micronutrient density, fibre-to-sugar ratio, and clinical evidence — not taste or reputation. Per 100g raw (USDA FoodData Central).</p>
+
+    <!-- fragment injected below -->
+    <h2 class="sr-only">Tiered fruit list showing each fruit's headline micronutrient, with full profiles expanding inline under each tier row.</h2>
+<div style="padding: 0.25rem 0;">
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1.25rem; align-items:center;">
+    <select id="sort">
+      <option value="tier">Group: tier</option>
+      <option value="sugar">Sort: sugar (low→high)</option>
+      <option value="fibre">Sort: fibre (high→low)</option>
+      <option value="cat">Group: headline nutrient type</option>
+    </select>
+    <span style="font-size:12px; color:var(--text-muted);">Click any fruit to expand it in place</span>
+  </div>
+  <div id="body"></div>
+</div>
+<script>
+const D=[
+{n:"Guava",t:"S",cat:"Vitamin C",hn:"Vitamin C",hv:"228mg",hw:"4× an orange, in one fruit — the single highest of any common fruit",why:"Nothing else pairs 228mg vitamin C with 5g fibre at 68 kcal.",s:9,f:5.4,cal:68,nut:[["Vitamin C","228mg","Collagen synthesis, non-haem iron absorption, antioxidant recycling"],["Fibre","5.4g","Soluble + insoluble; blunts the glucose curve, feeds gut microbiota"],["Lycopene","5.2mg (pink)","Carotenoid antioxidant"],["Potassium","417mg","Counters sodium, BP regulation"],["Folate","49µg","One-carbon metabolism, DNA synthesis"]]},
+{n:"Avocado",t:"S",cat:"Fat / fibre",hn:"Monounsaturated fat",hv:"15g (oleic)",hw:"The only fruit whose headline nutrient is a lipid — LDL falls when it replaces saturated fat",why:"Zero sugar, 6.7g fibre, more potassium than banana, most folate of any fruit.",s:0.7,f:6.7,cal:160,nut:[["MUFA (oleic acid)","15g","Lowers LDL when displacing saturated fat"],["Fibre","6.7g","Highest tier of any fruit — satiety"],["Potassium","485mg","Beats banana outright"],["Folate","81µg","Highest folate of common fruit"],["Vitamin E","2.1mg","Lipid-membrane antioxidant"],["Lutein/zeaxanthin","271µg","Macular pigment density"]]},
+{n:"Raspberry",t:"S",cat:"Fibre",hn:"Fibre",hv:"6.5g",hw:"Most fibre per calorie of any fruit — 6.5g against 4.4g sugar",why:"Only fruit where fibre exceeds sugar. Best glycaemic profile that exists.",s:4.4,f:6.5,cal:52,nut:[["Fibre","6.5g","Satiety, glycaemic blunting, SCFA production"],["Ellagitannins","~300mg","Metabolised to urolithins — mitochondrial autophagy research"],["Manganese","0.7mg","SOD antioxidant cofactor"],["Vitamin C","26mg","Antioxidant"]]},
+{n:"Kiwi",t:"S",cat:"Vitamin C",hn:"Vitamin C",hv:"93mg",hw:"Nearly 2× an orange, plus actinidin — a genuine functional enzyme",why:"Only fruit with RCT evidence beating psyllium for constipation. 2/day.",s:9,f:3,cal:61,nut:[["Vitamin C","93mg","Immune cell function, iron uptake"],["Actinidin","protease","Measurably accelerates gastric protein digestion"],["Vitamin K","40µg","Clotting cascade, osteocalcin"],["Fibre","3g","2 kiwi/day beats psyllium in head-to-head RCT"],["Potassium","312mg","Electrolyte balance"]]},
+{n:"Blackberry",t:"A",cat:"Polyphenol",hn:"Anthocyanins",hv:"~245mg",hw:"Densest anthocyanin load of the common berries",why:"5.3g fibre against 5g sugar. Nearly S-tier; loses only on vitamin C.",s:5,f:5.3,cal:43,nut:[["Anthocyanins","~245mg","Endothelial function, anti-inflammatory"],["Fibre","5.3g","Near-parity with sugar content"],["Manganese","0.6mg","SOD cofactor, bone matrix"],["Vitamin C","21mg","Modest"]]},
+{n:"Blueberry",t:"A",cat:"Polyphenol",hn:"Anthocyanins",hv:"~160mg",hw:"The best-evidenced polyphenol in fruit — cognition and endothelial RCTs",why:"Strongest human trial data of any fruit. Held back by 10g sugar, only 2.4g fibre.",s:10,f:2.4,cal:57,nut:[["Anthocyanins","~160mg","Best RCT evidence of any fruit: cognition, vascular function"],["Vitamin K","19µg","Coagulation, bone"],["Manganese","0.3mg","Enzyme cofactor"],["Fibre","2.4g","Unremarkable"]]},
+{n:"Strawberry",t:"A",cat:"Vitamin C",hn:"Vitamin C",hv:"59mg",hw:"More than an orange, at half the sugar and 32 kcal",why:"Best vitamin C:calorie ratio after guava. Only 2g fibre keeps it off S.",s:4.9,f:2,cal:32,nut:[["Vitamin C","59mg","Beats orange at half the sugar"],["Folate","24µg","DNA synthesis, preconception relevance"],["Manganese","0.4mg","Cofactor"],["Anthocyanins","pelargonidin","Vascular antioxidant"]]},
+{n:"Papaya",t:"A",cat:"Carotenoid",hn:"β-carotene",hv:"276µg RAE",hw:"Provitamin A plus 61mg vitamin C — an uncommon pairing",why:"Carotenoid + vitamin C + folate at 43 kcal. Solid across the board.",s:7.8,f:1.7,cal:43,nut:[["β-carotene","276µg RAE","Vision, epithelial integrity"],["Vitamin C","61mg","Antioxidant, immune"],["Folate","37µg","One-carbon metabolism"],["Lycopene","1.8mg","Carotenoid antioxidant"],["Papain","protease","Folk digestive use — thin evidence"]]},
+{n:"Pomegranate",t:"A",cat:"Polyphenol",hn:"Punicalagins",hv:"very high",hw:"Most polyphenol-dense fruit — meta-analysis shows modest BP reduction",why:"Real polyphenol pharmacology, but 14g sugar drags it down.",s:14,f:4,cal:83,nut:[["Punicalagins","high","Most polyphenol-dense fruit; modest BP reduction in meta-analysis"],["Fibre","4g","From the arils themselves"],["Folate","38µg","DNA synthesis"],["Vitamin K","16µg","Clotting, bone"]]},
+{n:"Orange",t:"B",cat:"Vitamin C",hn:"Vitamin C",hv:"53mg",hw:"The default vitamin C source — cheap, reliable, unremarkable",why:"Fine. Beaten on every axis by guava, kiwi, and strawberry.",s:9.4,f:2.4,cal:47,nut:[["Vitamin C","53mg","Immune, collagen"],["Folate","30µg","Neural tube, DNA synthesis"],["Hesperidin","flavanone","Endothelial function, mild BP effect"],["Fibre","2.4g","Pectin, mostly in the pith"]]},
+{n:"Grapefruit",t:"B",cat:"Vitamin C",hn:"Naringenin",hv:"flavanone",hw:"The pharmacologically interesting one — and the reason it's a clinical problem",why:"Low GL, decent lycopene. CYP3A4 inhibition is a real prescribing issue.",s:6.9,f:1.6,cal:42,nut:[["Naringenin","flavanone","⚠️ Inhibits CYP3A4 — statins, CCBs, ciclosporin, some DOACs"],["Vitamin C","31mg","Antioxidant"],["Lycopene","1.4mg (pink)","Carotenoid"],["Fibre","1.6g","Low GL overall"]]},
+{n:"Mango",t:"B",cat:"Carotenoid",hn:"Vitamin A",hv:"54µg RAE",hw:"Best provitamin A of any common fruit",why:"Genuine vitamin A source, but 14g sugar is the price.",s:14,f:1.6,cal:60,nut:[["Vitamin A","54µg RAE","Vision, epithelium, immune — best of common fruit"],["Vitamin C","36mg","Antioxidant"],["Folate","43µg","DNA synthesis"],["Mangiferin","xanthone","Anti-inflammatory interest, weak human data"]]},
+{n:"Apricot",t:"B",cat:"Carotenoid",hn:"β-carotene",hv:"96µg RAE",hw:"Carotenoids at 48 kcal — efficient, if unspectacular",why:"Low calorie, decent potassium. Nothing standout.",s:9.2,f:2,cal:48,nut:[["β-carotene","96µg RAE","Provitamin A"],["Potassium","259mg","Electrolyte"],["Vitamin E","0.9mg","Membrane antioxidant"]]},
+{n:"Apple",t:"B",cat:"Fibre",hn:"Pectin",hv:"~1g",hw:"Soluble fibre that binds bile acids — the only real claim apples have",why:"4.6mg vitamin C is negligible. It's a fibre delivery vehicle, nothing more.",s:10,f:2.4,cal:52,nut:[["Pectin","~1g","Binds bile acids — modest LDL effect"],["Fibre","2.4g","Bulk, microbiome substrate"],["Quercetin","skin only","Peel it and you lose most of the benefit"],["Vitamin C","4.6mg","Negligible"]]},
+{n:"Pear",t:"B",cat:"Fibre",hn:"Fibre",hv:"3.1g",hw:"Beats apple on fibre; sorbitol adds an osmotic laxative effect",why:"Quietly better than apple. FODMAP trigger in IBS.",s:9.8,f:3.1,cal:57,nut:[["Fibre","3.1g","Higher than apple"],["Sorbitol","sugar alcohol","Osmotic laxative — also a FODMAP trigger in IBS"],["Copper","0.08mg","Iron metabolism, connective tissue"]]},
+{n:"Banana",t:"B",cat:"B vitamin",hn:"Vitamin B6",hv:"0.37mg",hw:"The genuinely high nutrient — not potassium, which is overrated",why:"B6 is real. Potassium is beaten by avocado and potato. 12g sugar, 89 kcal.",s:12,f:2.6,cal:89,nut:[["Vitamin B6","0.37mg","Amino acid metabolism, neurotransmitter synthesis — the real story"],["Potassium","358mg","Overrated — avocado and potato beat it"],["Resistant starch","green only","Ferments to butyrate; vanishes as it ripens"],["Magnesium","27mg","Modest"]]},
+{n:"Cherry",t:"B",cat:"Polyphenol",hn:"Anthocyanins",hv:"tart > sweet",hw:"Modest gout and DOMS data — for tart cherry specifically, not the sweet ones you eat",why:"Sleep claims rest on trace melatonin. Dose is too small to matter.",s:13,f:2.1,cal:63,nut:[["Anthocyanins","tart > sweet","Modest gout and exercise-recovery data"],["Melatonin","trace","Basis of sleep claims — dose too small, evidence weak"],["Potassium","222mg","Electrolyte"]]},
+{n:"Peach / plum",t:"B",cat:"Carotenoid",hn:"Potassium",hv:"190mg",hw:"Nothing stands out — low calorie is the whole pitch",why:"Perfectly fine, entirely unremarkable. 39 kcal.",s:8.4,f:1.5,cal:39,nut:[["Potassium","190mg","Electrolyte"],["Carotenoids","modest","Antioxidant"],["Vitamin C","6.6mg","Low"]]},
+{n:"Pineapple",t:"C",cat:"Mineral",hn:"Manganese",hv:"0.9mg",hw:"Highest manganese of any fruit — genuinely the standout, and nobody mentions it",why:"High glycaemic load. Bromelain is denatured by gastric acid.",s:9.9,f:1.4,cal:50,nut:[["Manganese","0.9mg","Highest of any fruit — SOD cofactor, bone matrix"],["Vitamin C","48mg","Antioxidant"],["Bromelain","protease","Claims oversold — largely denatured by gastric acid"]]},
+{n:"Watermelon",t:"C",cat:"Carotenoid",hn:"Lycopene",hv:"4.5mg",hw:"More lycopene than raw tomato — the only genuinely notable thing here",why:"30 kcal and 91% water. Hard to overeat, but hardly nutritious.",s:6.2,f:0.4,cal:30,nut:[["Lycopene","4.5mg","Higher than raw tomato"],["Citrulline","~0.7g","NO precursor — ergogenic claims need far larger doses"],["Vitamin A","28µg RAE","Provitamin A"]]},
+{n:"Cantaloupe",t:"C",cat:"Carotenoid",hn:"β-carotene",hv:"169µg RAE",hw:"Best of the melons — which is a low bar",why:"34 kcal, mostly water. 0.9g fibre.",s:8,f:0.9,cal:34,nut:[["β-carotene","169µg RAE","Best of the melons"],["Vitamin C","37mg","Antioxidant"],["Potassium","267mg","Electrolyte"]]},
+{n:"Grapes",t:"C",cat:"Sugar",hn:"Sugar",hv:"16g",hw:"The headline nutrient is sugar. That's the problem",why:"Resveratrol is ~0.3mg/100g. RCT doses are 150–500mg. Ignore the marketing.",s:16,f:0.9,cal:69,nut:[["Sugar","16g","Highest of the fresh fruits, with 0.9g fibre to buffer it"],["Resveratrol","~0.3mg","Trivial — RCT doses are 150–500mg"],["Vitamin K","14µg","Clotting"],["Potassium","191mg","Electrolyte"]]},
+{n:"Dried fruit",t:"D",cat:"Sugar",hn:"Sugar",hv:"66g",hw:"Everything concentrates — including the 66g of sugar",why:"7g fibre and 700mg potassium are real. So is 280 kcal per 100g and no water to stop you.",s:66,f:7,cal:280,nut:[["Sugar","66g","No water left to limit intake — the core issue"],["Fibre","~7g","Concentrated along with everything else"],["Potassium","~700mg","Genuinely high"],["Iron","non-haem","Apricots/raisins — poorly absorbed without vitamin C"]]},
+{n:"Fruit juice",t:"D",cat:"Sugar",hn:"Free sugars",hv:"10g",hw:"Fibre stripped to 0.2g. This is sugar water with vitamin C in it",why:"Cohorts link juice to ↑T2DM risk where whole fruit is protective. The fibre was the point.",s:10,f:0.2,cal:45,nut:[["Free sugars","10g","Cohorts link juice to ↑T2DM risk where whole fruit is protective"],["Fibre","0.2g","Stripped — this is the entire issue"],["Vitamin C","~50mg","The only thing it retains"]]}];
+const TIERS=[["S","Elite — nothing else matches","var(--bg-success)","var(--text-success)"],["A","Excellent — one real weakness","var(--bg-accent)","var(--text-accent)"],["B","Fine — eat it, don't optimise for it","var(--bg-pro)","var(--text-pro)"],["C","Marginal — mostly water or sugar","var(--bg-warning)","var(--text-warning)"],["D","Avoid or limit","var(--bg-danger)","var(--text-danger)"]];
+const TM={};TIERS.forEach(t=>TM[t[0]]=t);
+let sel=null;
+const b=document.getElementById('body');
+function chip(x,badge){const on=sel===x.n;const t=TM[x.t];
+return `<button data-n="${x.n}" style="text-align:left; padding:10px 12px; border-radius:var(--radius); border:${on?'2px solid var(--border-accent)':'0.5px solid var(--border)'}; background:${on?'var(--bg-accent)':'var(--surface-2)'}; cursor:pointer;">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+    <span style="font-size:14px; font-weight:500; color:var(--text-primary);">${x.n}</span>
+    ${badge?`<span style="font-size:11px; padding:1px 6px; border-radius:var(--radius); background:${t[2]}; color:${t[3]};">${x.t}</span>`:`<i class="ti ti-chevron-${on?'up':'down'}" style="font-size:14px; color:var(--text-muted);" aria-hidden="true"></i>`}
+  </div>
+  <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">${x.hn} · ${x.hv}</div>
+</button>`}
+function card(x){const t=TM[x.t];
+return `<div style="background:var(--surface-2); border:0.5px solid var(--border); border-radius:12px; padding:1rem 1.25rem; margin-top:8px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px;">
+    <span style="font-size:18px; font-weight:500; color:var(--text-primary);">${x.n}</span>
+    <span style="font-size:12px; padding:2px 10px; border-radius:var(--radius); background:${t[2]}; color:${t[3]};">${x.t} tier</span>
+  </div>
+  <div style="background:var(--bg-accent); border-radius:var(--radius); padding:10px 12px; margin-bottom:14px;">
+    <div style="font-size:12px; color:var(--text-accent);">Headline nutrient</div>
+    <div style="font-size:16px; font-weight:500; color:var(--text-accent); margin-top:2px;">${x.hn} — ${x.hv}</div>
+    <div style="font-size:13px; color:var(--text-accent); line-height:1.5; margin-top:4px;">${x.hw}</div>
+  </div>
+  <div style="font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:14px;"><span style="color:var(--text-primary); font-weight:500;">Why ${x.t} tier:</span> ${x.why}</div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px; margin-bottom:14px;">
+    ${[["Calories",x.cal],["Sugar",x.s+"g"],["Fibre",x.f+"g"]].map(m=>`<div style="background:var(--surface-1); border-radius:var(--radius); padding:8px 10px;"><div style="font-size:12px; color:var(--text-muted);">${m[0]}</div><div style="font-size:16px; font-weight:500; color:var(--text-primary);">${m[1]}</div></div>`).join('')}
+  </div>
+  <div style="border-top:0.5px solid var(--border); padding-top:12px; display:flex; flex-direction:column; gap:12px;">
+    ${x.nut.map(n=>`<div><div style="display:flex; justify-content:space-between; gap:10px; align-items:baseline;"><span style="font-size:14px; font-weight:500; color:var(--text-primary);">${n[0]}</span><span style="font-size:12px; color:var(--text-muted); text-align:right; white-space:nowrap;">${n[1]}</span></div><div style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-top:2px;">${n[2]}</div></div>`).join('')}
+  </div>
+  <div style="border-top:0.5px solid var(--border); margin-top:14px; padding-top:12px; font-size:12px; color:var(--text-muted);">Per 100g raw, USDA FoodData Central.</div>
+</div>`}
+function row(items,badge){
+  const open=items.find(x=>x.n===sel);
+  return `<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:6px;">${items.map(x=>chip(x,badge)).join('')}</div>${open?card(open):''}`;
+}
+function render(){
+  const s=document.getElementById('sort').value;
+  if(s==='tier'){
+    b.innerHTML=TIERS.map(t=>{const l=D.filter(x=>x.t===t[0]);return `<div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px;">
+      <div style="flex:0 0 52px; background:${t[2]}; color:${t[3]}; border-radius:var(--radius); padding:8px 0; text-align:center;">
+        <div style="font-size:20px; font-weight:500;">${t[0]}</div>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">${t[1]}</div>
+        ${row(l,false)}
+      </div>
+    </div>`}).join('');
+  } else if(s==='cat'){
+    const cats=[...new Set(D.map(x=>x.cat))];
+    b.innerHTML=cats.map(c=>{const l=D.filter(x=>x.cat===c);return `<div style="margin-bottom:14px;">
+      <div style="font-size:14px; font-weight:500; color:var(--text-primary); margin-bottom:6px;">${c}</div>
+      ${row(l,true)}
+    </div>`}).join('');
+  } else {
+    let l=[...D];
+    if(s==='sugar')l.sort((a,z)=>a.s-z.s); else l.sort((a,z)=>z.f-a.f);
+    b.innerHTML=row(l,true);
+  }
+  b.querySelectorAll('button[data-n]').forEach(x=>x.onclick=()=>{sel=(sel===x.dataset.n?null:x.dataset.n);render()});
+}
+document.getElementById('sort').onchange=render;
+render();
+</script>
+
+  </div>
+</div>
+</body>
+</html>
