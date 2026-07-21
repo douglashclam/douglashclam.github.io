@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinical Foundation Block — Day-by-Day</title>
+<style>
+  :root {
+    --ink: #1f2421; --muted: #6b6f6a; --line: #e2e0d8; --bg: #faf9f5; --card: #ffffff;
+    --el: #7a4a2b; --el-bg: #f6ede6; --el-line: #d8b79c;
+    --vid: #3a5a3a; --vid-bg: #eef3ea; --vid-line: #bcd0b4;
+    --rev: #7a6a2b; --rev-bg: #f6f2e0; --rev-line: #d8cd9c;
+    --diss: #5b3a72; --diss-bg: #f1eaf6; --diss-line: #cdb6dd;
+    --bed: #234b6e; --pbl: #8a3324; --log: #1f6e5a;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--bg); margin: 0; padding: 32px 20px 60px;
+    line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 600; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
+  .assess-line { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+  .assess-line b { color: var(--ink); }
+
+  .week { margin: 0 0 30px; }
+  .week-hd { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 2px solid var(--line); padding-bottom: 6px; margin: 0 0 14px; }
+  .week-hd.crunch { color: var(--diss); border-color: var(--diss-line); }
+
+  .day { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 0 0 10px; }
+  .day.wknd { background: #fbf9fc; border-color: var(--diss-line); }
+  .day-date { font-weight: 600; font-size: 15px; margin: 0 0 8px; display: flex; align-items: baseline; gap: 8px; }
+  .day-date .dow { color: var(--muted); font-weight: 400; font-size: 13px; }
+
+  /* Ordinary schedule items — one per line, plain */
+  .sess { font-size: 14px; padding: 3px 0 3px 12px; border-left: 3px solid var(--line); margin: 0 0 4px; }
+  .sess .time { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; margin-right: 8px; }
+
+  /* Bedside / PBL — part of the same schedule list, just a colored left border + small weight tag, not a filled box */
+  .sess.bed { border-left-color: var(--bed); font-weight: 500; }
+  .sess.bed .wt { color: var(--bed); font-weight: 600; font-size: 11.5px; margin-left: 8px; }
+  .sess.pbl { border-left-color: var(--pbl); font-weight: 500; }
+  .sess.pbl .wt { color: var(--pbl); font-weight: 600; font-size: 11.5px; margin-left: 8px; }
+
+  .block { margin: 9px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 13px; }
+  .block.vid { background: var(--vid-bg); border: 1px solid var(--vid-line); }
+  .block.rev { background: var(--rev-bg); border: 1px solid var(--rev-line); }
+  .block.practice { background: #e3f0f0; border: 1px solid #a8cfcf; }
+  .block.practice .lbl { color: #1f6e6e; }
+  .block.el { background: var(--el-bg); border: 1px solid var(--el-line); }
+  .block.diss { background: var(--diss-bg); border: 1px solid var(--diss-line); }
+  .block .lbl { font-weight: 600; font-size: 11.5px; letter-spacing: 0.03em; text-transform: uppercase; display: block; margin: 0 0 4px; }
+  .block.vid .lbl { color: var(--vid); }
+  .block.rev .lbl { color: var(--rev); }
+  .block.el .lbl { color: var(--el); }
+  .block.diss .lbl { color: var(--diss); }
+  .block ul { margin: 0; padding-left: 17px; }
+  .block li { margin: 2px 0; }
+  .block .why { color: var(--muted); font-size: 12px; }
+  .block.diss p { margin: 0; }
+
+  .logbar { color: var(--log); font-size: 12.5px; font-weight: 500; margin: 6px 0 0 12px; }
+  .done { background: #eef3ee; border: 1px solid #cfe0cf; border-radius: 8px; padding: 12px 14px; font-size: 13.5px; margin: 0 0 24px; }
+  .done .lbl { font-weight: 600; color: #3b6d55; }
+  @media print { body { background: #fff; padding: 0; } .day, .week { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav style="margin-bottom:16px"><a href="index.html" style="font-size:13px;color:var(--muted);text-decoration:none">← Home</a></nav>
+  <h1>Clinical Foundation Block — Day-by-Day</h1>
+  <p class="sub">MBBS4026 · Group 21 (D3 / SD2 / P24) · 20 Jul – 24 Sep 2026 · dissertation due 2 Sep · MBBS IV formative 4 Oct</p>
+  <p class="assess-line">Block assessment: <b>bedside/small-group 60%</b> (blue border below) · <b>PBL 20%</b> (red border) · <b>logbook 20%</b>. Separately, the MBBS IV formative (4 Oct) is <b>MCQ/EMQ + SAQ</b> covering all CFB content — a knowledge exam, not a skills exam.</p>
+
+  <!-- WEEK 1 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 1 · 20–26 Jul · dissertation weekends</div>
+
+    <div class="day">
+      <div class="day-date">Mon 20 Jul <span class="dow">— orientation & demos</span></div>
+      <div class="sess"><span class="time">10:30</span> Surgery demo: Thyroid</div>
+      <div class="sess"><span class="time">11:30</span> Infection Control Refresher</div>
+      <div class="sess"><span class="time">14:30</span> Professionalism in Practice</div>
+      <div class="sess"><span class="time">15:00</span> Learnable Moments / MCQ debrief</div>
+      <div class="sess"><span class="time">16:30</span> Medicine demo: Central Nervous System</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 21 Jul <span class="dow">— today</span></div>
+      <div class="sess"><span class="time">09:00</span> Masterclass: Clinical Reasoning (S2)</div>
+      <div class="sess"><span class="time">10:00</span> Surgery demo: Peripheral Vascular System</div>
+      <div class="sess"><span class="time">11:00</span> Interprofessional: Safe Prescribing (S1)</div>
+      <div class="sess"><span class="time">14:00</span> Surgery demo: Abdomen</div>
+      <div class="sess"><span class="time">15:00</span> Surgery seminar: Surgical Emergencies</div>
+      <div class="sess"><span class="time">16:00</span> Surgery seminar: Surgical Principles</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (up to 3, your main task)</span>
+        <ul>
+          <li>Surgery – General Examination</li>
+          <li>GS6 General exam of the face</li>
+          <li>GS7 General exam of the neck</li>
+          <li>GS8 General exam of the upper limb</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ one block lecture if you have energy</span>
+        <ul><li>History taking &amp; general examination</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 22 Jul <span class="dow">— CVS demo</span></div>
+      <div class="sess"><span class="time">09:00</span> Medicine demo: Cardiovascular System</div>
+      <div class="sess"><span class="time">10:30</span> Chemical Pathology Sem 1: Sodium &amp; Water</div>
+      <div class="sess"><span class="time">14:00</span> Diagnostic Radiology: Cross-sectional Imaging</div>
+      <div class="sess"><span class="time">16:00</span> Diagnostic Radiology: Interventional</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (CVS set)</span>
+        <ul>
+          <li>GS9 General exam of the lower limb</li>
+          <li>Intro to Examination of the CVS</li>
+          <li>Examination of the CVS Part 1</li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — pair with CVS</span>
+        <ul><li>CPR17 Gross anatomy of the heart</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 23 Jul <span class="dow">— afternoon only</span></div>
+      <div class="sess"><span class="time">09:00</span> Masterclass: Clinical Reasoning (S3)</div>
+      <div class="sess"><span class="time">10:00</span> Surgery demo: Urology</div>
+      <div class="sess"><span class="time">14:00</span> Diagnostic Radiology: Nuclear Medicine</div>
+      <div class="sess"><span class="time">15:00</span> Surgery seminar: Metabolic Response</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (CVS + resp)</span>
+        <ul>
+          <li>Precordial examination Part 1</li>
+          <li>Precordial examination Part 2</li>
+          <li>RS3 Respiratory Percussion <span class="why">(resp demo tomorrow)</span></li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — CVS physiology</span>
+        <ul><li>CPR18 Cardiac muscle &amp; electrical activity</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 24 Jul</div>
+      <div class="sess"><span class="time">10:00</span> O&amp;T demo: General &amp; History Taking</div>
+      <div class="sess"><span class="time">11:00</span> Surgery seminar: Surgical Oncology</div>
+      <div class="sess"><span class="time">12:00</span> Clinical Ethics &amp; Law: intro</div>
+      <div class="sess"><span class="time">14:00</span> Medicine demo: Respiratory System</div>
+      <div class="sess"><span class="time">15:30</span> Interprofessional: Safe Prescribing (S2)</div>
+      <div class="sess"><span class="time">16:30</span> ENT Seminar: ENT (I)</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (finish respiratory)</span>
+        <ul>
+          <li>RS4 Respiratory Auscultation</li>
+          <li>RS5 Peak expiratory flow rate</li>
+          <li>RS6 Pulse oximetry</li>
+        </ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">10–15 min — revisit this week's demos</span>
+        <p style="margin:0">You watched General, CVS, and Respiratory exam skills this week and saw them demonstrated live. Before moving on, actually run through one — talk yourself through the CVS exam on yourself or a coursemate, not just re-watch. This is what makes it stick for the bedside sessions in August.</p>
+      </div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 25–26 Jul <span class="dow">— weekend</span></div>
+      <div class="block el">
+        <span class="lbl">Block lectures — fit around writing</span>
+        <ul>
+          <li>The use of laboratory tests in clinical medicine</li>
+          <li>Examination of the Abdomen <span class="why">(Med demo Mon)</span></li>
+          <li>Dermatology <span class="why">(Surgery Skin demo 3 Aug)</span></li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — respiratory (optional, fit around writing)</span>
+        <ul><li>CPR03 Anatomy of the lungs / CPR05 Pulmonary physiology</li></ul>
+      </div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — primary task</span>
+        <p>Writing comes first; the three lectures above are the priority if you only have room for one thing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 2 · 27 Jul – 2 Aug · dissertation weekends</div>
+
+    <div class="day">
+      <div class="day-date">Mon 27 Jul</div>
+      <div class="sess"><span class="time">08:30</span> Medicine demo: Abdomen</div>
+      <div class="sess"><span class="time">10:00</span> Psychiatry Sem 1: History Taking &amp; MSE</div>
+      <div class="sess"><span class="time">12:00</span> Pathology Lab Sem 1: Anatomical pathology</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (GI set)</span>
+        <ul>
+          <li>Medicine GI(1) Intro to GI exam</li>
+          <li>Medicine GI(2) General Inspection</li>
+          <li>Medicine GI(3) Palpation of the Abdomen</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lecture (Psych Sem 1 was today)</span>
+        <ul><li>An Introduction to Psychiatry</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 28 Jul</div>
+      <div class="sess"><span class="time">08:30</span> O&amp;G Communication Skills</div>
+      <div class="sess"><span class="time">14:00</span> Masterclass: Clinical Reasoning (S4)</div>
+      <div class="sess"><span class="time">15:00</span> Masterclass: Clinical Reasoning (S1)</div>
+      <div class="sess"><span class="time">17:00</span> Integrative Medicine: TCM for CVD</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (GI cont.)</span>
+        <ul>
+          <li>Medicine GI(4) Examination of the Liver</li>
+          <li>Medicine GI(5) Spleen &amp; Kidneys</li>
+          <li>Medicine GI(6) Percussion</li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — GI anatomy</span>
+        <ul><li>GIS01 General anatomy of the abdomen</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 29 Jul <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: General examination (D3)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">11:45</span> Pathology Lab Sem 2: Immunohistochemistry</div>
+      <div class="sess"><span class="time">14:00</span> ENT demo: Ear &amp; Nose</div>
+      <div class="sess"><span class="time">17:00</span> Patient Safety &amp; Risk Management</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (finish GI)</span>
+        <ul>
+          <li>Medicine GI(7) Auscultation</li>
+          <li>Surgery – Abdominal examination I</li>
+          <li>Surgery – Abdominal examination II</li>
+        </ul>
+      </div>
+      <div class="logbar">◆ Log today's General bedside now.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 30 Jul <span class="dow">— morning ward</span></div>
+      <div class="sess bed"><span class="time">09:30</span> Surgery: Breast &amp; Skin lesions (SD2)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 1</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (breast/neck)</span>
+        <ul>
+          <li>Surgery – Breast &amp; Axillary Examination</li>
+          <li>Surgery – Lumps &amp; Bumps</li>
+          <li>Surgery – Thyroid &amp; neck examination</li>
+        </ul>
+      </div>
+      <div class="logbar">◆ Log the Breast &amp; Skin bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 31 Jul</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (finish surgery abdo)</span>
+        <ul>
+          <li>Surgery – Hernia Examination</li>
+          <li>Surgery – Digital Rectal Examination</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lectures</span>
+        <ul>
+          <li>Fertility Regulation</li>
+          <li>Introduction to Orthopaedic Surgery <span class="why">(O&amp;T bedside 4 Aug)</span></li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — GI</span>
+        <ul><li>GIS05 Anatomy of the alimentary tract</li></ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">10–15 min — revisit General bedside (Wed) &amp; Breast/Skin bedside (Thu)</span>
+        <p style="margin:0">You've now done your first two real bedside sessions. Think back: what did you fumble, what did the tutor correct? Re-run the general exam sequence once more before it fades.</p>
+      </div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 1–2 Aug <span class="dow">— weekend</span></div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — one month out</span>
+        <p>Full writing weekend. A solid draft should be forming by now.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 3 · 3–9 Aug · dissertation weekends</div>
+
+    <div class="day">
+      <div class="day-date">Mon 3 Aug</div>
+      <div class="sess"><span class="time">09:00</span> Surgery seminar: History &amp; Physical Exam</div>
+      <div class="sess"><span class="time">10:00</span> Surgery demo: Skin &amp; Subcutaneous Lesions</div>
+      <div class="sess"><span class="time">11:00</span> Surgery demo: Head &amp; Neck</div>
+      <div class="sess"><span class="time">12:00</span> Diagnostic Radiology: Radiography</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 2</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (CNS set, bedside Wed)</span>
+        <ul>
+          <li>NS1 Motor system — upper limb</li>
+          <li>NS2 Motor system — lower limb</li>
+          <li>NS3 Sensory System Examination</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lecture (moved closer to bedside)</span>
+        <ul><li>Central Nervous System</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 4 Aug <span class="dow">— ward day</span></div>
+      <div class="sess"><span class="time">10:00</span> Chest X-ray (Gp 21)</div>
+      <div class="sess bed"><span class="time">14:00</span> O&amp;T: History Taking (Gps 21–24)<span class="wt">bedside 60%</span></div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (finish CNS before tomorrow)</span>
+        <ul>
+          <li>NS4 Cranial Nerves Examination</li>
+          <li>NS5 Assessing Level of Consciousness</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lectures</span>
+        <ul>
+          <li>Principles and concepts of Family Medicine</li>
+          <li>Injuries to Bone and Joints <span class="why">(Bone &amp; Joints workshop 6 Aug)</span></li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — CNS overview</span>
+        <ul><li>HNS01 Overview of the central nervous system</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 5 Aug <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: CNS I (D3)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">14:00</span> Chemical Pathology Sem 2: Potassium</div>
+      <div class="sess"><span class="time">15:00</span> Chemical Pathology Sem 3: Function tests</div>
+      <div class="block rev">
+        <span class="lbl">Evening — revision (light)</span>
+        <ul><li>HNS14 Motor System</li></ul>
+      </div>
+      <div class="logbar">◆ Log CNS I bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 6 Aug <span class="dow">— ward day</span></div>
+      <div class="sess"><span class="time">08:30</span> O&amp;T Workshop IIa: Bone &amp; Joints</div>
+      <div class="sess bed"><span class="time">14:00</span> O&amp;T: History Taking (Gps 21–24)<span class="wt">bedside 60%</span></div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (MSK)</span>
+        <ul>
+          <li>Instructional Video on MSK Examination</li>
+          <li>Examination of the hand</li>
+          <li>Examination of the knee joint</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lecture</span>
+        <ul><li>Introduction to common problems: normal vs abnormal <span class="why">(FM Workshop B 10 Aug)</span></li></ul>
+      </div>
+      <div class="logbar">◆ Log the O&amp;T bedside + Bone &amp; Joints workshop.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 7 Aug</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 3</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (MSK/vascular)</span>
+        <ul>
+          <li>Examination of the spine</li>
+          <li>Surgery – Peripheral Arterial System</li>
+          <li>Surgery – Peripheral Venous System</li>
+        </ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">10–15 min — revisit CNS I bedside (Wed) &amp; O&amp;T bedsides</span>
+        <p style="margin:0">Cranial nerves and the motor exam are easy to lose without repetition. Run through the CNS sequence once more from memory.</p>
+      </div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 8–9 Aug <span class="dow">— weekend</span></div>
+      <div class="block el">
+        <span class="lbl">O&amp;G sequence — start here</span>
+        <ul>
+          <li>1. Physiology of Pregnancy &amp; Minor Ailments</li>
+          <li>2. Perinatal Medicine, Antenatal Care (I)</li>
+          <li>3. Perinatal Medicine, Antenatal Care (II)</li>
+        </ul>
+      </div>
+      <div class="block diss">
+        <span class="lbl">Dissertation</span>
+        <p>Writing weekend — fit the three O&amp;G lectures above around it (Gyn exam 13 Aug).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 4 · 10–16 Aug · dissertation crunch + Gyn exam + CVS bedside</div>
+
+    <div class="day">
+      <div class="day-date">Mon 10 Aug</div>
+      <div class="sess"><span class="time">08:30</span> TB Teaching Clinic 1</div>
+      <div class="sess"><span class="time">10:30</span> Chemical Pathology Sem 5: Lipids</div>
+      <div class="sess"><span class="time">11:30</span> Surgery seminar: Surgical Infection</div>
+      <div class="sess"><span class="time">14:30</span> FMPC Workshop B</div>
+      <div class="block vid">
+        <span class="lbl">Evening — exam skills (finish CVS before tomorrow's bedside)</span>
+        <ul>
+          <li>Examination of the CVS Part 2</li>
+          <li>Examination of JVP</li>
+          <li>Carotid pulse</li>
+          <li>Radial pulse</li>
+        </ul>
+      </div>
+      <div class="block el">
+        <span class="lbl">+ block lectures (moved closer to bedside)</span>
+        <ul>
+          <li>Cardiovascular (I): History Taking</li>
+          <li>Cardiovascular (II): Physical Examination</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 11 Aug <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: Cardiovascular System (D3)<span class="wt">bedside 60%</span></div>
+      <div class="block el">
+        <span class="lbl">Evening — Gyn exam prep (Thu) + O&amp;G sequence cont.</span>
+        <ul>
+          <li>4. Menstrual Disorders</li>
+          <li>5. Physiology of Lactation &amp; Breast Feeding (I)</li>
+        </ul>
+      </div>
+      <div class="logbar">◆ Log the CVS bedside — a big one for your 60%.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 12 Aug <span class="dow">— no sessions</span></div>
+      <div class="block el">
+        <span class="lbl">Before tomorrow's Gyn exam — finish the sequence</span>
+        <ul>
+          <li>Confirm Menstrual Disorders + Fertility Regulation are done</li>
+          <li>6. Physiology of Lactation &amp; Breast Feeding (II)</li>
+        </ul>
+      </div>
+      <div class="block diss">
+        <span class="lbl">Otherwise — dissertation</span>
+        <p>Under three weeks to deadline. Split evening between the lecture above and writing.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 13 Aug <span class="dow">— Gyn exam</span></div>
+      <div class="sess"><span class="time">08:30</span> O&amp;G Physical Examination (Part I — Gyn)</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 14 Aug <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">09:30</span> Surgery: Head &amp; Neck &amp; Thyroid (SD2)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">14:00</span> Clinical Interpersonal Skills (CIPS)</div>
+      <div class="logbar">◆ Log the Surgery bedside.</div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 15–16 Aug <span class="dow">— weekend</span></div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — final push begins</span>
+        <p>Two weeks out. Heaviest writing block. Nothing clinical scheduled.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 5 · 17–23 Aug · dissertation crunch + PBL begins + dorm move</div>
+
+    <div class="day">
+      <div class="day-date">Mon 17 Aug</div>
+      <div class="sess"><span class="time">08:30</span> TB Teaching Clinic 2</div>
+      <div class="sess"><span class="time">10:30</span> Chemical Pathology Sem 4: Poisoning</div>
+      <div class="sess"><span class="time">11:30</span> Surgery demo: Perineum &amp; Hernia</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 5</div>
+      <div class="block el">
+        <span class="lbl">Evening — block lecture (moved closer to bedside)</span>
+        <ul><li>Respiratory System <span class="why">(bedside Wed 19 Aug)</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 18 Aug</div>
+      <div class="sess"><span class="time">14:00</span> Human Sexuality S1: SRH needs</div>
+      <div class="sess"><span class="time">16:00</span> Surgery seminar: Fluid &amp; Electrolytes</div>
+      <div class="block diss">
+        <span class="lbl">Evening — dissertation (front-loaded)</span>
+        <p>Move weekend is unconfirmed, so treat it as likely to eat Sat–Sun. Pull writing forward into this evening instead of the planned revision clip — better to bank the words now than assume the weekend delivers them.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 19 Aug <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: Respiratory System (D3)<span class="wt">bedside 60%</span></div>
+      <div class="block diss">
+        <span class="lbl">Evening — dissertation</span>
+        <p>Respiratory videos already done (week 1) — free for writing.</p>
+      </div>
+      <div class="logbar">◆ Log the Respiratory bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 20 Aug <span class="dow">— ward + PBL</span></div>
+      <div class="sess bed"><span class="time">09:30</span> Surgery: Abdomen &amp; PVS (SD2)<span class="wt">bedside 60%</span></div>
+      <div class="sess pbl"><span class="time">14:00</span> PBL Session 1: Case 1 + Preview Case 2 (P24)<span class="wt">PBL 20%</span></div>
+      <div class="block el">
+        <span class="lbl">Evening — PBL prep for Session 2 (Mon 24)</span>
+        <ul><li>Work through Case 2 learning objectives</li></ul>
+      </div>
+      <div class="logbar">◆ Log the Abdomen &amp; PVS bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 21 Aug</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 6</div>
+      <div class="block diss">
+        <span class="lbl">Evening — dissertation, extra push</span>
+        <p>Last clear evening before the move. Get as much writing done as you can — treat Saturday and Sunday as unreliable for writing until you know otherwise.</p>
+      </div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 22–23 Aug <span class="dow">— weekend · dorm move</span></div>
+      <div class="block diss">
+        <span class="lbl">Dorm move, dissertation best-effort</span>
+        <p>Move takes priority — don't fight it for writing time. Because Tue–Fri evenings this week were front-loaded with extra writing, losing the weekend shouldn't be a crisis. If you get any spare hours (evening after settling in, etc.), that's a bonus, not the plan. Reassess Monday: if you're behind, the following week has slack in the Wed 26 Aug and Thu–Fri 27–28 evenings to absorb it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week">
+    <div class="week-hd crunch">Week 6 · 24–30 Aug · final dissertation week + PBL 2</div>
+
+    <div class="day">
+      <div class="day-date">Mon 24 Aug <span class="dow">— PBL</span></div>
+      <div class="sess pbl"><span class="time">14:00</span> PBL Session 2: Case 2 (P24)<span class="wt">PBL 20%</span></div>
+      <div class="sess"><span class="time">09:00</span> Chemical Pathology Sem 6: Interferences</div>
+      <div class="sess"><span class="time">10:00</span> Diagnostic Radiology Workshop 1</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 25 Aug</div>
+      <div class="sess"><span class="time">09:00</span> FMPC Workshop A</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 26 Aug <span class="dow">— ward day + ophthal</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: CNS II (D3)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">14:30</span> Ophthalmology: Ocular Examination</div>
+      <div class="block el">
+        <span class="lbl">Before ophthal — in order</span>
+        <ul>
+          <li>1. Common Eye Diseases</li>
+          <li>2. Ocular Manifestations of Systemic Disease</li>
+        </ul>
+      </div>
+      <div class="logbar">◆ Log CNS II bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu–Fri 27–28 Aug</div>
+      <div class="sess bed"><span class="time">Fri 09:00</span> TB Bedside Session (Gp 21, Ruttonjee)<span class="wt">bedside 60%</span></div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — final days</span>
+        <p>Editing, references, formatting. Submission Tue 2 Sep.</p>
+      </div>
+      <div class="logbar">◆ Log the TB bedside Friday.</div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 29–30 Aug <span class="dow">— weekend</span></div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — last weekend before submission</span>
+        <p>Final read-through and polish. Everything else waits.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week">
+    <div class="week-hd">Week 7 · 31 Aug – 6 Sep · recovery zone begins</div>
+
+    <div class="day">
+      <div class="day-date">Mon 31 Aug</div>
+      <div class="sess"><span class="time">08:30</span> Pathology Lab Sem 3: Haematology</div>
+      <div class="sess"><span class="time">09:30</span> Chemical Pathology Sem 7: Iron</div>
+      <div class="sess"><span class="time">10:30</span> Chemical Pathology Sem 8: Metabolic disease</div>
+      <div class="sess"><span class="time">11:30</span> Surgery demo: Breast</div>
+      <div class="sess"><span class="time">14:00</span> Global Health Occupational Medicine Lecture</div>
+      <div class="sess"><span class="time">15:00</span> Psychiatry Sem 3: Child &amp; Adolescent</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 1 Sep <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">09:30</span> Surgery: Perineum, Hernia &amp; Urology (SD2)<span class="wt">bedside 60%</span></div>
+      <div class="block diss">
+        <span class="lbl">Dissertation — submission tomorrow</span>
+        <p>Final checks.</p>
+      </div>
+      <div class="logbar">◆ Log the Surgery bedside.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 2 Sep <span class="dow">— DISSERTATION DUE</span></div>
+      <div class="sess"><span class="time">08:30</span> O&amp;G Physical Examination (Part II — Obs)</div>
+      <div class="block el">
+        <span class="lbl">Submit first — then the backlog opens at a sane pace</span>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 3 Sep</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 8</div>
+      <div class="block el">
+        <span class="lbl">Catch-up (1–2/evening now)</span>
+        <ul>
+          <li>Classification &amp; Diagnosis of Psychiatric Illness</li>
+          <li>7. Puerperium and Related Problems <span class="why">(completes the O&amp;G sequence — this one lands after the Obs exam given the dissertation crunch, but still worth doing for the wards)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 4 Sep <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: Abdomen (D3)<span class="wt">bedside 60%</span></div>
+      <div class="sess"><span class="time">14:30</span> Diagnostic Radiology Workshop 2: Ultrasound</div>
+      <div class="logbar">◆ Log the Abdomen bedside.</div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 5–6 Sep <span class="dow">— first free weekend</span></div>
+      <div class="block el">
+        <span class="lbl">Catch-up weekend (post-dissertation)</span>
+        <ul>
+          <li>Introduction to Orthopaedic Surgery (if not done)</li>
+          <li>Injuries to Bone and Joints (if not done)</li>
+          <li>Reconstruction</li>
+          <li>Introduction to common problems: normal vs abnormal (if not done)</li>
+          <li>Any exam-video slippage from the crunch weeks</li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ revision — backfill weakest system</span>
+        <ul><li>Now's the time to backfill anatomy/physiology gaps noticed at the bedside</li></ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">30 min — this is the priority this weekend</span>
+        <p style="margin:0">During the dissertation crunch you did CVS, Respiratory, Abdomen/PVS, TB, and Perineum/Hernia bedsides with no time to revisit any of them. Pick two or three that felt shakiest and actually re-run the exam sequence — this is more valuable right now than working through new lectures.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week">
+    <div class="week-hd">Week 8 · 7–13 Sep · recovery zone</div>
+
+    <div class="day">
+      <div class="day-date">Mon 7 Sep</div>
+      <div class="sess"><span class="time">08:30</span> TB Teaching Clinic 3</div>
+      <div class="sess"><span class="time">10:30</span> O&amp;T Workshop IIb: Spine</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 9</div>
+      <div class="block el">
+        <span class="lbl">Evening</span>
+        <ul><li>Aetiology of Psychiatric Disorders</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 8 Sep <span class="dow">— ENT skills</span></div>
+      <div class="sess"><span class="time">08:30</span> ENT: Clinical demo &amp; skills (I) Larynx, Neck &amp; Mouth</div>
+      <div class="block vid">
+        <span class="lbl">Should be done — ENT exam clips + kept anatomy</span>
+        <ul>
+          <li>Surgery – Ear Examination</li>
+          <li>Surgery – Nose Examination</li>
+          <li>Surgery – Throat Examination</li>
+          <li>Surgery – Oral Cavity &amp; Parotid Gland Examination</li>
+          <li>HNS29 Larynx <span class="why">(kept)</span></li>
+          <li>HNS40 Ear <span class="why">(kept)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 9 Sep</div>
+      <div class="sess"><span class="time">10:00</span> Global Health Occupational Medicine Tutorial</div>
+      <div class="sess"><span class="time">16:30</span> O&amp;T Workshop Ib: Upper Limb</div>
+      <div class="block el">
+        <span class="lbl">Evening — Paeds (1 of 3)</span>
+        <ul><li>Paediatric history taking</li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 10 Sep <span class="dow">— ward day</span></div>
+      <div class="sess bed"><span class="time">08:45</span> Medicine: CVS &amp; Respiratory (D3)<span class="wt">bedside 60%</span></div>
+      <div class="block el">
+        <span class="lbl">Evening — Paeds (2 of 3)</span>
+        <ul><li>Child growth and development</li></ul>
+      </div>
+      <div class="logbar">◆ Log — last Medicine bedside of the block.</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 11 Sep</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 10</div>
+      <div class="block el">
+        <span class="lbl">Evening — Paeds (3 of 3)</span>
+        <ul><li>Immunisation</li></ul>
+      </div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Sat–Sun 12–13 Sep <span class="dow">— free weekend</span></div>
+      <div class="block el">
+        <span class="lbl">Mop-up</span>
+        <ul>
+          <li>Introduction to Geriatric Medicine</li>
+          <li>Rehabilitation Medicine</li>
+          <li>Children's Orthopaedics and Deformities</li>
+          <li>Any slippage from earlier weeks</li>
+        </ul>
+      </div>
+      <div class="block rev">
+        <span class="lbl">+ logbook review</span>
+        <ul><li>Check it's complete and up to date — 20%, don't let gaps sit</li></ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">15–20 min — revisit ENT skills &amp; O&amp;T workshops</span>
+        <p style="margin:0">ENT (larynx/neck/mouth) and the upper limb/spine workshops both happened this week. Re-run one of them before it's a distant memory — these are exactly the skills that show up again in later years.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 9 -->
+  <div class="week">
+    <div class="week-hd">Week 9 · 14–20 Sep</div>
+
+    <div class="day">
+      <div class="day-date">Mon 15 Sep</div>
+      <div class="sess"><span class="time">09:00</span> Integrative Medicine: Q&amp;A</div>
+      <div class="sess"><span class="time">10:00</span> Psychiatry Sem 4: Psychogeriatrics</div>
+      <div class="sess"><span class="time">14:00</span> Human Sexuality S2 &amp; S3</div>
+      <div class="sess"><span class="time">17:00</span> Pathology Lab Sem 4: Transplant immunology</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 16 Sep</div>
+      <div class="sess"><span class="time">09:00</span> Human Sexuality S4: Forensic sexology</div>
+      <div class="sess"><span class="time">14:00</span> Human Sexuality S5 &amp; S6</div>
+      <div class="block el">
+        <span class="lbl">Evening</span>
+        <ul><li>Psychiatric conditions in medical settings <span class="why">(Psychopathology tomorrow)</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 17 Sep</div>
+      <div class="sess"><span class="time">10:30</span> Psychiatry Sem 2: Psychopathology</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 11</div>
+    </div>
+
+    <div class="day wknd">
+      <div class="day-date">Fri–Sun 18–20 Sep <span class="dow">— open, final buffer</span></div>
+      <div class="block el">
+        <span class="lbl">Final catch-up + logbook</span>
+        <p style="margin:0">Anything outstanding lands here. Final logbook pass before the block closes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 10 -->
+  <div class="week">
+    <div class="week-hd">Week 10 · 21–24 Sep</div>
+
+    <div class="day">
+      <div class="day-date">Mon 21 Sep</div>
+      <div class="sess"><span class="time">11:30</span> ENT Seminar: Common ENT conditions</div>
+      <div class="sess"><span class="time">14:00</span> CAES9740 Session 12</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 22 Sep</div>
+      <div class="sess"><span class="time">09:30</span> O&amp;T Workshop Ia: Lower Limb</div>
+      <div class="sess"><span class="time">11:00</span> Pathology Lab Sem 5: Immunological disorders</div>
+      <div class="sess"><span class="time">17:00</span> SSCM Session (Zoom)</div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 24 Sep <span class="dow">— block wrap-up</span></div>
+      <div class="sess"><span class="time">10:00</span> MBBS IV Block C Orientation (Zoom)</div>
+      <div class="block el">
+        <span class="lbl">Before this — logbook must be submitted-ready</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11 -->
+  <div class="week">
+    <div class="week-hd">Week 11 · 25 Sep – 3 Oct · knowledge revision for the formative (4 Oct)</div>
+
+    <div class="day">
+      <div class="day-date">Fri 25 Sep <span class="dow">— Medicine: cardiovascular + respiratory</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review, not skills practice</span>
+        <p style="margin:0">Format is MCQ/EMQ + SAQ covering everything taught in CFB — not an OSCE. Review lecture content and mechanisms: CVS history/exam findings and what they indicate, cardiac cycle and electrical activity, common cardiac presentations; respiratory exam findings, ventilation mechanics, common respiratory conditions. Go back through your notes and the lecture slides, not the videos.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Sat 26 Sep <span class="dow">— Medicine: CNS + GI/abdomen</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review</span>
+        <p style="margin:0">CNS: cranial nerve lesions, motor/sensory patterns, level of consciousness scales — these lend themselves well to MCQ/EMQ. GI: abdominal exam findings and their clinical significance, lab test interpretation. Try writing a couple of short-answer explanations from memory — that's SAQ practice.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Sun 27 Sep <span class="dow">— O&amp;T + MSK + vascular</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review</span>
+        <p style="margin:0">Orthopaedic surgery principles, bone/joint injuries, reconstruction, MSK exam findings, peripheral vascular disease presentations. EMQ-style question stems often hinge on matching a finding to a diagnosis — practise that pattern here.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Mon 28 Sep <span class="dow">— O&amp;G + Paediatrics + ENT + Ophthalmology</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review — the dense one</span>
+        <p style="margin:0">The O&amp;G lecture sequence (pregnancy physiology → antenatal care → lactation → puerperium → menstrual/fertility) is easy to blur together — this is worth a proper re-read. Paediatric history taking, growth &amp; development, immunisation schedule. ENT and ophthalmology conditions and their distinguishing features.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Tue 29 Sep <span class="dow">— Surgery + Family Medicine</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review</span>
+        <p style="margin:0">Surgical principles, common surgical emergencies, fluid/electrolytes, surgical infection, oncology basics, breast/thyroid/skin conditions. Family Medicine principles and the normal-vs-abnormal framework — these show up well in MCQ format.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Wed 30 Sep <span class="dow">— Psychiatry + Chemical Pathology + Pathology Lab</span></div>
+      <div class="block practice">
+        <span class="lbl">Content review</span>
+        <p style="margin:0">Psychiatric history/MSE, classification systems, aetiology, psychiatric conditions in medical settings. Chem Path: sodium/potassium/lipids/iron, diagnostic function tests, lab interferences — dense factual content, good MCQ material. Pathology Lab seminars on anatomical pathology, immunohistochemistry, haematology.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Thu 1 Oct <span class="dow">— weak-point sweep + question practice</span></div>
+      <div class="block el">
+        <span class="lbl">Anything still not done</span>
+        <ul>
+          <li>Any of the 35 block lectures with real gaps — check against the full list</li>
+        </ul>
+      </div>
+      <div class="block practice">
+        <span class="lbl">If past MCQ/EMQ or SAQ papers exist, use them now</span>
+        <p style="margin:0">Ask classmates or your year rep whether past formative papers or question banks exist for this block — targeted question practice is more efficient than re-reading everything. SAQ is self-assessed, so write full answers and mark them honestly against your notes or a model answer if available.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Fri 2 Oct <span class="dow">— logbook + integration</span></div>
+      <div class="block practice">
+        <span class="lbl">Pull it together</span>
+        <p style="margin:0">Go through the logbook chronologically as a memory-jog for cases across the block — clinical vignettes are exactly how EMQ/SAQ questions are framed, so recalling real cases you saw is genuinely useful prep, not just sentimental.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Sat 3 Oct <span class="dow">— day before</span></div>
+      <div class="block practice">
+        <span class="lbl">Light final review only</span>
+        <p style="margin:0">No new material. Sleep matters more than one more topic the night before an assessment.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <div class="day-date">Sun 4 Oct <span class="dow">— MBBS IV formative: MCQ/EMQ + SAQ</span></div>
+    </div>
+  </div>
+
+  <div class="done">
+    <span class="lbl">Week 11 is now knowledge revision, matching the actual format.</span> The formative is MCQ/EMQ + SAQ covering everything taught in CFB — not an OSCE — so re-running physical exam sequences isn't the priority use of that time. Each day is now a content sweep by topic area (drawing on lecture material and mechanisms, not videos), with a weak-point day, a nudge to find past papers or question banks if they exist, and a logbook-driven integration pass at the end, since clinical vignettes from real cases map well onto how EMQ/SAQ questions are usually written. The bedside-skills practice slots earlier in the block (weeks 1–3 and the two post-dissertation weekends) stay as they were — those matter for your 60% bedside assessment, which is a separate thing from this formative. The dorm move weekend (22–23 Aug) is still an open flag — tell me how demanding it turns out to be.
+  </div>
+</div>
+</body>
+</html>
