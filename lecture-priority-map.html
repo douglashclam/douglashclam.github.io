@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weekly Lecture Priority Map — CFB</title>
+<title>Full Curriculum Map — CFB</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -20,7 +20,7 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: #eeeee8; min-height: 100vh; color: var(--text-primary); }
-.page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+.page-wrap { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
 nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
 nav a { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
 nav a:hover { color: var(--text-primary); }
@@ -35,176 +35,310 @@ p.panel-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 1.25
 <div class="page-wrap">
   <nav>
     <a href="cfb.html"><i class="ti ti-arrow-left"></i> CFB</a>
-    <h1>Weekly Priority Map</h1>
+    <h1>Full Curriculum Map</h1>
   </nav>
   <div class="panel">
-    <h2 class="panel-title">Weekly Lecture Priority Map</h2>
-    <p class="panel-sub">Ten-week priority map, grouped within each week by tier S, A, then B. Background color shows specialty; icons show whether a lecture matters for exams, clinical practice, or both.</p>
-    <h2 class="sr-only">Ten week priority map, grouped within each week by tier S, A, then B. Background color shows specialty. Icons show whether a lecture matters for exams, clinical practice, or both.</h2>
+    <h2 class="panel-title">Full Curriculum Weekly Map</h2>
+    <p class="panel-sub">Every lecture across the block, tiered S/A/B/C within each week. Clinical Skills Learning sits in a left column, E-Learning in a right column, with Induction Week videos below as compact chips.</p>
+    <h2 class="sr-only">Full curriculum map. Within each tier, Clinical Skills Learning lectures appear in a left column, E-Learning lectures in a right column, with Induction Week videos below as compact chips without specialty labels.</h2>
     <div style="display:flex;gap:16px;margin-bottom:8px;font-size:12px;color:var(--text-secondary);flex-wrap:wrap;align-items:center;">
     <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clipboard-list" style="font-size:14px;" aria-hidden="true"></i><i class="ti ti-stethoscope" style="font-size:14px;" aria-hidden="true"></i>Both</span>
-    <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clipboard-list" style="font-size:14px;" aria-hidden="true"></i>Exam yield</span>
+    <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-clipboard-list" style="font-size:14px;" aria-hidden="true"></i>Exam (2+ hits)</span>
     <span style="display:flex;align-items:center;gap:4px;"><i class="ti ti-stethoscope" style="font-size:14px;" aria-hidden="true"></i>Clinical</span>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:1.25rem;font-size:11px;color:var(--text-secondary);flex-wrap:wrap;">
     <span style="background:#EEEDFE;color:#26215C;padding:2px 8px;border-radius:6px;">Pathology</span>
-    <span style="background:#FAECE7;color:#4A1B0C;padding:2px 8px;border-radius:6px;">Surgery / GI</span>
-    <span style="background:#F1EFE8;color:#2C2C2A;padding:2px 8px;border-radius:6px;">Medicine</span>
+    <span style="background:#FAECE7;color:#4A1B0C;padding:2px 8px;border-radius:6px;">Surgery / GI / General Surgery</span>
+    <span style="background:#F1EFE8;color:#2C2C2A;padding:2px 8px;border-radius:6px;">Medicine / Induction / Masterclasses</span>
     <span style="background:#FBEAF0;color:#4B1528;padding:2px 8px;border-radius:6px;">O&G</span>
     <span style="background:#E6F1FB;color:#042C53;padding:2px 8px;border-radius:6px;">Diagnostic Radiology</span>
-    <span style="background:#E1F5EE;color:#04342C;padding:2px 8px;border-radius:6px;">Nervous System / MSK / Ortho</span>
+    <span style="background:#E1F5EE;color:#04342C;padding:2px 8px;border-radius:6px;">Nervous System / MSK / Ortho / Vascular</span>
     <span style="background:#FCEBEB;color:#501313;padding:2px 8px;border-radius:6px;">Cardiovascular</span>
     <span style="background:#FAEEDA;color:#412402;padding:2px 8px;border-radius:6px;">Psychiatry / Ophthalmology</span>
     <span style="background:#EAF3DE;color:#173404;padding:2px 8px;border-radius:6px;">Family Medicine / Paediatrics</span>
+    <span style="background:#F1EFE8;color:#5F5E5A;padding:2px 8px;border-radius:6px;">ENT / H&N and ENT</span>
     </div>
     <div style="display: grid; gap: 12px;" id="weeks"></div>
   </div>
 </div>
 <script>
 const ramp = {
-  purple: {bg:"#EEEDFE",dark:"#26215C",mid:"#534AB7"},
-  coral: {bg:"#FAECE7",dark:"#4A1B0C",mid:"#993C1D"},
-  gray: {bg:"#F1EFE8",dark:"#2C2C2A",mid:"#5F5E5A"},
-  pink: {bg:"#FBEAF0",dark:"#4B1528",mid:"#993556"},
-  blue: {bg:"#E6F1FB",dark:"#042C53",mid:"#185FA5"},
-  teal: {bg:"#E1F5EE",dark:"#04342C",mid:"#0F6E56"},
-  red: {bg:"#FCEBEB",dark:"#501313",mid:"#A32D2D"},
-  amber: {bg:"#FAEEDA",dark:"#412402",mid:"#854F0B"},
-  green: {bg:"#EAF3DE",dark:"#173404",mid:"#3B6D11"}
+  purple:{bg:"#EEEDFE",dark:"#26215C",mid:"#534AB7"}, coral:{bg:"#FAECE7",dark:"#4A1B0C",mid:"#993C1D"},
+  gray:{bg:"#F1EFE8",dark:"#2C2C2A",mid:"#5F5E5A"}, pink:{bg:"#FBEAF0",dark:"#4B1528",mid:"#993556"},
+  blue:{bg:"#E6F1FB",dark:"#042C53",mid:"#185FA5"}, teal:{bg:"#E1F5EE",dark:"#04342C",mid:"#0F6E56"},
+  red:{bg:"#FCEBEB",dark:"#501313",mid:"#A32D2D"}, amber:{bg:"#FAEEDA",dark:"#412402",mid:"#854F0B"},
+  green:{bg:"#EAF3DE",dark:"#173404",mid:"#3B6D11"}
 };
 const specialtyRamp = {
-  "Pathology":"purple","Surgery":"coral","GI and Abdomen":"coral","Medicine":"gray",
-  "Obstetrics and Gynaecology":"pink","Diagnostic Radiology":"blue","Nervous System":"teal",
-  "Musculoskeletal":"teal","Orthopaedics and Traumatology":"teal","Cardiovascular":"red",
-  "Psychiatry":"amber","Ophthalmology":"amber","Family Medicine":"green","Paediatrics":"green"
+  "Pathology":"purple","Surgery":"coral","GI and Abdomen":"coral","General Surgery":"coral","Medicine":"gray",
+  "Induction Seminars":"gray","Masterclasses Series":"gray","Obstetrics and Gynaecology":"pink","Diagnostic Radiology":"blue",
+  "Nervous System":"teal","Musculoskeletal":"teal","Orthopaedics and Traumatology":"teal","Vascular Surgery":"teal",
+  "Cardiovascular":"red","Psychiatry":"amber","Ophthalmology":"amber","Family Medicine":"green","Paediatrics":"green",
+  "ENT":"gray","H&N and ENT":"gray"
 };
-const catIcons = { both: ["ti-clipboard-list","ti-stethoscope"], exam: ["ti-clipboard-list"], clinical: ["ti-stethoscope"] };
-const tierLabel = { S: "S tier — don't skip", A: "A tier — high priority", B: "B tier — if time allows" };
+const catIcons = { both:["ti-clipboard-list","ti-stethoscope"], exam:["ti-clipboard-list"], clinical:["ti-stethoscope"] };
+const tierLabel = { S:"S tier", A:"A tier", B:"B tier", C:"C tier" };
 const weeks = [
-{ range: "Jul 20-26", items: [
+{ range:"Jul 20-26", context:["MBBS 140 Clinical Curriculum","Professionalism in Practice","Masterclasses Session 1","Masterclasses Session 2"], items:[
   ["History taking and general examination","both","S","Medicine","E-Learning"],
   ["Examination of the Abdomen","both","S","Medicine","E-Learning"],
   ["Precordial examination Part 1","both","S","Cardiovascular","Induction Week"],
   ["Precordial examination Part 2","both","S","Cardiovascular","Induction Week"],
+  ["Demonstration on Central Nervous System","clinical","S","Medicine","Clinical Skills"],
+  ["Surgery - General Examination","clinical","S","General Surgery","Induction Week"],
+  ["Clinical Demonstration: Abdomen","clinical","S","Surgery","Clinical Skills"],
+  ["Clinical Demo: Cardiovascular System","clinical","S","Medicine","Clinical Skills"],
+  ["Intro to Exam of the Cardiovascular System","clinical","S","Cardiovascular","Induction Week"],
+  ["Exam of the Cardiovascular System Part 1","clinical","S","Cardiovascular","Induction Week"],
+  ["Clinical Demo: Respiratory System","clinical","S","Medicine","Clinical Skills"],
+  ["Safe Prescribing (Interprofessional)","clinical","S","Induction Seminars","E-Learning"],
   ["Dermatology","both","A","Medicine","E-Learning"],
-  ["Seminar: Interventional Radiology","exam","A","Diagnostic Radiology","Clinical Skills"],
-  ["Seminar: Cross-sectional Imaging","exam","A","Diagnostic Radiology","Clinical Skills"],
-  ["Clinical Demonstration: Urology","exam","A","Surgery","Clinical Skills"],
+  ["Seminar: Interventional Radiology","both","A","Diagnostic Radiology","Clinical Skills"],
+  ["Seminar: Cross-sectional Imaging","both","A","Diagnostic Radiology","Clinical Skills"],
+  ["Clinical Demonstration: Urology","both","A","Surgery","Clinical Skills"],
   ["Seminar: Common Surgical Emergencies","clinical","A","Surgery","Clinical Skills"],
   ["ChemPath Sem 1: Sodium and water","clinical","A","Pathology","Clinical Skills"],
-  ["The use of laboratory test in clinical medicine","clinical","A","Medicine","E-Learning"],
-  ["Seminar: Nuclear Medicine","exam","B","Diagnostic Radiology","Clinical Skills"],
-  ["Seminar: Metabolic Response in Surgical Patients","exam","B","Surgery","Clinical Skills"],
-  ["Seminar: Role of Surgical Oncology","exam","B","Surgery","Clinical Skills"],
-  ["Clinical Demonstration: Peripheral Vascular System","clinical","B","Surgery","Clinical Skills"],
-  ["Clinical Demonstration: Thyroid","clinical","B","Surgery","Clinical Skills"]
+  ["Use of lab test in clinical medicine","clinical","A","Medicine","E-Learning"],
+  ["Infection Control Refresher","clinical","A","Induction Seminars","E-Learning"],
+  ["GS8: upper limb exam","clinical","A","Musculoskeletal","Induction Week"],
+  ["GS7: neck exam","clinical","A","H&N and ENT","Induction Week"],
+  ["GS6: face exam","clinical","A","H&N and ENT","Induction Week"],
+  ["Clinical Demo: Peripheral Vascular System","clinical","A","Surgery","Clinical Skills"],
+  ["Seminar: Surgery and Surgical Principles","clinical","A","Surgery","Clinical Skills"],
+  ["GS9: lower limb exam","clinical","A","Musculoskeletal","Induction Week"],
+  ["RS3: Percussion","clinical","A","Nervous System","Induction Week"],
+  ["RS4: Auscultation","clinical","A","Nervous System","Induction Week"],
+  ["Clinical Ethics and Law","clinical","A","Induction Seminars","E-Learning"],
+  ["RS6: Pulse oximetry","clinical","A","Nervous System","Induction Week"],
+  ["Demonstration: General Hx Taking","clinical","A","Orthopaedics and Traumatology","Clinical Skills"],
+  ["Seminar: Nuclear Medicine","both","B","Diagnostic Radiology","Clinical Skills"],
+  ["Seminar: Metabolic Response","both","B","Surgery","Clinical Skills"],
+  ["Clinical Demonstration: Thyroid","both","B","Surgery","Clinical Skills"],
+  ["Seminar: Role of Surgical Oncology","clinical","B","Surgery","Clinical Skills"],
+  ["Seminar: ENT (I)","clinical","B","ENT","Clinical Skills"],
+  ["RS5: PEFR","clinical","B","Nervous System","Induction Week"]
 ]},
-{ range: "Jul 27-Aug 2", items: [
-  ["Seminar 1: Psychiatric History Taking and MSE","both","S","Psychiatry","Clinical Skills"],
+{ range:"Jul 27-Aug 2", context:["Masterclasses Session 3","Masterclasses Session 4"], items:[
+  ["Medicine GI(3): Palpation of Abdomen","clinical","S","GI and Abdomen","Induction Week"],
+  ["Medicine GI(2): Inspection of Abdomen","clinical","S","GI and Abdomen","Induction Week"],
+  ["Clinical Demonstration: Abdomen (Medicine)","clinical","S","Medicine","Clinical Skills"],
+  ["Medicine GI(1): Intro to GI exam","clinical","S","GI and Abdomen","Induction Week"],
+  ["Medicine GI(6): Percussion of Abdomen","clinical","S","GI and Abdomen","Induction Week"],
+  ["Medicine GI(7): Auscultation of Abdomen","clinical","S","GI and Abdomen","Induction Week"],
+  ["Surgery - Abdominal exam I","clinical","S","GI and Abdomen","Induction Week"],
+  ["Surgery - Abdominal exam II","clinical","S","GI and Abdomen","Induction Week"],
+  ["Seminar 1: Psychiatric Hx Taking and MSE","clinical","S","Psychiatry","Clinical Skills"],
   ["Medicine GI(4): Examination of the Liver","both","A","GI and Abdomen","Induction Week"],
+  ["Medicine GI(5): Spleen and Kidneys","clinical","A","GI and Abdomen","Induction Week"],
+  ["Fertility Regulation","clinical","A","Obstetrics and Gynaecology","E-Learning"],
+  ["Communication Skills","clinical","A","Obstetrics and Gynaecology","Clinical Skills"],
+  ["Patient Safety Seminar (1)","clinical","A","Induction Seminars","E-Learning"],
+  ["Surgery - Breast and Axillary Exam","clinical","A","General Surgery","Induction Week"],
+  ["Surgery - Thyroid and neck exam","clinical","A","General Surgery","Induction Week"],
+  ["Surgery - Hernia Examination","clinical","A","GI and Abdomen","Induction Week"],
+  ["Surgery - Digital Rectal Exam","clinical","A","GI and Abdomen","Induction Week"],
   ["Lab Diagnostic Investigations Sem 2: IHC","exam","A","Pathology","Clinical Skills"],
-  ["Lab Diagnostic Investigations Sem 1: Anatomical pathology","exam","B","Pathology","Clinical Skills"],
-  ["Fertility Regulation","exam","B","Obstetrics and Gynaecology","E-Learning"]
+  ["An Introduction to Psychiatry","clinical","B","Psychiatry","E-Learning"],
+  ["Clinical demonstration: Ear & Nose","clinical","B","ENT","Clinical Skills"],
+  ["Surgery - Lumps and Bumps","clinical","B","General Surgery","Induction Week"],
+  ["Introduction to Orthopaedic Surgery","clinical","B","Orthopaedics and Traumatology","E-Learning"],
+  ["Lab Diagnostic Investigations Sem 1: Anatomical pathology","exam","B","Pathology","Clinical Skills"]
 ]},
-{ range: "Aug 3-9", items: [
+{ range:"Aug 3-9", context:[], items:[
   ["NS1: Motor exam, upper limb","both","S","Nervous System","Induction Week"],
   ["NS2: Motor exam, lower limb","both","S","Nervous System","Induction Week"],
   ["Central Nervous System","both","S","Medicine","E-Learning"],
-  ["Clinical Demonstration: Skin and Subcutaneous Lesions","both","S","Surgery","Clinical Skills"],
+  ["Clinical Demo: Skin and Subcutaneous Lesions","both","S","Surgery","Clinical Skills"],
   ["ChemPath Sem 2: Potassium","both","S","Pathology","Clinical Skills"],
   ["Perinatal Medicine, Antenatal Care I","both","S","Obstetrics and Gynaecology","E-Learning"],
   ["Perinatal Medicine, Antenatal Care II","both","S","Obstetrics and Gynaecology","E-Learning"],
-  ["NS3: Sensory System Examination","clinical","A","Nervous System","Induction Week"],
-  ["NS4: Cranial Nerves Examination","clinical","A","Nervous System","Induction Week"],
-  ["NS5: Assessing Level of Consciousness","clinical","A","Nervous System","Induction Week"],
-  ["Seminar: History Taking and Physical Exam in general","clinical","A","Surgery","Clinical Skills"],
+  ["Examination of the spine","clinical","A","Musculoskeletal","Induction Week"],
+  ["NS3: Sensory Exam","clinical","A","Nervous System","Induction Week"],
+  ["NS4: Cranial Nerves Exam","clinical","A","Nervous System","Induction Week"],
+  ["NS5: Level of Consciousness","clinical","A","Nervous System","Induction Week"],
+  ["Seminar: Hx Taking and Physical Exam general","clinical","A","Surgery","Clinical Skills"],
+  ["Clinical Demo: Head and Neck","clinical","A","Surgery","Clinical Skills"],
+  ["Clinical Skills WS (IIa): Bone and Joints","clinical","A","Orthopaedics and Traumatology","Clinical Skills"],
+  ["Injuries to Bone and Joints","exam","A","Orthopaedics and Traumatology","E-Learning"],
+  ["Examination of the hand","exam","A","Musculoskeletal","Induction Week"],
+  ["Examination of the knee joint","exam","A","Musculoskeletal","Induction Week"],
+  ["Peripheral Arterial System Exam","clinical","A","Vascular Surgery","Induction Week"],
+  ["Peripheral Venous System Exam","clinical","A","Vascular Surgery","Induction Week"],
   ["Seminar: Radiography","exam","B","Diagnostic Radiology","Clinical Skills"],
-  ["Injuries to Bone and Joints","exam","B","Orthopaedics and Traumatology","E-Learning"],
-  ["Examination of the hand","exam","B","Musculoskeletal","Induction Week"],
-  ["Examination of the knee joint","exam","B","Musculoskeletal","Induction Week"],
-  ["Physiology of Pregnancy and Minor Ailments","exam","B","Obstetrics and Gynaecology","E-Learning"]
+  ["Physiology of Pregnancy and Minor Ailments","exam","B","Obstetrics and Gynaecology","E-Learning"],
+  ["Instructional Video: MSK Exam","clinical","B","Musculoskeletal","Induction Week"],
+  ["Introduction to common problems","clinical","B","Family Medicine","E-Learning"]
 ]},
-{ range: "Aug 10-16", items: [
+{ range:"Aug 10-16", context:[], items:[
   ["Examination of jugular venous pressure","both","S","Cardiovascular","Induction Week"],
-  ["Cardiovascular (II): Physical Examination","both","S","Medicine","E-Learning"],
-  ["Workshop B: Diagnostic approach to problem solving","exam","A","Family Medicine","Clinical Skills"],
+  ["Cardiovascular (II): Physical Exam","both","S","Medicine","E-Learning"],
+  ["Cardiovascular (I): Physical Exam","clinical","S","Medicine","E-Learning"],
+  ["Exam of the CVS Part 2","clinical","S","Cardiovascular","Induction Week"],
+  ["Radial pulse exam","clinical","S","Cardiovascular","Induction Week"],
+  ["Workshop B: Diagnostic approach","exam","A","Family Medicine","Clinical Skills"],
   ["Menstrual Disorders","exam","A","Obstetrics and Gynaecology","E-Learning"],
   ["Seminar: Surgical Infection","clinical","A","Surgery","Clinical Skills"],
-  ["Physiology of Lactation I","exam","B","Obstetrics and Gynaecology","E-Learning"],
-  ["Physiology of Lactation II","exam","B","Obstetrics and Gynaecology","E-Learning"],
-  ["Physical Examination Part 1: Gynaecology","exam","B","Obstetrics and Gynaecology","Clinical Skills"]
+  ["Physiology of Lactation I","clinical","A","Obstetrics and Gynaecology","E-Learning"],
+  ["Physiology of Lactation II","clinical","A","Obstetrics and Gynaecology","E-Learning"],
+  ["Physical Exam Part 1: Gynaecology","clinical","A","Obstetrics and Gynaecology","Clinical Skills"],
+  ["ChemPath Sem 5: Plasma Lipids","clinical","A","Pathology","Clinical Skills"],
+  ["Carotid pulse exam","clinical","A","Cardiovascular","Induction Week"]
 ]},
-{ range: "Aug 17-23", items: [
+{ range:"Aug 17-23", context:[], items:[
   ["Respiratory System","both","S","Medicine","E-Learning"],
   ["Seminar: Fluid, Electrolytes and Blood Transfusion","clinical","A","Surgery","Clinical Skills"],
-  ["Clinical Demonstration: Perineum and Hernia","exam","B","Surgery","Clinical Skills"]
+  ["ChemPath Sem 4: poisoned patients","clinical","A","Pathology","Clinical Skills"],
+  ["Clinical Demo: Perineum and Hernia","clinical","A","Surgery","Clinical Skills"]
 ]},
-{ range: "Aug 24-30", items: [
+{ range:"Aug 24-30", context:[], items:[
   ["Ocular Manifestations of Systemic Disease","both","A","Ophthalmology","E-Learning"],
-  ["Workshop A: History taking workshop","exam","B","Family Medicine","Clinical Skills"],
-  ["Common Eye Diseases","exam","B","Ophthalmology","E-Learning"]
+  ["Common Eye Diseases","clinical","A","Ophthalmology","E-Learning"],
+  ["Workshop 1: Radiology","clinical","B","Diagnostic Radiology","Clinical Skills"],
+  ["Workshop A: Hx taking workshop","clinical","B","Family Medicine","Clinical Skills"],
+  ["ChemPath Sem 6: Interferences","clinical","C","Pathology","Clinical Skills"]
 ]},
-{ range: "Aug 31-Sep 6", items: [
+{ range:"Aug 31-Sep 6", context:[], items:[
   ["Puerperium and Related Problems","both","S","Obstetrics and Gynaecology","E-Learning"],
   ["Clinical Demonstration: Breast","both","A","Surgery","Clinical Skills"],
-  ["Classification and Diagnosis of Psychiatric Illness","exam","A","Psychiatry","E-Learning"],
-  ["Workshop 2: Radiology-Ultrasound","exam","A","Diagnostic Radiology","Clinical Skills"]
+  ["Workshop 2: Radiology-Ultrasound","clinical","A","Diagnostic Radiology","Clinical Skills"],
+  ["Physical Exam Part 2: Obstetrics","clinical","A","Obstetrics and Gynaecology","Clinical Skills"],
+  ["Classification and Diagnosis of Psychiatric Illness","exam","B","Psychiatry","E-Learning"],
+  ["ChemPath Sem 7: Iron metabolism","clinical","B","Pathology","Clinical Skills"],
+  ["Lab Diag Investigations Sem 3: haematological disorders","clinical","B","Pathology","Clinical Skills"],
+  ["Seminar 3: Child and Adolescent Psychiatry","clinical","B","Psychiatry","Clinical Skills"],
+  ["ChemPath Sem 8: Inherited metabolic disease","clinical","C","Pathology","Clinical Skills"]
 ]},
-{ range: "Sep 7-13", items: [
-  ["Clinical Skills Workshop (IIb): Spine","both","A","Orthopaedics and Traumatology","Clinical Skills"],
+{ range:"Sep 7-13", context:[], items:[
+  ["Clinical Skills WS (IIb): Spine","both","A","Orthopaedics and Traumatology","Clinical Skills"],
   ["Aetiology of Psychiatric Disorders","both","A","Psychiatry","E-Learning"],
   ["MolPath Sem 4: Lymphoma","exam","A","Pathology","E-Learning"],
   ["MolPath Sem 6: Lung cancers","exam","A","Pathology","E-Learning"],
   ["MolPath Sem 7: Gynaecological cancers","exam","A","Pathology","E-Learning"],
   ["Immunisation","clinical","A","Paediatrics","E-Learning"],
   ["Introduction to Geriatric Medicine","clinical","A","Medicine","E-Learning"],
+  ["Paediatric history taking","clinical","A","Paediatrics","E-Learning"],
+  ["Rehabilitation Medicine","clinical","A","Medicine","E-Learning"],
+  ["Child growth and development","clinical","A","Paediatrics","E-Learning"],
+  ["Surgery - Throat Examination","clinical","A","H&N and ENT","Induction Week"],
+  ["Surgery - Ear Examination","clinical","A","H&N and ENT","Induction Week"],
+  ["Clinical demo: Larynx, Neck, Mouth","clinical","A","ENT","Clinical Skills"],
+  ["Surgery - Oral Cavity, Parotid Exam","clinical","A","H&N and ENT","Induction Week"],
+  ["Surgery - Nose Examination","clinical","A","H&N and ENT","Induction Week"],
+  ["Clinical Skills WS (Ib): Upper Limb","clinical","A","Orthopaedics and Traumatology","Clinical Skills"],
   ["MolPath Sem 8: Breast cancer","exam","B","Pathology","E-Learning"],
-  ["Paediatric history taking","exam","B","Paediatrics","E-Learning"],
-  ["Rehabilitation Medicine","exam","B","Medicine","E-Learning"],
-  ["Child growth and development","clinical","B","Paediatrics","E-Learning"]
+  ["Reconstruction","clinical","B","Orthopaedics and Traumatology","E-Learning"],
+  ["Children's Orthopaedics and Deformities","clinical","B","Orthopaedics and Traumatology","E-Learning"],
+  ["MolPath Sem 1: Technologies","clinical","C","Pathology","E-Learning"],
+  ["MolPath Sem 2: Colorectal cancers","clinical","C","Pathology","E-Learning"],
+  ["MolPath Sem 3: Viral etiology","clinical","C","Pathology","E-Learning"],
+  ["MolPath Sem 5: Haematological malignancies","clinical","C","Pathology","E-Learning"]
 ]},
-{ range: "Sep 14-20", items: [
+{ range:"Sep 14-20", context:[], items:[
   ["Forensic Pathology","both","S","Pathology","E-Learning"],
   ["Seminar 2: Psychopathology","both","S","Psychiatry","Clinical Skills"],
+  ["Psychiatric conditions in medical settings","clinical","S","Psychiatry","E-Learning"],
   ["Lab Diagnostic Investigations Sem 4: Tissue typing","exam","A","Pathology","Clinical Skills"],
-  ["The Eye Examination","exam","B","Ophthalmology","E-Learning"]
+  ["The Eye Examination","clinical","A","Ophthalmology","E-Learning"],
+  ["Seminar 4: Psychogeriatrics","clinical","A","Psychiatry","Clinical Skills"],
+  ["MolPath Sem 9: Forensic DNA profiling","clinical","C","Pathology","E-Learning"]
 ]},
-{ range: "Sep 21-24", items: [
-  ["Lab Diagnostic Investigations Sem 5: Immunological disorders","exam","A","Pathology","Clinical Skills"]
+{ range:"Sep 21-24", context:[], items:[
+  ["Lab Diagnostic Investigations Sem 5: Immunological disorders","exam","A","Pathology","Clinical Skills"],
+  ["Seminar: Common ENT conditions","clinical","A","ENT","Clinical Skills"],
+  ["Clinical Skills WS (Ia): Lower Limb","clinical","A","Orthopaedics and Traumatology","Clinical Skills"]
 ]},
-{ range: "Unscheduled - flag the date", items: [
-  ["Clinical Demonstration on general examination","both","S","Medicine","E-Learning"]
+{ range:"Date not set in Notion", context:["Patient Safety Seminar (2)"], items:[
+  ["Clinical Demonstration on general examination","both","S","Medicine","E-Learning"],
+  ["Interprofessional practice: working with nurses","clinical","A","Induction Seminars","E-Learning"]
 ]}
 ];
+function makeCard(item) {
+  var name = item[0], cat = item[1], specialty = item[3];
+  var r = ramp[specialtyRamp[specialty]];
+  var icons = catIcons[cat].map(function(ic){ return '<i class="ti ' + ic + '" style="font-size:13px;color:' + r.mid + ';" aria-hidden="true"></i>'; }).join("");
+  var row = document.createElement("div");
+  row.style.cssText = "background:" + r.bg + ";border-radius:8px;padding:6px 10px;display:flex;gap:8px;align-items:flex-start;";
+  row.innerHTML = '<span style="display:flex;gap:2px;margin-top:3px;flex-shrink:0;">' + icons + '</span>' +
+    '<span><span style="font-size:13px;color:' + r.dark + ';">' + name + '</span><br><span style="font-size:11px;color:' + r.mid + ';">' + specialty + '</span></span>';
+  return row;
+}
 const container = document.getElementById("weeks");
-weeks.forEach((w, i) => {
+weeks.forEach(function(w, i) {
   const card = document.createElement("div");
   card.style.cssText = "background:var(--surface-0);border-radius:12px;padding:12px 16px;border:0.5px solid var(--border);";
   const header = document.createElement("div");
   header.style.cssText = "font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:10px;";
-  header.textContent = "Week " + (i+1) + " · " + w.range;
+  header.textContent = (i < 10 ? "Week " + (i+1) + " · " : "") + w.range;
   card.appendChild(header);
-  ["S","A","B"].forEach(tier => {
-    const group = w.items.filter(it => it[2] === tier);
+  ["S","A","B","C"].forEach(function(tier) {
+    const group = w.items.filter(function(it){ return it[2] === tier; });
     if (!group.length) return;
     const tierHead = document.createElement("div");
     tierHead.style.cssText = "font-size:12px;font-weight:500;color:var(--text-muted);margin:10px 0 6px;";
     tierHead.textContent = tierLabel[tier];
     card.appendChild(tierHead);
-    const grid = document.createElement("div");
-    grid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px;";
-    group.forEach(([name, cat, tier, specialty, track]) => {
-      const r = ramp[specialtyRamp[specialty]];
-      const icons = catIcons[cat].map(ic => '<i class="ti ' + ic + '" style="font-size:14px;color:' + r.mid + ';" aria-hidden="true"></i>').join("");
-      const row = document.createElement("div");
-      row.style.cssText = "background:" + r.bg + ";border-radius:8px;padding:6px 10px;display:flex;gap:8px;align-items:flex-start;";
-      row.innerHTML =
-        '<span style="display:flex;gap:2px;margin-top:3px;flex-shrink:0;">' + icons + '</span>' +
-        '<span><span style="font-size:13px;color:' + r.dark + ';">' + name + '</span><br><span style="font-size:11px;color:' + r.mid + ';">' + specialty + ' · ' + track + '</span></span>';
-      grid.appendChild(row);
-    });
-    card.appendChild(grid);
+    const cs = group.filter(function(it){ return it[4] === "Clinical Skills"; });
+    const el = group.filter(function(it){ return it[4] === "E-Learning"; });
+    const iw = group.filter(function(it){ return it[4] === "Induction Week"; });
+    if (cs.length || el.length) {
+      const cols = document.createElement("div");
+      cols.style.cssText = "display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;";
+      const leftCol = document.createElement("div");
+      leftCol.style.cssText = "display:flex;flex-direction:column;gap:6px;";
+      if (cs.length) {
+        const lh = document.createElement("div");
+        lh.style.cssText = "font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.03em;";
+        lh.textContent = "Clinical Skills Learning";
+        leftCol.appendChild(lh);
+        cs.forEach(function(item){ leftCol.appendChild(makeCard(item)); });
+      }
+      const rightCol = document.createElement("div");
+      rightCol.style.cssText = "display:flex;flex-direction:column;gap:6px;";
+      if (el.length) {
+        const rh = document.createElement("div");
+        rh.style.cssText = "font-size:10px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.03em;";
+        rh.textContent = "E-Learning";
+        rightCol.appendChild(rh);
+        el.forEach(function(item){ rightCol.appendChild(makeCard(item)); });
+      }
+      cols.appendChild(leftCol);
+      cols.appendChild(rightCol);
+      card.appendChild(cols);
+    }
+    if (iw.length) {
+      const subHead = document.createElement("div");
+      subHead.style.cssText = "font-size:10px;font-weight:500;color:var(--text-muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:0.03em;";
+      subHead.textContent = "Induction Week";
+      card.appendChild(subHead);
+      const iwWrap = document.createElement("div");
+      iwWrap.style.cssText = "display:flex;flex-wrap:wrap;gap:4px;";
+      iw.forEach(function(item) {
+        var name = item[0], cat = item[1], specialty = item[3];
+        var r = ramp[specialtyRamp[specialty]];
+        var icons = catIcons[cat].map(function(ic){ return '<i class="ti ' + ic + '" style="font-size:10px;color:' + r.mid + ';" aria-hidden="true"></i>'; }).join("");
+        var pill = document.createElement("span");
+        pill.style.cssText = "background:" + r.bg + ";border-radius:6px;padding:3px 8px;display:inline-flex;gap:4px;align-items:center;";
+        pill.innerHTML = icons + '<span style="font-size:11px;color:' + r.dark + ';">' + name + '</span>';
+        iwWrap.appendChild(pill);
+      });
+      card.appendChild(iwWrap);
+    }
   });
+  if (w.context.length) {
+    const cHead = document.createElement("div");
+    cHead.style.cssText = "font-size:12px;font-weight:500;color:var(--text-muted);margin:10px 0 6px;";
+    cHead.textContent = "Orientation / professional development (not rated)";
+    card.appendChild(cHead);
+    const cWrap = document.createElement("div");
+    cWrap.style.cssText = "display:flex;flex-wrap:wrap;gap:5px;";
+    w.context.forEach(function(name) {
+      var pill = document.createElement("span");
+      pill.style.cssText = "background:var(--surface-1);color:var(--text-secondary);font-size:11px;padding:3px 8px;border-radius:6px;";
+      pill.textContent = name;
+      cWrap.appendChild(pill);
+    });
+    card.appendChild(cWrap);
+  }
   container.appendChild(card);
 });
 </script>
